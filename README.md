@@ -52,6 +52,24 @@ appid is the application id
 dashid is the id of the dashboard
 templates are entries that point to your template application on your controller. 
 
+Step 1 : Select Template
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step1.png"/>
+Once you have your templates configured, then first step is decide if which template's health rules you are going to copy. When you select copy in Step 3
+the Health Rules are first copied and then modified, then it is pushed back to the Controller.
+
+Step 2 : Select Destination Application
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step2.png"/>
+In Step 2 you will select your destination application that the health rules and dashboard will be copied to. To copy to all applications selec the "All Application" option.
+
+Step 3 : Copy Health Rules
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step3.png"/>
+If you select to overwrite the rules, then all the rules from the template application will be copied to the destination application. If you select to not overwrite the rules, then only new rules will be copied over.
+
+Step 4 : Copy Dashboards
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step4.png"/>
+When you copy the Dashboard, the template dashboard will be downloaded and modified. The internal references to health rules and deep links will be modified to reference the destination application. If you copy again, a new dashboard will be created. Overwriting dashboards are not supported right now .
+
+
 Scenario : Copy Health Rules
 You would create or use an existing application as your template. In this application configure your health rules the way you want. These
 rules would then be copied to the target application or "All Applications" if you desire. If you select All Applications the health rules 
