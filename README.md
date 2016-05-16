@@ -33,9 +33,9 @@ http://localhost:3000
 
 Configuration Steps :
 
-Create a config.json file in the root directory. Here is a sample :
+Create a config.json file in the root directory with the following :
 
-<code>
+<pre>
 {
 	"restuser" : "username@account_name",
 	"restpasswrd" : "password",
@@ -46,7 +46,8 @@ Create a config.json file in the root directory. Here is a sample :
 		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":27,"dashid":3},
 	]
 }
-</code>
+</pre>
+<br/>
 restuser is the username @ the account <br/>
 https is wether you are using https to reference your controller.<br/>
 appid is the application id<br/>
