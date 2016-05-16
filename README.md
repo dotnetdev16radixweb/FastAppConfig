@@ -1,13 +1,13 @@
 FastAppConfig
 ==========
 
-Deploy Health Rules and Dashboards quickly
+Deploy Health Rules and Dashboards quickly.
 
 Installation :
 
-Required Frameworks :
-1. node.js
-2. bower
+Required Frameworks :<br/>
+1. node.js <br/>
+2. bower<br/>
 
 Installation :
 
