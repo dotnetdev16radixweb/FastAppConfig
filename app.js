@@ -15,6 +15,13 @@ var fs = require('fs');
 var config = require("./config.json");
 var moment = require("moment");
 
+var restManager = require('./src/RestManager.js');
+var appConfigManager = require('./src/AppConfigManager.js');
+var templates = require('./routes/templates.js');
+var appJson = require('./routes/applications.js');
+var copyhealthrules = require('./routes/copyhealthrules.js');
+var copydashboards = require('./routes/copydashboards.js');
+
 var log = log4js.getLogger("app");
 var app = express();
 
@@ -23,6 +30,11 @@ var init = function(){
 	//todo
 }()
 
+app.use(function(req,res,next){
+    req.restManager = restManager;
+    req.appConfigManager = appConfigManager;
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,19 +52,18 @@ app.get('/public/images/*', function (req,res)
 });
 
 app.use(express.static(__dirname + '/public/images'));
-
-
-//Make our db accessible to our router
-app.use(function(req,res,next){
-    //req.trendmanager = trendManager;
-    next();
-});
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use('/templates.json',templates);
+app.use('/applications.json',appJson);
+app.use('/copyhealthrules',copyhealthrules);
+app.use('/copydashboards',copydashboards);
 
 app.use('/', routes);
 
 app.get('/deploy.html', function(req, res) {
 	res.render('deploy');
 });
+
 app.get('/deployhelp.html', function(req, res) {
 	res.render('deployhelp');
 });

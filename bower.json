@@ -1,5 +1,5 @@
 {
-  "name": "appconfig",
+  "name": "FastAppConfig",
   "version": "0.0.0",
   "homepage": "https://github.com/appdynamics/fastappconfig",
   "authors": [
@@ -13,6 +13,11 @@
     "requirejs": "~2.1.14",
     "underscore": "~1.6.0",
     "rickshaw": "~1.5.1",
-    "react":"~0.14.7"
+    "angular": "~1.5.4",
+    "angular-route": "~1.5.4",
+    "jquery": "^2.2.3"
+  },
+  "resolutions": {
+    "angular": "1.5.4-build.4726+sha.d497822"
   }
 }

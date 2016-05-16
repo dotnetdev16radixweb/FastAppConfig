@@ -1,7 +1,7 @@
 var log4js = require('log4js');
-var log = log4js.getLogger("appConfigManager");
+var log = log4js.getLogger("AppConfigManager");
 var config = require('../config.json');
-var restManager = require('./restmanager');
+var restManager = require('./RestManager');
 var Q = require('q');
 var jp = require('jsonpath');
 
@@ -56,23 +56,37 @@ findTemplateById = function(id){
 	return templates[0];
 }
 
-postHealthRules = function(srcAppID,destAppID,forceHealthRules,callback){
+exports.postHealthRules = function(srcAppID,destAppID,forceHealthRules,copy,contains,callback){
 	restManager.fetchHealthRules(srcAppID,function(rules){
+		
+		if(!copy){
+			restManager.fetchHealthRules(srcAppID,function(destRules){
+				updateHealthRulesBasedOnMatches(contains,rules,destRules);
+			});
+		}
 		restManager.postHealthRules(destAppID,rules,forceHealthRules,function(response){
 			callback(response);
 		});
 	});
 }
 
-postDashBoard = function(dashboardId,destAppID,destAppName,destDashboardName,callback){
+exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,copy,contains,callback){
+	restManager.fetchHealthRules(srcAppID,function(rules){
+		restManager.getAppJson(function(apps){
+			apps.forEach(function(app){
+				restManager.postHealthRules(app.id,rules,forceHealthRules,function(response){
+					log.info(response);
+				});
+			});
+		});
+		callback("Health Rules have been copied");
+	});
+}
+
+exports.postDashBoard = function(dashboardId,destAppID,destAppName,destDashboardName,callback){
 	exports.fetchDashboard(dashboardId,function(customDash){
 		
-		//log.debug(JSON.stringify(customDash));
-		
 		var newDashBoard = exports.updateDashboard(customDash,destDashboardName,destAppName,destAppID);
-		
-		//log.debug(JSON.stringify(newDashBoard));
-		
 		
 		restManager.postDashboard(newDashBoard,function(response){
 			callback(response);
@@ -95,4 +109,7 @@ exports.pushConfig = function(templateId, dashboardFlag, healthRuleFlag, forceHe
 	}
 }
 
+updateHealthRulesBasedOnMatches = function(contains,rules,destRules){
+	
+}
 

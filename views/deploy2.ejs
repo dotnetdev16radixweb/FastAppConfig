@@ -96,12 +96,17 @@
         <div class="col-xs-12">
             <div class="col-md-12 well">
                 <h4 class="text-center"> STEP 3 - Copy Health Rules</h6>
+                <div class="row form-group">
+	                <input type="radio" ng-model="$parent.copy" value="true" ng-checked="true"> Only Match - By Name</input> &nbsp;
+	                <input type="radio" ng-model="$parent.copy" value="false"> Only Match - By Name that contains :</input> <input type="text" size="50" ng-model="$parent.contains"/><br/>
+                </div>
                 <div class ="row form-group">
 	                <input type="radio" ng-model="$parent.owHR" value="true" ng-checked="true"> Overwrite Existing Rules</input><br/>
 	                <input type="radio" ng-model="$parent.owHR" value="false"> Do NOT Overwrite</input>
                 </div>
             </div>
             <button id="copyHealthRulesBtn" class="btn btn-primary text-center" ng-click="copyHealthRules">Copy Now</button>
+            <button id="backToStep2" class="btn btn-primary text-center" >Back To Select Application</button>
             <button id="skipToStep4" class="btn btn-primary text-center" >Skip To Step 4</button>
         </div>
     </div>
