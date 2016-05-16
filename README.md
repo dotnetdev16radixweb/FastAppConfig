@@ -26,7 +26,7 @@ Installation :
 5. Configure the application. See Configuration Steps
 
 6. start node.js
-> npm install
+> npm start
 
 6. Open browser to :
 http://localhost:3000
