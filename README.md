@@ -35,6 +35,7 @@ Configuration Steps :
 
 Create a config.json file in the root directory. Here is a sample :
 
+<code>
 {
 	"restuser" : "username@account_name",
 	"restpasswrd" : "password",
@@ -45,12 +46,12 @@ Create a config.json file in the root directory. Here is a sample :
 		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":27,"dashid":3},
 	]
 }
-
-restuser is the username @ the account 
-https is wether you are using https to reference your controller.
-appid is the application id
-dashid is the id of the dashboard
-templates are entries that point to your template application on your controller. 
+</code>
+restuser is the username @ the account <br/>
+https is wether you are using https to reference your controller.<br/>
+appid is the application id<br/>
+dashid is the id of the dashboard<br/>
+templates are entries that point to your template application on your controller.<br/> 
 
 Step 1 : Select Template
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step1.png"/>
