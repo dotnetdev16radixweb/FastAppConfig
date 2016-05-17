@@ -8,9 +8,9 @@ Deploy Health Rules and Dashboards quickly.
 2. bower<br/>
 
 References :<br/>
-http://www.thinkingmedia.ca/2015/07/how-to-install-nodejs-bower-and-grunt-on-windows-8/
-https://nodejs.org/en/download/
-http://bower.io/
+http://www.thinkingmedia.ca/2015/07/how-to-install-nodejs-bower-and-grunt-on-windows-8/<br/>
+https://nodejs.org/en/download/<br/>
+http://bower.io/<br/>
 
 ####Installation
 
