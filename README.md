@@ -71,18 +71,15 @@ Step 4 : Copy Dashboards
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/step4.png"/>
 When you copy the Dashboard, the template dashboard will be downloaded and modified. The internal references to health rules and deep links will be modified to reference the destination application. If you copy again, a new dashboard will be created. Overwriting dashboards are not supported right now .
 
-
-Scenario : Copy Health Rules
-You would create or use an existing application as your template. In this application configure your health rules the way you want. These
-rules would then be copied to the target application or "All Applications" if you desire. If you select All Applications the health rules 
-would be copied to all existing applications.
-
-Scenario : Copy Dashboard
-You would create a dashboard and use this as a template. Then when you are ready to the copy the dashboard to the target application, we download the 
-dashboard and update any references to an application and change it to the target application. For example health rule references are modified
-and deep link references are also modified.
-
-Scenario : Copy Health Rules to All Applications
+<p/>
+Scenario : Copy Health Rules <br/>
+You would create or use an existing application as your template on your controller. In this template application configure your health rules the way you want. These rules would then be copied to the target application that you select in Step 2. 
+<p/>
+Scenario : Copy Dashboard <br/>
+You would create a dashboard and use this as a template. If you have status widgets tied to health rules, then make sure that these health rules are also copied to the target application. When you are ready to the copy the dashboard to the target application, this app downloads the 
+dashboard and update any references e.g. Health Rules and deep links, and updates it to the target application. 
+<p/>
+Scenario : Copy Health Rules to All Applications <br/>
 You can select a template and select the "All Applications" option in the target application from the drop down selection. This would copy
 all the health rules from the template application to all other applications on the Controller. 
 If you want to push just 1 health rule change, then make sure that only 1 health rule exist in the template application.
