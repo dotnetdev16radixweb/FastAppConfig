@@ -3,6 +3,8 @@ FastAppConfig
 
 Deploy Health Rules and Dashboards quickly.
 
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/features.png"/>
+
 #### Required Frameworks
 1. node.js <br/>
 2. bower<br/>
@@ -57,13 +59,15 @@ appid is the application id<br/>
 dashid is the id of the dashboard<br/>
 templates are entries that point to your template application on your controller.<br/> 
 
-####Sample Dashboards
+---
+####Feature 1 : Sample Dashboards
 Use this option to quickly deploy existing sample dashboards into your Controller. When you select this option you will be shown a list of sample dashboards
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/sample1.png"/>
 You can then select a sample dashboard to deploy. You will select the destination application you want the dashboard associated with. Some sample dashboards come with the associated Health Rules. Deploy the Health Rules first and then deploy the Dashboard. The dashboard will then be named with the name of the application plus the dashboard sample name.
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/sample2.png"/>
 
-####Health Rules and Dashboard Templates
+---
+####Feature 2 : Health Rules and Dashboard Templates
 Use this option when you have configured health rules and dashboards for your applications that you would like to use as a template for new applications. You can point to the Application and Dashboard, which can then be copied over to new applications as they are onboarded. The typical use case is where you want to onboard 50+ new apps quickly. Best practice is to setup one app with health rules and dashboards for each type of environment example Java vs .NET. You can also make modifications to the base health rules and then publish this to all apps.
 
 #### Screenshots
