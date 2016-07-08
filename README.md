@@ -34,7 +34,7 @@ Create a config.json file in the root directory with the following :
 	"https" : true,
 	"templates":[
 		{"id":1,"name":"Java Template","type":"Java","description":"Java Application - Health Rules and Dashboards","appid":2,"dashid":2},
-		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":3,"dashid":3},
+		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":3,"dashid":3}
 	]
 }
 </pre>
