@@ -183,7 +183,7 @@ $(document).ready(function() {
 
     $('#copyHealthRulesBtn').on('click', function(e) {
     	var scope = angular.element(document.getElementById('copyHealthRulesBtn')).scope();
-        scope.pushHealthRules(scope.selectedTemplate,scope.selectedApp,scope.owHR,scope.copy,scope.contains);
+        scope.pushHealthRules(scope.selectedTemplate,scope.selectedApp,scope.owHR);
     })  
     
     $('#copyDashboardsBtn').on('click', function(e) {

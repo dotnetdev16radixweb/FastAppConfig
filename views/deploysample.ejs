@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard Samples</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+    	var sampleId = <%=sample.id%>;
+    </script>
+    <style>
+    
+    #screen {
+		background-color:#777;
+	}
+	
+	.center-block {
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	 }
+
+    </style>
+  </head>
+  <body style="background-color:#ccc" ng-app="DeployApp" ng-controller="DeployController">
+  
+  	<div class="container-fluid">
+  		<div class="row form-group">
+	  		<div id="deploy" class="col-md-4">
+	  			<div>
+		  			<h6>First Select Target Application : 
+	                <select ng-model="selectedApp" ng-options="app.name for app in applications| filter: { id: '!0' }"">
+		    			<option value="">Select Option</option>
+					</select>
+					</h6>
+				</div>
+				<%if (sample.hasHealthRules) { %>
+					<div id="hr" ng-if="selectedApp">
+						<p></p>
+		  				<button id="copyHRBtn" class="btn btn-primary text-center" ng-click="deploySampleHR();">Deploy Health Rules</button>
+		  			</div>
+				<% } %>
+				<%if (sample.hasDashboard) { %>
+					<div id="dash" ng-if="selectedApp">
+						<p></p>
+		  				<button id="copyDashboardBtn" class="btn btn-primary text-center" ng-click="deploySampleDashboard();">Deploy Dashboard</button>
+		  			</div>
+				<% } %>
+	  		</div>
+	  		<div id="details" class="col-md-8">
+				<h6>Name: <%=sample.name%></h6>
+				<h6>Description : <%=sample.description%></h6>
+	  		</div>
+	  		
+  		</div>
+  		<div id="screen" class="row form-group">
+  			<%if (sample.hasDashboard) { %>
+				<div class="col-md-12">
+					<img src ="<%=sample.path%>/full.png" class="center-block"/>
+	  			</div>
+			<% } %>
+  		</div>
+	</div>
+ 	
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/css/bootstrap.min.js"></script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/deployapp.js"></script>
+
+	<script>  	
+	$(document).ready(function() {
+		
+	});
+	</script>	
+
+
+  </body>
+</html>

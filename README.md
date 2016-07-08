@@ -17,7 +17,7 @@ http://bower.io/<br/>
 1. Clone from repository : 
 >git clone https://github.com/Appdynamics/FastAppConfig.git
 
-2. Change into the direcotry
+2. Change into the directory
 > cd FastAppConfig
 
 3. Download the dependencies
@@ -45,17 +45,26 @@ Create a config.json file in the root directory with the following :
 	"controller" : "server.saas.appdynamics.com",
 	"https" : true,
 	"templates":[
-		{"id":1,"name":"Java Template","type":"Java","description":"Java Application - Health Rules and Dashboards","appid":38,"dashid":39},
-		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":27,"dashid":3},
+		{"id":1,"name":"Java Template","type":"Java","description":"Java Application - Health Rules and Dashboards","appid":2,"dashid":2},
+		{"id":2,"name":".NET Template","type":".NET","description":".NET Application - Health Rules and Dashboards","appid":3,"dashid":3},
 	]
 }
 </pre>
 <br/>
 restuser is the username @ the account <br/>
-https is wether you are using https to reference your controller.<br/>
+https is a flag to set if you are using https to reference your controller.<br/>
 appid is the application id<br/>
 dashid is the id of the dashboard<br/>
 templates are entries that point to your template application on your controller.<br/> 
+
+####Sample Dashboards
+Use this option to quickly deploy existing sample dashboards into your Controller. When you select this option you will be shown a list of sample dashboards
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/sample1.png"/>
+You can then select a sample dashboard to deploy. You will select the destination application you want the dashboard associated with. Some sample dashboards come with the associated Health Rules. Deploy the Health Rules first and then deploy the Dashboard. The dashboard will then be named with the name of the application plus the dashboard sample name.
+<img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/sample2.png"/>
+
+####Health Rules and Dashboard Templates
+Use this option when you have configured health rules and dashboards for your applications that you would like to use as a template for new applications. You can point to the Application and Dashboard, which can then be copied over to new applications as they are onboarded. The typical use case is where you want to onboard 50+ new apps quickly. Best practice is to setup one app with health rules and dashboards for each type of environment example Java vs .NET. You can also make modifications to the base health rules and then publish this to all apps.
 
 #### Screenshots
 Step 1 : Select Template
@@ -88,6 +97,12 @@ You can select a template and select the "All Applications" option in the target
 all the health rules from the template application to all other applications on the Controller. 
 If you want to push just 1 health rule change, then make sure that only 1 health rule exist in the template application.
 
+#### Steps to sanitize a Dashboard Sample : <br/>
+<ul>
+	<li>Change any Application Name element to {app_name}</li>
+	<li>Change any elementName that needs to be modified to {app_name}</li>
+	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li> 
+</ul>
 
 
 

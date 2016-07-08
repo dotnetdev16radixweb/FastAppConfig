@@ -15,7 +15,9 @@
     "rickshaw": "~1.5.1",
     "angular": "~1.5.4",
     "angular-route": "~1.5.4",
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "angulargrid": "^0.6.0",
+    "pinto": "*"
   },
   "resolutions": {
     "angular": "1.5.4-build.4726+sha.d497822"

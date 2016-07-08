@@ -1,9 +1,11 @@
 var log4js = require('log4js');
 var log = log4js.getLogger("AppConfigManager");
 var config = require('../config.json');
+var dashsamples = require("../dashsamples.json");
 var restManager = require('./RestManager');
 var Q = require('q');
 var jp = require('jsonpath');
+var fs = require('fs');
 
 var host = {};
 host.controller = config.controller;
@@ -56,21 +58,15 @@ findTemplateById = function(id){
 	return templates[0];
 }
 
-exports.postHealthRules = function(srcAppID,destAppID,forceHealthRules,copy,contains,callback){
+exports.postHealthRules = function(srcAppID,destAppID,forceHealthRules,callback){
 	restManager.fetchHealthRules(srcAppID,function(rules){
-		
-		if(!copy){
-			restManager.fetchHealthRules(srcAppID,function(destRules){
-				updateHealthRulesBasedOnMatches(contains,rules,destRules);
-			});
-		}
 		restManager.postHealthRules(destAppID,rules,forceHealthRules,function(response){
 			callback(response);
 		});
 	});
 }
 
-exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,copy,contains,callback){
+exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,callback){
 	restManager.fetchHealthRules(srcAppID,function(rules){
 		restManager.getAppJson(function(apps){
 			apps.forEach(function(app){
@@ -109,7 +105,83 @@ exports.pushConfig = function(templateId, dashboardFlag, healthRuleFlag, forceHe
 	}
 }
 
-updateHealthRulesBasedOnMatches = function(contains,rules,destRules){
-	
+exports.findSampleById = function(id){
+	var samples = dashsamples.samples.filter(function(item) {
+	    return item.id == id;
+	});
+	return samples[0];
 }
+
+
+exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,callback){
+	var sample = exports.findSampleById(sampleId);
+	var url    = './public'+sample.path+"/hr.xml"; 
+
+	fs.readFile(url, 'utf8', function (err, data) {
+		  if (err) throw err;
+		  restManager.postHealthRules(destAppID,data,forceHealthRules,function(response){
+				callback(response);
+		  });
+	});
+}
+
+exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName, appID){
+	//swap out the application name
+	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
+	
+	//swap out entityNames
+	var nodes = jp.apply(dashboardJsonObj, '$..entityName', function(value) {
+		if(value == "{app_name}")
+			return appName
+		else
+			return value;
+	});
+	
+	//change the dashboard name
+	dashboardJsonObj.name = appName+" "+dashboardName;
+
+	//swap out any deep URLs
+	var regex = /application=\d*/;
+	nodes = jp.apply(dashboardJsonObj, '$..drillDownUrl', function(value) {
+		if(value){
+			if(config.https)
+				value = value.replace("{server}","https://"+config.controller)
+			else
+				value = value.replace("{server}","http://"+config.controller)
+			return value.replace(regex,"application="+appID);
+		}
+		return value;
+	});	
+	nodes = jp.apply(dashboardJsonObj, '$..imageURL', function(value) {
+		if(value){
+			if(config.https)
+				value = value.replace("{server}","https://"+config.controller)
+			else
+				value = value.replace("{server}","http://"+config.controller)
+			return value.replace(regex,"application="+appID);
+		}
+		return value;
+	});	
+	return dashboardJsonObj;
+}
+
+exports.deploySampleDashboard = function(sampleId,destApp,callback){
+	
+	var sample = exports.findSampleById(sampleId);
+	var url    = './public'+sample.path+"/dashboard.json"; 
+
+	fs.readFile(url, 'utf8', function (err, data) {
+		  if (err) throw err;
+		  
+		  var dashObj = JSON.parse(data);
+		  dashObj = exports.updateSampleDashboard(dashObj,sample.name,destApp.name,destApp.id);
+		  
+		  console.log(JSON.stringify(dashObj));
+		  
+		  restManager.postDashboard(dashObj,function(response){
+				callback(response);
+		  });
+	});
+}
+
 

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config.json');
 
 router.post('/', function(req, res) {
 	
@@ -11,11 +10,11 @@ router.post('/', function(req, res) {
 	var contains    = req.body[4];
 	
 	if(application.id == 0){
-		req.appConfigManager.postHealthRulesToAllApps(template.appid,overwrite == 'true',copy=='true',contains,function(results){
+		req.appConfigManager.postHealthRulesToAllApps(template.appid,overwrite == 'true',function(results){
 			res.send("Health Rules Copied Successfully");
 		});
 	}else{
-		req.appConfigManager.postHealthRules(template.appid,application.id,overwrite == 'true',copy=='true',contains,function(results){
+		req.appConfigManager.postHealthRules(template.appid,application.id,overwrite == 'true',function(results){
 			res.send("Health Rules Copied Successfully");
 		});
 	}

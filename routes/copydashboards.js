@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config.json');
 
 router.post('/', function(req, res) {
 	

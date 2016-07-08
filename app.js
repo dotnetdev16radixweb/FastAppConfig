@@ -21,6 +21,10 @@ var templates = require('./routes/templates.js');
 var appJson = require('./routes/applications.js');
 var copyhealthrules = require('./routes/copyhealthrules.js');
 var copydashboards = require('./routes/copydashboards.js');
+var samples = require('./routes/samples.js');
+var dashsamples = require("./dashsamples.json");
+var deploySampleHealthRules = require("./routes/deploySampleHealthRules.js");
+var deploySampleDashboard = require("./routes/deploySampleDashboard.js");
 
 var log = log4js.getLogger("app");
 var app = express();
@@ -57,11 +61,24 @@ app.use('/templates.json',templates);
 app.use('/applications.json',appJson);
 app.use('/copyhealthrules',copyhealthrules);
 app.use('/copydashboards',copydashboards);
+app.use('/samples.json',samples);
+app.use('/deploySampleHealthRules',deploySampleHealthRules);
+app.use('/deploySampleDashboard',deploySampleDashboard);
 
 app.use('/', routes);
 
 app.get('/deploy.html', function(req, res) {
 	res.render('deploy');
+});
+
+app.get('/samples.html', function(req, res) {
+	res.render('sample',{"dashsamples":dashsamples});
+});
+
+app.get('/deploysample.html', function(req, res) {
+	var id = req.param("id");
+	var selectedSample = appConfigManager.findSampleById(id);
+	res.render('deploysample',{"sample":selectedSample});
 });
 
 app.get('/deployhelp.html', function(req, res) {

@@ -1,0 +1,14 @@
+{
+"samples":[
+		{"id":1,"name":"OPs - Java Sample 1","path":"/samples/opssample1java","hasHealthRules":true,"hasDashboard" : true,"description":"Overal App Performance. Adds two health rules which monitor Application Health and Node Health for Java."},
+		{"id":2,"name":"OPs - .NET Sample 1","path":"/samples/opssample1net","hasHealthRules":true,"hasDashboard" : true,"description":"Overal App Performance. Adds two health rules which monitor Application Health and Node Health for .NET"},
+		{"id":3,"name":"OPs - Sample 2","path":"/samples/opssample2","hasHealthRules":false,"hasDashboard" : true,"description":"This sample Absolute Layout dashboard provides key metrics for an Application, including Response Time, Errors, and Calls. The key metrics are shown as a chart with baseline, and the aggregate value is shown as a number. Status lights indicate the Response Time and Error health of the target application. You would have to clean up some of the specific references e.g. to AppDynamics and ECommerce."},
+		{"id":4,"name":"OPs - Sample 3","path":"/samples/opssample3","hasHealthRules":false,"hasDashboard" : true,"description":"This dashboard delves deep into the performance of individual nodes present in the system."},
+		{"id":5,"name":"OPs - Sample 4","path":"/samples/opssample4","hasHealthRules":false,"hasDashboard" : true,"description":"Overal App Performance"},
+		{"id":6,"name":"Workflow Widgets","path":"/samples/widgets1","hasHealthRules":false,"hasDashboard" : true,"description":"Widgets that can be used to create a workflow dashboard. An overlay technique is used, to overlay an image over a status widget."},
+		{"id":7,"name":"Exec Dashboard 1","path":"/samples/exec","hasHealthRules":false,"hasDashboard" : true,"description":"High Level Executive Dashboard"},
+		{"id":8,"name":"Exec Dashboard 2","path":"/samples/execdetails","hasHealthRules":false,"hasDashboard" : true,"description":"High Level Dashboard showing various steps."},
+		{"id":9,"name":"Dev - Sample 1","path":"/samples/dev1","hasHealthRules":false,"hasDashboard" : true,"description":"This sample dashboard is targeted primarily for Development teams, enabling them to track the performance status of their code broken down by Business Transactions."},
+		{"id":10,"name":"BT - Sample 1","path":"/samples/btsample1","hasHealthRules":false,"hasDashboard" : true,"description":"This sample dashboard provides key metrics for a Business Transaction, including Calls, Response Time, Errors, and Slow, Very Slow, and Stall count. Good for scheduled reports. Once you have imported the dashboard, you can either export and modify the json to select the desired BT or edit each widget and select the desired BT."}	
+	]
+}

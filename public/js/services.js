@@ -56,7 +56,7 @@ angular.module('DeployApp.services',[])
 		    });
 	}
 	
-_templatesService.prototype.deployDashboards = function(template,application,dashboardName) {
+	_templatesService.prototype.deployDashboards = function(template,application,dashboardName) {
 		
 		var hrRequest = [];
 		hrRequest.push(template);
@@ -65,6 +65,42 @@ _templatesService.prototype.deployDashboards = function(template,application,das
 				
 		$http({
 		    url: '/copydashboards',
+		    method: "POST",
+		    data: JSON.stringify(hrRequest),
+		    headers: {'Content-Type': 'application/json'}
+		    }).success(function (data, status, headers, config) {
+		        alert(data);
+		    }).error(function (data, status, headers, config) {
+		    	
+		    });
+	}
+	
+	_templatesService.prototype.deploySampleHR = function(sampleId,application) {
+		
+		var hrRequest = [];
+		hrRequest.push(sampleId);
+		hrRequest.push(application);
+				
+		$http({
+		    url: '/deploySampleHealthRules',
+		    method: "POST",
+		    data: JSON.stringify(hrRequest),
+		    headers: {'Content-Type': 'application/json'}
+		    }).success(function (data, status, headers, config) {
+		        alert(data);
+		    }).error(function (data, status, headers, config) {
+		    	
+		    });
+	}
+	
+	_templatesService.prototype.deploySampleDashboard = function(sampleId,application) {
+		
+		var hrRequest = [];
+		hrRequest.push(sampleId);
+		hrRequest.push(application);
+				
+		$http({
+		    url: '/deploySampleDashboard',
 		    method: "POST",
 		    data: JSON.stringify(hrRequest),
 		    headers: {'Content-Type': 'application/json'}
