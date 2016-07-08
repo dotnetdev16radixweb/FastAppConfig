@@ -23,16 +23,7 @@ http://bower.io/<br/>
 4. Download npm dependencies
 > npm install
 
-5. Configure the application. See Configuration Steps
-
-6. start node.js
-> npm start
-
-6. Open browser to :
-http://localhost:3000
-
-####Configuration Steps
-
+5. Configure the app. 
 Create a config.json file in the root directory with the following :
 
 <pre>
@@ -53,6 +44,15 @@ https is a flag to set if you are using https to reference your controller.<br/>
 appid is the application id<br/>
 dashid is the id of the dashboard<br/>
 templates are entries that point to your template application on your controller.<br/> 
+
+6. start node.js
+> npm start
+
+6. Open browser to :
+http://localhost:3000
+
+####Configuration Steps
+
 
 ---
 ####Feature 1 : Sample Dashboards
