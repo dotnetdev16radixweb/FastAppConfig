@@ -176,8 +176,6 @@ exports.deploySampleDashboard = function(sampleId,destApp,callback){
 		  var dashObj = JSON.parse(data);
 		  dashObj = exports.updateSampleDashboard(dashObj,sample.name,destApp.name,destApp.id);
 		  
-		  console.log(JSON.stringify(dashObj));
-		  
 		  restManager.postDashboard(dashObj,function(response){
 				callback(response);
 		  });
