@@ -1,8 +1,3 @@
-FastAppConfig
-==========
-
-Deploy Health Rules and Dashboards quickly.
-
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/features.png"/>
 
 #### Required Frameworks
