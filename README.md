@@ -66,6 +66,22 @@ Use this option to quickly deploy existing sample dashboards into your Controlle
 You can then select a sample dashboard to deploy. You will select the destination application you want the dashboard associated with. Some sample dashboards come with the associated Health Rules. Deploy the Health Rules first and then deploy the Dashboard. The dashboard will then be named with the name of the application plus the dashboard sample name.
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/sample2.png"/>
 
+#### Steps to add your own sample : <br/>
+<ul>
+	<li>Create a directory under the public/samples directory</li>
+	<li>Add the dashboard.json, hr.xml (Health Rules), preview png and a full png screenshot.</li>
+	<li>Last step is to update the ./dashsamples.json file<li>
+	<li>Restart the app by running npm start again and your sample should be available for deployment.</li>
+</ul>
+
+#### Steps to sanitize a Dashboard Sample : <br/>
+<ul>
+	<li>Change any Application Name element to {app_name}</li>
+	<li>Change any elementName that needs to be modified to {app_name}</li>
+	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li> 
+</ul>
+
+
 ---
 ####Feature 2 : Health Rules and Dashboard Templates
 Use this option when you have configured health rules and dashboards for your applications that you would like to use as a template for new applications. You can point to the Application and Dashboard, which can then be copied over to new applications as they are onboarded. The typical use case is where you want to onboard 50+ new apps quickly. Best practice is to setup one app with health rules and dashboards for each type of environment example Java vs .NET. You can also make modifications to the base health rules and then publish this to all apps.
@@ -101,12 +117,6 @@ You can select a template and select the "All Applications" option in the target
 all the health rules from the template application to all other applications on the Controller. 
 If you want to push just 1 health rule change, then make sure that only 1 health rule exist in the template application.
 
-#### Steps to sanitize a Dashboard Sample : <br/>
-<ul>
-	<li>Change any Application Name element to {app_name}</li>
-	<li>Change any elementName that needs to be modified to {app_name}</li>
-	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li> 
-</ul>
 
 
 
