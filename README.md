@@ -45,6 +45,11 @@ appid is the application id<br/>
 dashid is the id of the dashboard<br/>
 templates are entries that point to your template application on your controller.<br/> 
 
+If you are running your controller with a different port e.g. 8090 then you need to add the port element e.g.
+
+"controller" : "server.saas.appdynamics.com",
+"port":8090,
+
 6. start node.js
 > npm start
 

@@ -21,18 +21,9 @@ var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toStr
 var fetch = function(controller,url, parentCallBack){
 	var str = "";
 	
-	var port = 8080;
-	if (config.port){
-		port = config.port;
-	}else{
-		if(config.https){
-			port = 443;
-		}
-	}
-
 	var options = {
 		host : controller,
-		port : port,
+		port : getPort(),
 		method : "GET",
 		path : url,
 		headers : {
@@ -40,7 +31,7 @@ var fetch = function(controller,url, parentCallBack){
 		}
 	};
 
-	log.debug("fetch options :"+JSON.stringify(options));
+	//log.debug("fetch options :"+JSON.stringify(options));
 	
 	var callback = function(response) {
 		response.on('data', function(chunk) {
@@ -75,6 +66,17 @@ var getProtocol = function(){
 	return url;
 }
 
+var getPort = function(){
+	var port = 8080;
+	if (config.port){
+		port = config.port;
+	}else{
+		if(config.https){
+			port = 443;
+		}
+	}
+	return port;
+}
 
 /**
  * API for custom event : https://docs.appdynamics.com/display/PRO41/Use+the+AppDynamics+REST+API#UsetheAppDynamicsRESTAPI-CreateEvents
@@ -94,7 +96,7 @@ exports.postEvent = function (app,metric,dataRecord,callback){
 
 var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 	
-	var url = getProtocol() + controller + postUrl;
+	var url = getProtocol() + controller +":"+getPort()+postUrl;
 	var options = {
 		  method: 'POST',
 		  multipart : true,
