@@ -21,8 +21,18 @@ var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toStr
 var fetch = function(controller,url, parentCallBack){
 	var str = "";
 	
+	var port = 8080;
+	if (config.port){
+		port = config.port;
+	}else{
+		if(config.https){
+			port = 443;
+		}
+	}
+
 	var options = {
 		host : controller,
+		port : port,
 		method : "GET",
 		path : url,
 		headers : {
@@ -30,7 +40,7 @@ var fetch = function(controller,url, parentCallBack){
 		}
 	};
 
-	//log.debug("fetch options :"+JSON.stringify(options));
+	log.debug("fetch options :"+JSON.stringify(options));
 	
 	var callback = function(response) {
 		response.on('data', function(chunk) {
