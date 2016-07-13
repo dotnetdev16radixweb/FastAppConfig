@@ -1,7 +1,7 @@
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/features.png"/>
 
 #### Required Frameworks
-1. node.js <br/>
+1. node.js version v0.10.34<br/>
 2. bower<br/>
 
 References :<br/>
