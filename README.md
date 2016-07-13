@@ -1,7 +1,7 @@
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/features.png"/>
 
 #### Required Frameworks
-1. node.js version v0.10.34<br/>
+1. node.js version v0.10.34 or or v4.2.6<br/>
 2. bower<br/>
 
 References :<br/>
@@ -17,13 +17,13 @@ http://www.hostingadvice.com/how-to/install-nodejs-ubuntu-14-04/#ubuntu-package-
 3. sudo ln -s /usr/bin/nodejs /usr/bin/node
 4. sudo npm install bower -g
 
-Switch to node version 0.10.34
+Switch to node version 0.10.34 
 (If you need to switch node.js versions follow this : https://github.com/creationix/nvm)
 
 1. curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
 2. Logout and log back in
 2. Check if it installed >command -v nvm should output nvm
-3. nvm install 0.10.34
+3. nvm install 0.10.34 
 
 ### Installing on Mac
 Download Node 0.10.34 from
