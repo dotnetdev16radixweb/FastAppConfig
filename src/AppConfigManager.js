@@ -125,6 +125,18 @@ exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,ca
 	});
 }
 
+exports.updateServer = function(url){
+	var server = config.controller;
+	if(config.port){
+		server = server +":"+config.port
+	}
+	if(config.https)
+		server = "https://"+server;
+	else
+		server = "http://"+server;
+	return url.replace("{server}",server);
+}
+
 exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName, appID){
 	//swap out the application name
 	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
@@ -144,20 +156,14 @@ exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName
 	var regex = /application=\d*/;
 	nodes = jp.apply(dashboardJsonObj, '$..drillDownUrl', function(value) {
 		if(value){
-			if(config.https)
-				value = value.replace("{server}","https://"+config.controller)
-			else
-				value = value.replace("{server}","http://"+config.controller)
+			value = exports.updateServer(value);
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
 	});	
 	nodes = jp.apply(dashboardJsonObj, '$..imageURL', function(value) {
 		if(value){
-			if(config.https)
-				value = value.replace("{server}","https://"+config.controller)
-			else
-				value = value.replace("{server}","http://"+config.controller)
+			value = exports.updateServer(value);
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
