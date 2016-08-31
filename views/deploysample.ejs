@@ -28,7 +28,7 @@
 	  		<div id="deploy" class="col-md-4">
 	  			<div>
 		  			<h6>First Select Target Application : 
-	                <select ng-model="selectedApp" ng-options="app.name for app in applications| filter: { id: '!0' }"">
+	                <select ng-model="selectedApp" ng-options="app.name for app in applications| filter: { name: '!<All Applications>' }">
 		    			<option value="">Select Option</option>
 					</select>
 					</h6>

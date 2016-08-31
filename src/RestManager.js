@@ -18,6 +18,8 @@ var errorCodeSnapshotsDuration = config.error_code_fetch_snapshots;
 
 var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 var fetch = function(controller,url, parentCallBack){
 	var str = "";
 	
@@ -26,12 +28,13 @@ var fetch = function(controller,url, parentCallBack){
 		port : getPort(),
 		method : "GET",
 		path : url,
+		rejectUnauthorized: false,
 		headers : {
 			"Authorization" : auth,
 		}
 	};
 
-	//log.debug("fetch options :"+JSON.stringify(options));
+    log.debug("fetch options :"+JSON.stringify(options));
 	
 	var callback = function(response) {
 		response.on('data', function(chunk) {
@@ -43,8 +46,8 @@ var fetch = function(controller,url, parentCallBack){
 		})
 
 		response.on('end', function() {
-//			log.debug("url :"+url);
-//			log.debug("response :"+str);
+			log.debug("url :"+url);
+			log.debug("response :"+str);
 			parentCallBack(str);
 		});
 	}.bind(this)
@@ -100,6 +103,7 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 	var options = {
 		  method: 'POST',
 		  multipart : true,
+		  rejectUnauthorized: false,
 		  headers:{
 			  'Content-Type': "multipart/form-data'",
 			  "Authorization" : auth

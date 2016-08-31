@@ -33,6 +33,9 @@ angular.module('DeployApp.services',[])
 	
 	_templatesService.prototype.getApps = function($scope) {
 		$http.get('/applications.json').success(function(result) {
+			
+			console.log(result);
+			
 			$scope.applications = result;
 		});	
 	}

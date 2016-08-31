@@ -97,14 +97,13 @@ You can then select a sample dashboard to deploy. You will select the destinatio
 <ul>
 	<li>Create a directory under the public/samples directory</li>
 	<li>Add the dashboard.json, hr.xml (Health Rules), preview png and a full png screenshot.</li>
-	<li>Last step is to update the ./dashsamples.json file<li>
+	<li>Last step is to update the ./dashsamples.json file</li>
 	<li>Restart the app by running npm start again and your sample should be available for deployment.</li>
 </ul>
 
 #### Steps to sanitize a Dashboard Sample : <br/>
 <ul>
-	<li>Change any Application Name element to {app_name}</li>
-	<li>Change any elementName that needs to be modified to {app_name}</li>
+	<li>Change any reference to your Application Name element to {app_name}</li>
 	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li> 
 </ul>
 
