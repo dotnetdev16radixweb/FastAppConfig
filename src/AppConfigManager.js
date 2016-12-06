@@ -24,7 +24,7 @@ exports.postEvent = function(metric,trendDataRecord,callback){
 exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appID){
 	//swap out the application name
 	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
-	
+
 	//change the dashboard name
 	dashboardJsonObj.name = dashboardName;
 
@@ -35,14 +35,14 @@ exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appI
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
-	});	
+	});
 	return dashboardJsonObj;
 }
 
 exports.fetchDashboard= function(dashboardId,callback){
 	restManager.fetchDashboard(dashboardId, function(response){
 		callback(response);
-	})	
+	})
 }
 
 exports.fetchApplications = function(callback){
@@ -81,9 +81,9 @@ exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,callback){
 
 exports.postDashBoard = function(dashboardId,destAppID,destAppName,destDashboardName,callback){
 	exports.fetchDashboard(dashboardId,function(customDash){
-		
+
 		var newDashBoard = exports.updateDashboard(customDash,destDashboardName,destAppName,destAppID);
-		
+
 		restManager.postDashboard(newDashBoard,function(response){
 			callback(response);
 		});
@@ -92,7 +92,7 @@ exports.postDashBoard = function(dashboardId,destAppID,destAppName,destDashboard
 
 exports.pushConfig = function(templateId, dashboardFlag, healthRuleFlag, forceHealthRules,destAppID, destAppName, destDashboardName,callback){
 	var template = findTemplateById(templateId);
-	
+
 	if(healthRuleFlag){
 		postHealthRules(template.appid,destAppID,forceHealthRules,function(response){
 			callback(response);
@@ -115,7 +115,7 @@ exports.findSampleById = function(id){
 
 exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,callback){
 	var sample = exports.findSampleById(sampleId);
-	var url    = './public'+sample.path+"/hr.xml"; 
+	var url    = './public'+sample.path+"/hr.xml";
 
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;
@@ -140,7 +140,7 @@ exports.updateServer = function(url){
 exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName, appID){
 	//swap out the application name
 	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
-	
+
 	//swap out entityNames
 	var nodes = jp.apply(dashboardJsonObj, '$..entityName', function(value) {
 		if(value == "{app_name}")
@@ -148,7 +148,23 @@ exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName
 		else
 			return value;
 	});
-	
+
+	//HV: swap out all {app_name} for any text fields
+	var nodes = jp.apply(dashboardJsonObj, "$..text", function(value) {
+		if (value) {
+			log.debug(JSON.stringify(value)+appName);
+			return value.replace("{app_name}",appName);
+		}
+	});
+
+	//HV: swap out all {app_name} for any metricDisplayNameCustomFormat fields
+	var nodes = jp.apply(dashboardJsonObj, "$..metricDisplayNameCustomFormat", function(value) {
+		if (value) {
+			log.debug(JSON.stringify(value)+appName);
+			return value.replace("{app_name}",appName);
+		}
+	});
+
 	//change the dashboard name
 	dashboardJsonObj.name = appName+" "+dashboardName;
 
@@ -160,25 +176,25 @@ exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
-	});	
+	});
 	nodes = jp.apply(dashboardJsonObj, '$..imageURL', function(value) {
 		if(value){
 			value = exports.updateServer(value);
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
-	});	
+	});
 	return dashboardJsonObj;
 }
 
 exports.deploySampleDashboard = function(sampleId,destApp,callback){
-	
+
 	var sample = exports.findSampleById(sampleId);
-	var url    = './public'+sample.path+"/dashboard.json"; 
+	var url    = './public'+sample.path+"/dashboard.json";
 
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;
-		  
+
 		  var dashObj = JSON.parse(data);
 		  dashObj = exports.updateSampleDashboard(dashObj,sample.name,destApp.name,destApp.id);
 		  log.debug(JSON.stringify(dashObj));
@@ -187,5 +203,3 @@ exports.deploySampleDashboard = function(sampleId,destApp,callback){
 		  });
 	});
 }
-
-
