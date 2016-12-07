@@ -2,7 +2,9 @@ var async 	= require("async");
 var log4js 	= require('log4js');
 var log 	= log4js.getLogger("HealthRuleManager");
 var xmldom 	= require('xmldom').DOMParser;
+var XMLSerializer = require('xmldom').XMLSerializer;
 
+var regex = "{node}";
 
 exports.matchNames = function(containsText,sourceXML,destinationXML,callback) {
 	var srcDoc 	= new xmldom().parseFromString(sourceXML, 'application/xml');
@@ -15,22 +17,39 @@ exports.matchNames = function(containsText,sourceXML,destinationXML,callback) {
 	for (hr in hrs) {
 		thishr = hrs[hr];
 		if(thishr.childNodes && thishr.childNodes.length > 1){
-			log.debug(thishr.firstChild.nodeValue);
+			//log.debug(thishr.firstChild.nodeValue);
 		}
-	  }
-	
-//	nodes.forEach(function(node){
-//		log.debug(node.nodeValue);
-//	});
-	
-	//then cycle through srcDoc
-		//if match on name then set to last match
-	
-	//convert srcDoc to string and return
+	}
 	
 	callback(sourceXML);
 }
 
+exports.updateNodeReference = function(sourceXML,mods,callback){
+	var srcDoc 	= new xmldom().parseFromString(sourceXML, 'application/xml');
+	var serializer = new XMLSerializer();
+	
+	for(mod in mods){
+		exports.updateTextElement(srcDoc,mods[mod].element,mods[mod].regexs);
+	}
+	callback(serializer.serializeToString(srcDoc));
+}
+
+exports.updateTextElement = function (doc,element,regexs) {
+	
+	var nodes = doc.getElementsByTagName(element);
+	for (node in nodes){
+		var thisNode = nodes[node];
+		if(thisNode.childNodes && thisNode.childNodes.length > 0){
+			var text = thisNode.firstChild.textContent;
+			if(text){
+				for(regex in regexs){
+					text = text.replace(regexs[regex].regex,regexs[regex].value);
+				}
+				thisNode.firstChild.data = text;
+			}
+		}
+	}
+}
 
 
 

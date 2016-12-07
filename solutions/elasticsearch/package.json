@@ -1,0 +1,7 @@
+{
+  "name": "elasticsearch",
+  "version": "1.0.0",
+  "main" : "esearch.js",
+  "context" : "elasticsearch",
+  "header" : "Elastic Search"  
+}

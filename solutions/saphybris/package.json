@@ -1,0 +1,7 @@
+{
+  "name": "saphybris",
+  "version": "1.0",
+  "main" : "setup.js",
+  "context" : "saphybris",
+  "header" : "SAP Hybris" 
+}

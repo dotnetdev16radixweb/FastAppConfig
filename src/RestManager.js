@@ -8,8 +8,13 @@ var request = require("request");
 var needle = require("needle");
 var fs = require('fs');
 
+var HttpsProxyAgent = require('https-proxy-agent');
+var HttpProxyAgent  = require('http-proxy-agent');
+
 http.globalAgent.maxSockets = 20;
-var config = require('../config.json');
+var configManager = require("./ConfigManager");
+var config = configManager.getConfig();
+var proxy = config.proxy;
 
 var weekDuration = parseInt(config.trending_use_number_of_weeks) * (7*24*60);
 var minDuration = parseInt(config.trending_use_number_of_mins);
@@ -19,6 +24,7 @@ var errorCodeSnapshotsDuration = config.error_code_fetch_snapshots;
 var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 
 var fetch = function(controller,url, parentCallBack){
 	var str = "";
@@ -53,8 +59,16 @@ var fetch = function(controller,url, parentCallBack){
 	}.bind(this)
 
 	if(config.https){
+		if(proxy){
+			var agent = new HttpsProxyAgent(proxy)
+			options.agent = agent;
+		}
 		var req = https.request(options, callback).end();
 	}else{
+		if(proxy){
+			var agent = new HttpProxyAgent(proxy)
+			options.agent = agent;
+		}
 		var req = http.request(options, callback).end();
 	}
 }
@@ -184,8 +198,19 @@ exports.getAppJson = function(callback) {
 	});
 }
 
+exports.getTiersJson = function(app,callback) {
+	var url = "/controller/rest/applications/"+app+"/tiers?output=JSON";
+	fetch(config.controller,url,function(response){
+		callback(JSON.parse(response));
+	});
+}
 
-
+exports.getNodesJson = function(app,tier,callback) {
+	var url = "/controller/rest/applications/"+app+"/tiers/"+tier+"/nodes?output=JSON";
+	fetch(config.controller,url,function(response){
+		callback(JSON.parse(response));
+	});
+}
 
 
 

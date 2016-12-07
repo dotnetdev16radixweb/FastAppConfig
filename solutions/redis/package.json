@@ -1,0 +1,7 @@
+{
+  "name": "redis",
+  "version": "1.0",
+  "main" : "setup.js",
+  "context" : "redis",
+  "header" : "Redis" 
+}

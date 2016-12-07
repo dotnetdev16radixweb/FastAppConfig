@@ -1,0 +1,1 @@
+angular.module('ElasticSearch', ['ElasticSearch.controllers','ElasticSearch.services']);

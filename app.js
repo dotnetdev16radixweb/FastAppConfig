@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var packageController = require("package.js");
 
 var routes = require('./routes/index');
 var config = require('./config.json');
@@ -17,6 +18,9 @@ var moment = require("moment");
 
 var restManager = require('./src/RestManager.js');
 var appConfigManager = require('./src/AppConfigManager.js');
+var hrManager = require('./src/HealthRuleManager.js');
+
+
 var templates = require('./routes/templates.js');
 var appJson = require('./routes/applications.js');
 var copyhealthrules = require('./routes/copyhealthrules.js');
@@ -25,6 +29,8 @@ var samples = require('./routes/samples.js');
 var dashsamples = require("./dashsamples.json");
 var deploySampleHealthRules = require("./routes/deploySampleHealthRules.js");
 var deploySampleDashboard = require("./routes/deploySampleDashboard.js");
+var tiersJson = require('./routes/tiers.js');
+var nodesJson = require('./routes/nodes.js');
 
 var log = log4js.getLogger("app");
 var app = express();
@@ -37,6 +43,7 @@ var init = function(){
 app.use(function(req,res,next){
     req.restManager = restManager;
     req.appConfigManager = appConfigManager;
+    req.hrManager = hrManager;
     next();
 });
 
@@ -59,6 +66,8 @@ app.use(express.static(__dirname + '/public/images'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/templates.json',templates);
 app.use('/applications.json',appJson);
+app.use('/tiers',tiersJson);
+app.use('/nodes',nodesJson);
 app.use('/copyhealthrules',copyhealthrules);
 app.use('/copydashboards',copydashboards);
 app.use('/samples.json',samples);
@@ -83,6 +92,22 @@ app.get('/deploysample.html', function(req, res) {
 
 app.get('/deployhelp.html', function(req, res) {
 	res.render('deployhelp');
+});
+
+//Add plugins
+plugins = [];
+packageController.autoload({
+    debug: true,
+    identify: function() {
+    	plugins.push({dir:this.dir,meta:this.meta});
+        return (true);
+    },
+    directories: [path.join(__dirname, "solutions")],
+    packageContstructorSettings: {app:app}
+});
+
+app.get('/solutions.html', function(req, res) {
+	res.render('solutions',{"plugins":plugins});
 });
 
 

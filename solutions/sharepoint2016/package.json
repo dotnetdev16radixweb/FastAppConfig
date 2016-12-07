@@ -1,0 +1,7 @@
+{
+  "name": "sharepoint",
+  "version": "1.0",
+  "main" : "setup.js",
+  "context" : "sharepoint2016",
+  "header" : "SharePoint 2016" 
+}

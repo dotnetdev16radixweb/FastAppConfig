@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Elastic Search Package</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body ng-app="ElasticSearch" ng-controller="ElasticSearchController">
+  	<div class="container-fluid">
+  		<div class="row">
+  			<div class="col-md-12">
+			  	<h4>Elastic Search Package Deployment</h4>
+			  	<p><br/></p>
+			</div>
+  		</div>
+  		<div class="row">
+  			<div class="col-md-12">
+  				<form>
+				  <div class="form-group">
+				    <label for="application">Select Target Application</label>
+				    <select id="appselection" ng-model="selectedApp" ng-change="applicationChanged();" ng-options="app.name for app in applications| filter: { name: '!<All Applications>' } | orderBy : 'name'">
+		    			<option value="">Select Option</option>
+					</select>
+				  </div>
+				  <div class="form-group" ng-if="selectedApp" >
+				    <label for="tierselection">Select Target Tier</label>
+				    <select id="tierselection" ng-model="selectedTier" ng-change="tierChanged();" ng-options="tier.name for tier in tiers">
+		    			<option value="">Select Option</option>
+					</select>
+				  </div>
+				  <div class="form-group" ng-if="selectedTier" >
+				    <label for="nodeselection">Select Elastic Search Master Node</label>
+				    <select id="nodeselection" ng-model="$parent.selectedNode" ng-options="node.name for node in nodes">
+		    			<option value="">Select Option</option>
+					</select>
+				  </div>
+				  <div class="form-group" ng-if="selectedNode" >
+				    <label for="nodeselection">Enter Cluster Name </label>
+				    <input type="text" size="50" ng-model="$parent.clustername"/>
+				    <p class="help-block">
+				    	The cluster name for the custom metric e.g. Application Infrastructure Performance|Elasticsearch|Custom Metrics|Elastic Search|<B>ES_AccentureOnline</B>|number of nodes
+				    </p>
+				  </div>
+				  <div ng-if="selectedNode" class="form-group">
+				  	<label for="healthrulename">Enter Health Rule Name </label>
+			  		<input type="text" size="50" ng-model="$parent.healthrulename"/>
+	  				<button id="copyHRBtn" class="btn btn-primary text-center" ng-click="deployHR();">Deploy Health Rules</button>
+			  	</div>
+			  	<div ng-if="selectedNode" class="form-group">
+			  		<label for="dashboardname">Enter Dashboard Name </label>
+			  		<input type="text" size="50" ng-model="$parent.dashboardname"/>
+	  				<button id="copyDashBtn" class="btn btn-primary text-center" ng-click="deployDash();">Deploy Dashboard</button>
+			  	</div>
+				</form>
+  			</div>
+  		</div>
+  		<div class="row">
+  			<p><br/></p>
+  			<div class="col-md-6">
+  				<div class="jumbotron">
+	  				<label> Health Rule Preview</label>
+	  				<p></p>
+	  				<img src="/elasticsearch/hr.png">
+	  			</div>
+  			</div>
+  			<div class="col-md-6" class="jumbotron">
+  				<div class="jumbotron">
+	  				<label> Dashboard Preview</label>
+	  				<p></p>
+	  				<img src="/elasticsearch/dash.png">
+	  			</div>
+  			</div>
+  		</div>
+  	</div>
+	
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/css/bootstrap.min.js"></script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/elasticsearch/js/services.js"></script>
+	<script src="/elasticsearch/js/controller.js"></script>
+	<script src="/elasticsearch/js/app.js"></script>
+
+	<script>  	
+	$(document).ready(function() {
+		
+	});
+	</script>	
+
+
+  </body>
+</html>

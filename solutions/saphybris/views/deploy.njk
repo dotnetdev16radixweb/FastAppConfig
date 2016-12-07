@@ -1,0 +1,61 @@
+<h1> Elastic Search Deploy </h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard Samples</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+   
+    <style>
+	    #screen {
+			background-color:#777;
+		}
+		.center-block {
+		    display: block;
+		    margin-left: auto;
+		    margin-right: auto;
+		 }
+    </style>
+  </head>
+  <body style="background-color:#ccc" ng-app="ElasticSearch" ng-controller="ElasticSearchController">
+  
+  	<div class="container-fluid">
+  		<div class="row form-group">
+	  		<div id="deploy" class="col-md-4">
+	  			<div>
+		  			First Select Target Application : 
+	                <select id="appselection" ng-model="selectedApp" ng-change="applicationChanged();" ng-options="app.name for app in applications| filter: { name: '!<All Applications>' }">
+		    			<option value="">Select Option</option>
+					</select>
+				</div>
+				<div id="tier" ng-if="selectedApp">
+					Select Target Tier
+					<select id="tierselection" ng-model="selectedTier" ng-change="tierChanged($scope);" ng-options="tier.name for tier in tiers">
+		    			<option value="">Select Option</option>
+					</select>
+		  		</div>
+		  		<div id="node" ng-if="selectedTier">
+					Select Master Node for Elastic Search
+					<select id="nodeselection" ng-model="selectedNode" ng-options="node.name for node in nodes">
+		    			<option value="">Select Option</option>
+					</select>
+		  		</div>
+	  		</div>
+	  	</div>
+	</div>
+ 	
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/css/bootstrap.min.js"></script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/elasticsearch/js/services.js"></script>
+	<script src="/elasticsearch/js/controller.js"></script>
+	<script src="/elasticsearch/js/app.js"></script>
+
+	<script>  	
+	$(document).ready(function() {
+		
+	});
+	</script>	
+
+
+  </body>
+</html>

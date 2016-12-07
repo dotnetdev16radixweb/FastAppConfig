@@ -1,6 +1,6 @@
 var log4js = require('log4js');
 var log = log4js.getLogger("AppConfigManager");
-var config = require('../config.json');
+var config = require('./ConfigManager').getConfig();
 var dashsamples = require("../dashsamples.json");
 var restManager = require('./RestManager');
 var Q = require('q');
@@ -25,13 +25,45 @@ exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appI
 	//swap out the application name
 	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
 
+	//swap out entityNames
+	var nodes = jp.apply(dashboardJsonObj, '$..entityName', function(value) {
+		if(value == "{app_name}")
+			return appName
+		else
+			return value;
+	});
+
+	//HV: swap out all {app_name} for any text fields
+	var nodes = jp.apply(dashboardJsonObj, "$..text", function(value) {
+		if (value) {
+			log.debug(JSON.stringify(value)+appName);
+			return value.replace("{app_name}",appName);
+		}
+	});
+
+	//HV: swap out all {app_name} for any metricDisplayNameCustomFormat fields
+	var nodes = jp.apply(dashboardJsonObj, "$..metricDisplayNameCustomFormat", function(value) {
+		if (value) {
+			log.debug(JSON.stringify(value)+appName);
+			return value.replace("{app_name}",appName);
+		}
+	});
+
 	//change the dashboard name
-	dashboardJsonObj.name = dashboardName;
+	dashboardJsonObj.name = appName+" "+dashboardName;
 
 	//swap out any deep URLs
 	var regex = /application=\d*/;
 	nodes = jp.apply(dashboardJsonObj, '$..drillDownUrl', function(value) {
 		if(value){
+			value = exports.updateServer(value);
+			return value.replace(regex,"application="+appID);
+		}
+		return value;
+	});
+	nodes = jp.apply(dashboardJsonObj, '$..imageURL', function(value) {
+		if(value){
+			value = exports.updateServer(value);
 			return value.replace(regex,"application="+appID);
 		}
 		return value;
@@ -47,9 +79,24 @@ exports.fetchDashboard= function(dashboardId,callback){
 
 exports.fetchApplications = function(callback){
 	restManager.getAppJson(function (result){
-		callback(JSON.parse(result));
+		callback(result);
 	});
 }
+
+exports.fetchTiers = function(appid,callback){
+	restManager.getTiersJson(appid,function (result){
+		callback(result);
+	});
+}
+
+exports.fetchNodes = function(appid,tierid,callback){
+	restManager.getNodesJson(appid,tierid,function (result){
+		callback(result);
+	});
+}
+
+
+
 
 findTemplateById = function(id){
 	var templates = config.templates.filter(function(item) {
@@ -137,56 +184,6 @@ exports.updateServer = function(url){
 	return url.replace("{server}",server);
 }
 
-exports.updateSampleDashboard= function(dashboardJsonObj, dashboardName, appName, appID){
-	//swap out the application name
-	var nodes = jp.apply(dashboardJsonObj, '$..applicationName', function(value) { return appName });
-
-	//swap out entityNames
-	var nodes = jp.apply(dashboardJsonObj, '$..entityName', function(value) {
-		if(value == "{app_name}")
-			return appName
-		else
-			return value;
-	});
-
-	//HV: swap out all {app_name} for any text fields
-	var nodes = jp.apply(dashboardJsonObj, "$..text", function(value) {
-		if (value) {
-			log.debug(JSON.stringify(value)+appName);
-			return value.replace("{app_name}",appName);
-		}
-	});
-
-	//HV: swap out all {app_name} for any metricDisplayNameCustomFormat fields
-	var nodes = jp.apply(dashboardJsonObj, "$..metricDisplayNameCustomFormat", function(value) {
-		if (value) {
-			log.debug(JSON.stringify(value)+appName);
-			return value.replace("{app_name}",appName);
-		}
-	});
-
-	//change the dashboard name
-	dashboardJsonObj.name = appName+" "+dashboardName;
-
-	//swap out any deep URLs
-	var regex = /application=\d*/;
-	nodes = jp.apply(dashboardJsonObj, '$..drillDownUrl', function(value) {
-		if(value){
-			value = exports.updateServer(value);
-			return value.replace(regex,"application="+appID);
-		}
-		return value;
-	});
-	nodes = jp.apply(dashboardJsonObj, '$..imageURL', function(value) {
-		if(value){
-			value = exports.updateServer(value);
-			return value.replace(regex,"application="+appID);
-		}
-		return value;
-	});
-	return dashboardJsonObj;
-}
-
 exports.deploySampleDashboard = function(sampleId,destApp,callback){
 
 	var sample = exports.findSampleById(sampleId);
@@ -196,8 +193,7 @@ exports.deploySampleDashboard = function(sampleId,destApp,callback){
 		  if (err) throw err;
 
 		  var dashObj = JSON.parse(data);
-		  dashObj = exports.updateSampleDashboard(dashObj,sample.name,destApp.name,destApp.id);
-		  log.debug(JSON.stringify(dashObj));
+		  dashObj = exports.updateDashboard(dashObj,sample.name,destApp.name,destApp.id);
 		  restManager.postDashboard(dashObj,function(response){
 				callback(response);
 		  });
