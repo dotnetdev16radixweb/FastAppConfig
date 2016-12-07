@@ -14,6 +14,7 @@
 		{"id":12,"name":"Application - Sample 1 - OS ","path":"/samples/style_1_app_os_perf","hasHealthRules":false,"hasDashboard" : true,"description":"OS Metrics"},
 		{"id":13,"name":"Application - Sample 1 - Performance","path":"/samples/style_1_app_perf","hasHealthRules":false,"hasDashboard" : true,"description":"Application Performance"},
 		{"id":14,"name":"Overall Application Health","path":"/samples/overallapphealth","hasHealthRules":false,"hasDashboard" : true,"description":"Overall Application Health Dashboard"},
-		{"id":15,"name":"DotNet App Health","path":"/samples/dotnet_app_health","hasHealthRules":false,"hasDashboard" : true,"description":"DotNet Application Health"}
+		{"id":15,"name":"DotNet App Health","path":"/samples/dotnet_app_health","hasHealthRules":false,"hasDashboard" : true,"description":"DotNet Application Health"},
+		{"id":16,"name":"Banking Business Transaction Health","path":"/samples/banking_bt_health","hasHealthRules":false,"hasDashboard" : true,"description":"Top Banking Business Transactions Health Dashboard. Search for string {bt_name} and {tier_name}. Replace with specific top BT's for your banking application"}
 	]
 }
