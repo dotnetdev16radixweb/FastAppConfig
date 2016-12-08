@@ -10,11 +10,17 @@ router.post('/', function(req, res) {
 	var contains    = req.body[4];
 	
 	if(application.id == 0){
-		req.appConfigManager.postHealthRulesToAllApps(template.appid,overwrite == 'true',function(results){
-			res.send("Health Rules Copied Successfully");
+		req.appConfigManager.postHealthRulesToAllApps(template.appid,overwrite == 'true',function(err,results){
+			if(err){
+				res.status = 500;
+				res.send(err.statusMessage);
+			}else{
+				res.status = 200;
+				res.send("Health Rules Copied Successfully");
+			}
 		});
 	}else{
-		req.appConfigManager.postHealthRules(template.appid,application.id,overwrite == 'true',function(results){
+		req.appConfigManager.postHealthRules(template.appid,application.id,overwrite == 'true',function(err,results){
 			res.send("Health Rules Copied Successfully");
 		});
 	}

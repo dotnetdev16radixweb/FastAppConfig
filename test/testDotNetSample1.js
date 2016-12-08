@@ -6,7 +6,7 @@ var sinon      		= require('sinon');
 var dashBoardSample = require('./samples/DotNetSample1.json');
 var jp 				= require('jsonpath');
 
-var dashBoardName   = "App2 - Operations";
+var dashBoardName   = "Operations";
 var appName 		= "App2";
 
 describe("Functional Testing replacing the dashboard name", function() {
@@ -14,7 +14,7 @@ describe("Functional Testing replacing the dashboard name", function() {
 		
 		appConfigManager.updateDashboard(dashBoardSample,dashBoardName,appName,20);
 		
-		assert.equal(dashBoardSample.name,dashBoardName);
+		assert.equal(dashBoardSample.name,appName+" "+dashBoardName);
 		//log.debug(JSON.stringify(dashBoardSample,null, 4));
 
 		done();

@@ -14,6 +14,7 @@ var schedule = require('node-schedule');
 var childProcess = require("child_process");
 var fs = require('fs');
 var config = require("./config.json");
+var configManager = require("./src/ConfigManager.js");
 var moment = require("moment");
 
 var restManager = require('./src/RestManager.js');
@@ -43,6 +44,7 @@ var init = function(){
 app.use(function(req,res,next){
     req.restManager = restManager;
     req.appConfigManager = appConfigManager;
+    req.configManager = configManager;
     req.hrManager = hrManager;
     next();
 });

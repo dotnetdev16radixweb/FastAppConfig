@@ -48,13 +48,19 @@ var fetch = function(controller,url, parentCallBack){
 		});
 
 		response.on('error', function(err) {
-			log.error("Error : " + err);
+			log.debug("Rest Error : "+err);
+			parentCallBack(err,null);
 		})
 
 		response.on('end', function() {
 			//log.debug("url :"+url);
-			//log.debug("response :"+str);
-			parentCallBack(str);
+			//log.debug("status "+response.statusCode);
+			//log.dbug("response :"+str);
+			if(response.statusCode > 400){
+				parentCallBack(str,null);
+			}else{
+				parentCallBack(null,str);
+			}
 		});
 	}.bind(this)
 
@@ -127,17 +133,25 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 	if(postData.file){
 		needle.post(url, postData, options, function(err, resp) {
 			if (err) {
-				parentCallBack(err);
+				parentCallBack(err,null);
 			} else {
-				parentCallBack(resp);
+				if(resp.statusCode > 400){
+					parentCallBack(resp,null)
+				}else{
+					parentCallBack(null,resp);
+				}
 			}
 		});
 	}else{
 		needle.post(url, {body:postData}, options, function(err, resp) {
 			if (err) {
-				parentCallBack(err);
+				parentCallBack(err,null);
 			} else {
-				parentCallBack(resp);
+				if(resp.statusCode > 400){
+					parentCallBack(resp,null)
+				}else{
+					parentCallBack(null,resp);
+				}
 			}
 		});
 	}
@@ -150,7 +164,7 @@ var postJSON = function(controller,postUrl,postData,parentCallBack) {
 
 var postFile = function(controller,postUrl,postData,parentCallBack) {
 	
-	var filename = 'dash.json';
+	var filename = 'temp-dash.json';
 	fs.writeFileSync(filename, JSON.stringify(postData));
 	
 	var data = {
@@ -164,17 +178,31 @@ var postXml = function(controller,postUrl,postData,parentCallBack) {
 	post(controller,postUrl,postData,"text/xml",parentCallBack);
 }
 
+
+var makeFetch = function(controller,url,callback){
+	fetch(controller,url,function(err,response){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,JSON.parse(response));
+		}
+	});
+}
+
+
 exports.fetchDashboard = function(dashboardId,callback){
 	var url = "/controller/CustomDashboardImportExportServlet?dashboardId="+dashboardId;
-	fetch(config.controller,url,function(response){
-		callback(JSON.parse(response));
-	});
+	makeFetch(config.controller,url,callback);
 }
 
 exports.fetchHealthRules = function(appID, callback){
 	var url = "/controller/healthrules/"+appID;
-	fetch(config.controller,url,function(response){
-		callback(response);
+	fetch(config.controller,url,function(err,response){
+		if(err){
+			callback(err,null);
+		}else{
+			callback(null,response);
+		}
 	});
 }
 
@@ -193,23 +221,17 @@ exports.postDashboard = function(dashboard,callback){
 
 exports.getAppJson = function(callback) {
 	var url = "/controller/rest/applications?output=JSON";
-	fetch(config.controller,url,function(response){
-		callback(JSON.parse(response));
-	});
+	makeFetch(config.controller,url,callback);
 }
 
 exports.getTiersJson = function(app,callback) {
 	var url = "/controller/rest/applications/"+app+"/tiers?output=JSON";
-	fetch(config.controller,url,function(response){
-		callback(JSON.parse(response));
-	});
+	makeFetch(config.controller,url,callback);
 }
 
 exports.getNodesJson = function(app,tier,callback) {
 	var url = "/controller/rest/applications/"+app+"/tiers/"+tier+"/nodes?output=JSON";
-	fetch(config.controller,url,function(response){
-		callback(JSON.parse(response));
-	});
+	makeFetch(config.controller,url,callback);
 }
 
 

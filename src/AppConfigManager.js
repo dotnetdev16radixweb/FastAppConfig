@@ -16,8 +16,8 @@ buildMetricPath= function(appID,metricPath,startTime,endTime){
 }
 
 exports.postEvent = function(metric,trendDataRecord,callback){
-	restManager.postEvent(host,metric,trendDataRecord,function(response){
-		callback(response);
+	restManager.postEvent(host,metric,trendDataRecord,function(err,response){
+		callback(err,response);
 	});
 }
 
@@ -36,7 +36,6 @@ exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appI
 	//HV: swap out all {app_name} for any text fields
 	var nodes = jp.apply(dashboardJsonObj, "$..text", function(value) {
 		if (value) {
-			log.debug(JSON.stringify(value)+appName);
 			return value.replace("{app_name}",appName);
 		}
 	});
@@ -44,7 +43,6 @@ exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appI
 	//HV: swap out all {app_name} for any metricDisplayNameCustomFormat fields
 	var nodes = jp.apply(dashboardJsonObj, "$..metricDisplayNameCustomFormat", function(value) {
 		if (value) {
-			log.debug(JSON.stringify(value)+appName);
 			return value.replace("{app_name}",appName);
 		}
 	});
@@ -72,26 +70,26 @@ exports.updateDashboard= function(dashboardJsonObj, dashboardName, appName, appI
 }
 
 exports.fetchDashboard= function(dashboardId,callback){
-	restManager.fetchDashboard(dashboardId, function(response){
-		callback(response);
+	restManager.fetchDashboard(dashboardId, function(err,response){
+		callback(err,response);
 	})
 }
 
 exports.fetchApplications = function(callback){
-	restManager.getAppJson(function (result){
-		callback(result);
+	restManager.getAppJson(function (err,result){
+		callback(err,result);
 	});
 }
 
 exports.fetchTiers = function(appid,callback){
-	restManager.getTiersJson(appid,function (result){
-		callback(result);
+	restManager.getTiersJson(appid,function (err,result){
+		callback(err,result);
 	});
 }
 
 exports.fetchNodes = function(appid,tierid,callback){
-	restManager.getNodesJson(appid,tierid,function (result){
-		callback(result);
+	restManager.getNodesJson(appid,tierid,function (err,result){
+		callback(err,result);
 	});
 }
 
@@ -107,8 +105,8 @@ findTemplateById = function(id){
 
 exports.postHealthRules = function(srcAppID,destAppID,forceHealthRules,callback){
 	restManager.fetchHealthRules(srcAppID,function(rules){
-		restManager.postHealthRules(destAppID,rules,forceHealthRules,function(response){
-			callback(response);
+		restManager.postHealthRules(destAppID,rules,forceHealthRules,function(err,response){
+			callback(err,response);
 		});
 	});
 }
@@ -117,7 +115,7 @@ exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,callback){
 	restManager.fetchHealthRules(srcAppID,function(rules){
 		restManager.getAppJson(function(apps){
 			apps.forEach(function(app){
-				restManager.postHealthRules(app.id,rules,forceHealthRules,function(response){
+				restManager.postHealthRules(app.id,rules,forceHealthRules,function(err,response){
 					log.info(response);
 				});
 			});
@@ -127,12 +125,12 @@ exports.postHealthRulesToAllApps = function(srcAppID,forceHealthRules,callback){
 }
 
 exports.postDashBoard = function(dashboardId,destAppID,destAppName,destDashboardName,callback){
-	exports.fetchDashboard(dashboardId,function(customDash){
+	exports.fetchDashboard(dashboardId,function(err,customDash){
 
 		var newDashBoard = exports.updateDashboard(customDash,destDashboardName,destAppName,destAppID);
 
-		restManager.postDashboard(newDashBoard,function(response){
-			callback(response);
+		restManager.postDashboard(newDashBoard,function(err,response){
+			callback(err,response);
 		});
 	});
 }
@@ -141,13 +139,13 @@ exports.pushConfig = function(templateId, dashboardFlag, healthRuleFlag, forceHe
 	var template = findTemplateById(templateId);
 
 	if(healthRuleFlag){
-		postHealthRules(template.appid,destAppID,forceHealthRules,function(response){
-			callback(response);
+		postHealthRules(template.appid,destAppID,forceHealthRules,function(err,response){
+			callback(err,response);
 		});
 	}
 	if(dashboardFlag){
-		postDashBoard(parseInt(template.dashid),destAppID,destAppName,destDashboardName,function(response){
-			callback(response);
+		postDashBoard(parseInt(template.dashid),destAppID,destAppName,destDashboardName,function(err,response){
+			callback(err,response);
 		});
 	}
 }
@@ -166,8 +164,24 @@ exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,ca
 
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;
-		  restManager.postHealthRules(destAppID,data,forceHealthRules,function(response){
-				callback(response);
+		  restManager.postHealthRules(destAppID,data,forceHealthRules,function(err,response){
+				callback(err,response);
+		  });
+	});
+}
+
+exports.deploySampleDashboard = function(sampleId,destApp,callback){
+
+	var sample = exports.findSampleById(sampleId);
+	var url    = './public'+sample.path+"/dashboard.json";
+
+	fs.readFile(url, 'utf8', function (err, data) {
+		  if (err) throw err;
+
+		  var dashObj = JSON.parse(data);
+		  dashObj = exports.updateDashboard(dashObj,sample.name,destApp.name,destApp.id);
+		  restManager.postDashboard(dashObj,function(err,response){
+				callback(err,response);
 		  });
 	});
 }
@@ -184,18 +198,4 @@ exports.updateServer = function(url){
 	return url.replace("{server}",server);
 }
 
-exports.deploySampleDashboard = function(sampleId,destApp,callback){
 
-	var sample = exports.findSampleById(sampleId);
-	var url    = './public'+sample.path+"/dashboard.json";
-
-	fs.readFile(url, 'utf8', function (err, data) {
-		  if (err) throw err;
-
-		  var dashObj = JSON.parse(data);
-		  dashObj = exports.updateDashboard(dashObj,sample.name,destApp.name,destApp.id);
-		  restManager.postDashboard(dashObj,function(response){
-				callback(response);
-		  });
-	});
-}

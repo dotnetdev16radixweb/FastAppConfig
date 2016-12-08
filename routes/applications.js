@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 			"name": "<All Applications>"
 	};
 	
-	req.restManager.getAppJson(function(result){
+	req.restManager.getAppJson(function(err,result){
 		result.push(allApp);
 		res.json(result);
 	});

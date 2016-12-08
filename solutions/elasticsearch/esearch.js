@@ -65,16 +65,20 @@ var Package = function(config) {
   			         {element:'metric-name',regexs:[{regex:'{cluster}',value:cluster}]}];
   			
   			req.hrManager.updateNodeReference(sourceXMLAsString,mods,function(hrxml){
-  				log.debug(hrxml);
-  				req.restManager.postHealthRules(appid,hrxml,true,function(result){
-  					res.status = 200;
-  					return res.send("success");
+  				//log.debug(hrxml);
+  				req.restManager.postHealthRules(appid,hrxml,true,function(err,results){
+//  					console.log("error :"+err);
+//  					console.log("results :"+results.toString());
+  					if(err){
+  						res.status = 500;
+  						return res.send(err.statusMessage);
+  					}else{
+  						res.status = 200;
+  						return res.send("success");
+  					}
   				})
   			})	
   		});
-		res.status = 500;
-		return res.send("error");
-		
 	})
 
 	app.post('/'+context+'/postpackage-dash',function(req,res){
@@ -91,16 +95,19 @@ var Package = function(config) {
 				
 		fs.readFile('./solutions/elasticsearch/dash.json', 'utf-8', function (err, data) {
 			dashboardJsonObj = JSON.parse(data);
-			dashboardJsonObj = services.updateDashboard(dashboardJsonObj,dashboardName,hrname,appname,appid,tiername,tierid,nodename,cluster);
+			dashboardJsonObj = services.updateDashboard(req.configManager,dashboardJsonObj,dashboardName,hrname,appname,appid,tiername,tierid,nodename,cluster);
 			console.log(JSON.stringify(dashboardJsonObj,null,4));
-			req.restManager.postDashboard(dashboardJsonObj,function(result){
-				res.status = 200;
-				return res.send("success");
+			req.restManager.postDashboard(dashboardJsonObj,function(err,result){
+				if(err){
+					res.status = 500;
+					return res.send(err.statusMessage);
+				}else{
+					res.status = 200;
+					return res.send("success");
+				}
 			})
 		});
 		
-		res.status = 500;
-		return res.send("error");
 	})
 
 	

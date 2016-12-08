@@ -3,7 +3,7 @@ var router = express.Router();
 var config = require('../config.json');
 
 router.get('/:appid/:tierid', function(req, res) {
-	req.restManager.getNodesJson(req.params.appid,req.params.tierid,function(result){
+	req.restManager.getNodesJson(req.params.appid,req.params.tierid,function(err,result){
 		res.json(result);
 	});
 });

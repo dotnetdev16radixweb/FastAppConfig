@@ -13,6 +13,10 @@ describe("ElasticSearch functional Test", function() {
 		fs.readFile('./solutions/elasticsearch/dash.json',function (err, data) {
 			dashboardJsonObj = JSON.parse(data);
 			dashboardJsonObj = service.updateDashboard(dashboardJsonObj,"4229_NextGen_PRD - ES","4229_NextGen_PRD",15,"Elasticsearch",16,"node","ES_AccentureOnline");
+			
+			assert.equal(dashboardJsonObj.name,"4229_NextGen_PRD - ES");
+			
+			
 			//console.log(JSON.stringify(dashboardJsonObj,null,4));
 			done();
 		});
