@@ -1,118 +1,316 @@
-<health-rules controller-version="004-001-006-000">
-    <health-rule>
-        <name>{healthrulename}</name>
-        <type>OTHER</type>
-        <description/>
-        <enabled>true</enabled>
-        <is-default>false</is-default>
-        <always-enabled>true</always-enabled>
-        <duration-min>30</duration-min>
-        <wait-time-min>30</wait-time-min>
-        <affected-entities-match-criteria>
-            <other-affected-entities-match-criteria>
-                <entity>
-                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
-                    <application-component-node>{node}</application-component-node>
-                </entity>
-            </other-affected-entities-match-criteria>
-        </affected-entities-match-criteria>
-        <critical-execution-criteria>
-            <entity-aggregation-scope>
-                <type>ANY</type>
-                <value>0</value>
-            </entity-aggregation-scope>
-            <policy-condition>
-                <type>boolean</type>
-                <operator>AND</operator>
-                <condition1>
+<health-rules>
+        <health-rule>
+            <name>Elasticsearch Nodes | Drive D: disk space low {hrname}</name>
+            <type>INFRASTRUCTURE</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>true</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>10</duration-min>
+            <wait-time-min>60</wait-time-min>
+            <affected-entities-match-criteria>
+                <affected-infra-match-criteria>
+                    <type>NODES</type>
+                    <node-match-criteria>
+                        <type>NODES_OF_SPECIFC_TIERS</type>
+                        <node-meta-info-match-criteria/>
+                        <vm-sys-properties/>
+                        <env-properties/>
+                    </node-match-criteria>
+                    <components>
+                        <application-component>{tier}</application-component>
+                    </components>
+                </affected-infra-match-criteria>
+            </affected-entities-match-criteria>
+            <critical-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
                     <type>leaf</type>
                     <display-name>condition 1</display-name>
                     <condition-value-type>ABSOLUTE</condition-value-type>
-                    <condition-value>1.0</condition-value>
+                    <condition-value>10.0</condition-value>
                     <operator>LESS_THAN</operator>
-                    <condition-expression/>
+                    <condition-expression>({y}/({x}+{y}))*100</condition-expression>
                     <use-active-baseline>false</use-active-baseline>
                     <metric-expression>
-                        <type>leaf</type>
-                        <function-type>VALUE</function-type>
-                        <value>0</value>
-                        <is-literal-expression>false</is-literal-expression>
-                        <display-name>null</display-name>
-                        <metric-definition>
-                            <type>ABSOLUTE_METRIC_SCOPE</type>
-                            <logical-metric-name>Application Infrastructure Performance|Elasticsearch|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
-                            <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
-                            <entity>
-                                <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
-                                <application-component-node>{node}</application-component-node>
-                            </entity>
-                        </metric-definition>
+                        <type>boolean</type>
+                        <operator>MULTIPLY</operator>
+                        <expression1>
+                            <type>boolean</type>
+                            <operator>DIVIDE</operator>
+                            <expression1>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>y</display-name>
+                                <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Available</logical-metric-name>
+                                </metric-definition>
+                            </expression1>
+                            <expression2>
+                                <type>boolean</type>
+                                <operator>PLUS</operator>
+                                <expression1>
+                                    <type>leaf</type>
+                                    <function-type>VALUE</function-type>
+                                    <value>0</value>
+                                    <is-literal-expression>false</is-literal-expression>
+                                    <display-name>x</display-name>
+                                    <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Used</logical-metric-name>
+                                    </metric-definition>
+                                </expression1>
+                                <expression2>
+                                    <type>leaf</type>
+                                    <function-type>VALUE</function-type>
+                                    <value>0</value>
+                                    <is-literal-expression>false</is-literal-expression>
+                                    <display-name>y</display-name>
+                                    <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Available</logical-metric-name>
+                                    </metric-definition>
+                                </expression2>
+                            </expression2>
+                        </expression1>
+                        <expression2>
+                            <type>leaf</type>
+                            <value>100</value>
+                            <is-literal-expression>true</is-literal-expression>
+                        </expression2>
                     </metric-expression>
-                </condition1>
-                <condition2>
-                    <type>leaf</type>
-                    <display-name>condition 2</display-name>
-                    <condition-value-type>ABSOLUTE</condition-value-type>
-                    <condition-value>0.0</condition-value>
-                    <operator>GREATER_THAN</operator>
-                    <condition-expression/>
-                    <use-active-baseline>false</use-active-baseline>
-                    <metric-expression>
-                        <type>leaf</type>
-                        <function-type>VALUE</function-type>
-                        <value>0</value>
-                        <is-literal-expression>false</is-literal-expression>
-                        <display-name>null</display-name>
-                        <metric-definition>
-                            <type>ABSOLUTE_METRIC_SCOPE</type>
-                            <logical-metric-name>Application Infrastructure Performance|Elasticsearch|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
-                            <metric-name>Agent|Machine|Availability</metric-name>
-                            <entity>
-                                <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
-                                <application-component-node>{node}</application-component-node>
-                            </entity>
-                        </metric-definition>
-                    </metric-expression>
-                </condition2>
-            </policy-condition>
-        </critical-execution-criteria>
-        <warning-execution-criteria>
-            <entity-aggregation-scope>
-                <type>ANY</type>
-                <value>0</value>
-            </entity-aggregation-scope>
-            <policy-condition>
-                <type>boolean</type>
-                <operator>AND</operator>
-                <condition1>
+                </policy-condition>
+            </critical-execution-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
                     <type>leaf</type>
                     <display-name>condition 1</display-name>
                     <condition-value-type>ABSOLUTE</condition-value-type>
-                    <condition-value>2.0</condition-value>
+                    <condition-value>25.0</condition-value>
                     <operator>LESS_THAN</operator>
-                    <condition-expression/>
+                    <condition-expression>({y}/({x}+{y}))*100</condition-expression>
                     <use-active-baseline>false</use-active-baseline>
                     <metric-expression>
-                        <type>leaf</type>
-                        <function-type>VALUE</function-type>
-                        <value>0</value>
-                        <is-literal-expression>false</is-literal-expression>
-                        <display-name>null</display-name>
-                        <metric-definition>
-                            <type>ABSOLUTE_METRIC_SCOPE</type>
-                            <logical-metric-name>Application Infrastructure Performance|Elasticsearch|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
-                            <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
-                            <entity>
-                                <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
-                                <application-component-node>{node}</application-component-node>
-                            </entity>
-                        </metric-definition>
+                        <type>boolean</type>
+                        <operator>MULTIPLY</operator>
+                        <expression1>
+                            <type>boolean</type>
+                            <operator>DIVIDE</operator>
+                            <expression1>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>y</display-name>
+                                <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Available</logical-metric-name>
+                                </metric-definition>
+                            </expression1>
+                            <expression2>
+                                <type>boolean</type>
+                                <operator>PLUS</operator>
+                                <expression1>
+                                    <type>leaf</type>
+                                    <function-type>VALUE</function-type>
+                                    <value>0</value>
+                                    <is-literal-expression>false</is-literal-expression>
+                                    <display-name>x</display-name>
+                                    <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Used</logical-metric-name>
+                                    </metric-definition>
+                                </expression1>
+                                <expression2>
+                                    <type>leaf</type>
+                                    <function-type>VALUE</function-type>
+                                    <value>0</value>
+                                    <is-literal-expression>false</is-literal-expression>
+                                    <display-name>y</display-name>
+                                    <metric-definition>
+                                    <type>LOGICAL_METRIC</type>
+                                    <logical-metric-name>Hardware Resources|Disks|d-|Space Available</logical-metric-name>
+                                    </metric-definition>
+                                </expression2>
+                            </expression2>
+                        </expression1>
+                        <expression2>
+                            <type>leaf</type>
+                            <value>100</value>
+                            <is-literal-expression>true</is-literal-expression>
+                        </expression2>
                     </metric-expression>
-                </condition1>
-                <condition2>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Cluster status YELLOW {hrname}</name>
+            <type>OTHER</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>60</duration-min>
+            <wait-time-min>60</wait-time-min>
+            <affected-entities-match-criteria>
+                <other-affected-entities-match-criteria>
+                    <entity>
+                        <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                        <application-component-node>{node}</application-component-node>
+                    </entity>
+                </other-affected-entities-match-criteria>
+            </affected-entities-match-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
                     <type>boolean</type>
                     <operator>AND</operator>
                     <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>2.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>VALUE</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition1>
+                    <condition2>
+                        <type>boolean</type>
+                        <operator>AND</operator>
+                        <condition1>
+                            <type>leaf</type>
+                            <display-name>condition 2</display-name>
+                            <condition-value-type>ABSOLUTE</condition-value-type>
+                            <condition-value>0.0</condition-value>
+                            <operator>GREATER_THAN</operator>
+                            <condition-expression/>
+                            <use-active-baseline>false</use-active-baseline>
+                            <metric-expression>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>null</display-name>
+                                <metric-definition>
+                                    <type>ABSOLUTE_METRIC_SCOPE</type>
+                                    <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                    <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                    <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                    </entity>
+                                </metric-definition>
+                            </metric-expression>
+                        </condition1>
+                        <condition2>
+                            <type>leaf</type>
+                            <display-name>condition 3</display-name>
+                            <condition-value-type>ABSOLUTE</condition-value-type>
+                            <condition-value>0.0</condition-value>
+                            <operator>GREATER_THAN</operator>
+                            <condition-expression/>
+                            <use-active-baseline>false</use-active-baseline>
+                            <metric-expression>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>null</display-name>
+                                <metric-definition>
+                                    <type>ABSOLUTE_METRIC_SCOPE</type>
+                                    <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                    <metric-name>Agent|Machine|Availability</metric-name>
+                                    <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                    </entity>
+                                </metric-definition>
+                            </metric-expression>
+                        </condition2>
+                    </condition2>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Cluster status RED {hrname}</name>
+            <type>OTHER</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>1</duration-min>
+            <wait-time-min>15</wait-time-min>
+            <affected-entities-match-criteria>
+                <other-affected-entities-match-criteria>
+                    <entity>
+                        <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                        <application-component-node>{node}</application-component-node>
+                    </entity>
+                </other-affected-entities-match-criteria>
+            </affected-entities-match-criteria>
+            <critical-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>boolean</type>
+                    <operator>AND</operator>
+                    <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>1.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>VALUE</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition1>
+                    <condition2>
                         <type>leaf</type>
                         <display-name>condition 2</display-name>
                         <condition-value-type>ABSOLUTE</condition-value-type>
@@ -128,8 +326,217 @@
                             <display-name>null</display-name>
                             <metric-definition>
                                 <type>ABSOLUTE_METRIC_SCOPE</type>
-                                <logical-metric-name>Application Infrastructure Performance|Elasticsearch|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
                                 <metric-name>Agent|Machine|Availability</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition2>
+                </policy-condition>
+            </critical-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Primary Server {node} | Count = 0 | Machine Agent Down {hrname}</name>
+            <type>OTHER</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>2</duration-min>
+            <wait-time-min>30</wait-time-min>
+            <affected-entities-match-criteria>
+                <other-affected-entities-match-criteria>
+                    <entity>
+                        <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                        <application-component-node>{node}</application-component-node>
+                    </entity>
+                </other-affected-entities-match-criteria>
+            </affected-entities-match-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>boolean</type>
+                    <operator>AND</operator>
+                    <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>1.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>COUNT</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition1>
+                    <condition2>
+                        <type>leaf</type>
+                        <display-name>condition 2</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>1.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression/>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>COUNT</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                <metric-name>Agent|Machine|Availability</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition2>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Primary Server {node} | Count = 0 | Machine Agent Up {hrname}</name>
+            <type>OTHER</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>2</duration-min>
+            <wait-time-min>30</wait-time-min>
+            <affected-entities-match-criteria>
+                <other-affected-entities-match-criteria>
+                    <entity>
+                        <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                        <application-component-node>{node}</application-component-node>
+                    </entity>
+                </other-affected-entities-match-criteria>
+            </affected-entities-match-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>boolean</type>
+                    <operator>AND</operator>
+                    <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>1.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>COUNT</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition1>
+                    <condition2>
+                        <type>leaf</type>
+                        <display-name>condition 2</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>0.0</condition-value>
+                        <operator>GREATER_THAN</operator>
+                        <condition-expression/>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>VALUE</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                <metric-name>Agent|Machine|Availability</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition2>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Cluster status {hrname}</name>
+            <type>OTHER</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>1</duration-min>
+            <wait-time-min>1</wait-time-min>
+            <affected-entities-match-criteria>
+                <other-affected-entities-match-criteria>
+                    <entity>
+                        <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                        <application-component-node>{node}</application-component-node>
+                    </entity>
+                </other-affected-entities-match-criteria>
+            </affected-entities-match-criteria>
+            <critical-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>boolean</type>
+                    <operator>AND</operator>
+                    <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>1.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>VALUE</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
                                 <entity>
                                     <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
                                     <application-component-node>{node}</application-component-node>
@@ -153,8 +560,8 @@
                             <display-name>null</display-name>
                             <metric-definition>
                                 <type>ABSOLUTE_METRIC_SCOPE</type>
-                                <logical-metric-name>Application Infrastructure Performance|Elasticsearch|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
-                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                <metric-name>Agent|Machine|Availability</metric-name>
                                 <entity>
                                     <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
                                     <application-component-node>{node}</application-component-node>
@@ -162,8 +569,137 @@
                             </metric-definition>
                         </metric-expression>
                     </condition2>
-                </condition2>
-            </policy-condition>
-        </warning-execution-criteria>
-    </health-rule>
-</health-rules>
+                </policy-condition>
+            </critical-execution-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>boolean</type>
+                    <operator>AND</operator>
+                    <condition1>
+                        <type>leaf</type>
+                        <display-name>condition 1</display-name>
+                        <condition-value-type>ABSOLUTE</condition-value-type>
+                        <condition-value>2.0</condition-value>
+                        <operator>LESS_THAN</operator>
+                        <condition-expression>({availSpace}/({usedSpace}+{availSpace}))*100</condition-expression>
+                        <use-active-baseline>false</use-active-baseline>
+                        <metric-expression>
+                            <type>leaf</type>
+                            <function-type>VALUE</function-type>
+                            <value>0</value>
+                            <is-literal-expression>false</is-literal-expression>
+                            <display-name>null</display-name>
+                            <metric-definition>
+                                <type>ABSOLUTE_METRIC_SCOPE</type>
+                                <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                </entity>
+                            </metric-definition>
+                        </metric-expression>
+                    </condition1>
+                    <condition2>
+                        <type>boolean</type>
+                        <operator>AND</operator>
+                        <condition1>
+                            <type>leaf</type>
+                            <display-name>condition 2</display-name>
+                            <condition-value-type>ABSOLUTE</condition-value-type>
+                            <condition-value>0.0</condition-value>
+                            <operator>GREATER_THAN</operator>
+                            <condition-expression/>
+                            <use-active-baseline>false</use-active-baseline>
+                            <metric-expression>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>null</display-name>
+                                <metric-definition>
+                                    <type>ABSOLUTE_METRIC_SCOPE</type>
+                                    <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|status</logical-metric-name>
+                                    <metric-name>Custom Metrics|Elastic Search|{cluster}|status</metric-name>
+                                    <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                    </entity>
+                                </metric-definition>
+                            </metric-expression>
+                        </condition1>
+                        <condition2>
+                            <type>leaf</type>
+                            <display-name>condition 3</display-name>
+                            <condition-value-type>ABSOLUTE</condition-value-type>
+                            <condition-value>0.0</condition-value>
+                            <operator>GREATER_THAN</operator>
+                            <condition-expression/>
+                            <use-active-baseline>false</use-active-baseline>
+                            <metric-expression>
+                                <type>leaf</type>
+                                <function-type>VALUE</function-type>
+                                <value>0</value>
+                                <is-literal-expression>false</is-literal-expression>
+                                <display-name>null</display-name>
+                                <metric-definition>
+                                    <type>ABSOLUTE_METRIC_SCOPE</type>
+                                    <logical-metric-name>Application Infrastructure Performance|Machine Agent|Individual Nodes|{node}|Agent|Machine|Availability</logical-metric-name>
+                                    <metric-name>Agent|Machine|Availability</metric-name>
+                                    <entity>
+                                    <entity-type>APPLICATION_COMPONENT_NODE</entity-type>
+                                    <application-component-node>{node}</application-component-node>
+                                    </entity>
+                                </metric-definition>
+                            </metric-expression>
+                        </condition2>
+                    </condition2>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+        <health-rule>
+            <name>Elasticsearch Unassigned shards {hrname}</name>
+            <type>BUSINESS_TRANSACTION</type>
+            <description/>
+            <enabled>true</enabled>
+            <is-default>false</is-default>
+            <always-enabled>true</always-enabled>
+            <duration-min>10</duration-min>
+            <wait-time-min>60</wait-time-min>
+            <affected-entities-match-criteria>
+                <affected-bt-match-criteria>
+                    <type>ALL</type>
+                </affected-bt-match-criteria>
+            </affected-entities-match-criteria>
+            <warning-execution-criteria>
+                <entity-aggregation-scope>
+                    <type>ANY</type>
+                    <value>0</value>
+                </entity-aggregation-scope>
+                <policy-condition>
+                    <type>leaf</type>
+                    <display-name>condition 1</display-name>
+                    <condition-value-type>ABSOLUTE</condition-value-type>
+                    <condition-value>0.0</condition-value>
+                    <operator>GREATER_THAN</operator>
+                    <condition-expression/>
+                    <use-active-baseline>false</use-active-baseline>
+                    <metric-expression>
+                        <type>leaf</type>
+                        <function-type>VALUE</function-type>
+                        <value>0</value>
+                        <is-literal-expression>false</is-literal-expression>
+                        <display-name>null</display-name>
+                        <metric-definition>
+                            <type>LOGICAL_METRIC</type>
+                            <logical-metric-name>Application Infrastructure Performance|{tier}|Individual Nodes|{node}|Custom Metrics|Elastic Search|{cluster}|unassigned shards</logical-metric-name>
+                        </metric-definition>
+                    </metric-expression>
+                </policy-condition>
+            </warning-execution-criteria>
+        </health-rule>
+    </health-rules>

@@ -2,13 +2,9 @@ angular.module('ElasticSearch.controllers', ['ElasticSearch.services']).
 controller('ElasticSearchController', function($scope,$window,esearch) {
     
 	$scope.selectedNode = null;
-	$scope.healthrulename = "ES Cluster status";
+	$scope.healthrulename = '';
 	
 	esearch.getApps($scope);
-	
-	$scope.updateDashName = function(scope){
-		scope.dashName = scope.selectedApp.name + ' - OPs';
-	};
 	
 	$scope.deployHR = function(){
 		esearch.deployHR($scope.selectedApp,$scope.selectedTier,$scope.selectedNode,$scope.clustername,$scope.healthrulename);

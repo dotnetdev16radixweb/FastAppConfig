@@ -55,14 +55,15 @@ var Package = function(config) {
 		var cluster  	= req.body[5];
 		var hrname 		= req.body[6];
 		
+		if(!hrname){
+			hrname = '';
+		}
+
+		
 		fs.readFile('./solutions/elasticsearch/hr.xml', 'utf-8', function (err, data) {
   			sourceXMLAsString = data;
   			
-  			sourceXMLAsString = sourceXMLAsString.replace("{healthrulename}",hrname);
-  			
-  			var mods = [{element:'application-component-node',regexs:[{regex:'{node}',value:nodename}]},
-  			         {element:'logical-metric-name',regexs:[{regex:'{node}',value:nodename},{regex:'{cluster}',value:cluster}]},
-  			         {element:'metric-name',regexs:[{regex:'{cluster}',value:cluster}]}];
+  			var mods = services.getMods(cluster,tiername,nodename,hrname);
   			
   			req.hrManager.updateNodeReference(sourceXMLAsString,mods,function(hrxml){
   				//log.debug(hrxml);
@@ -91,11 +92,15 @@ var Package = function(config) {
 		var hrname 		= req.body[6];
 		var dashboardName = req.body[7];
 		
+		if(!hrname){
+			hrname = '';
+		}
+		
 		console.log(appid+" "+appname+" "+tierid+" "+tiername+" "+nodename+" "+cluster+" "+hrname+" "+dashboardName);
 				
 		fs.readFile('./solutions/elasticsearch/dash.json', 'utf-8', function (err, data) {
 			dashboardJsonObj = JSON.parse(data);
-			dashboardJsonObj = services.updateDashboard(req.configManager,dashboardJsonObj,dashboardName,hrname,appname,appid,tiername,tierid,nodename,cluster);
+			dashboardJsonObj = services.updateDashboard(req.configManager,dashboardJsonObj,dashboardName,hrname,appname,appid,tiername,tierid,nodename,hrname,cluster);
 			console.log(JSON.stringify(dashboardJsonObj,null,4));
 			req.restManager.postDashboard(dashboardJsonObj,function(err,result){
 				if(err){

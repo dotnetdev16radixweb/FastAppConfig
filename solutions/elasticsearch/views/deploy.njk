@@ -37,13 +37,17 @@
 				    <label for="nodeselection">Enter Cluster Name </label>
 				    <input type="text" size="50" ng-model="$parent.clustername"/>
 				    <p class="help-block">
-				    	The cluster name for the custom metric e.g. Application Infrastructure Performance|Elasticsearch|Custom Metrics|Elastic Search|<B>ES_AccentureOnline</B>|number of nodes
+				    	The cluster name for the custom metric e.g. Application Infrastructure Performance|Elasticsearch|Custom Metrics|Elastic Search|<B>Cluster</B>|number of nodes
 				    </p>
 				  </div>
 				  <div ng-if="selectedNode" class="form-group">
-				  	<label for="healthrulename">Enter Health Rule Name </label>
-			  		<input type="text" size="50" ng-model="$parent.healthrulename"/>
+				  	<label for="healthrulename">Append Health Rule Label</label>
+				  	<input type="text" size="50" ng-model="$parent.healthrulename"/>
 	  				<button id="copyHRBtn" class="btn btn-primary text-center" ng-click="deployHR();">Deploy Health Rules</button>
+	  				<p class="help-block">
+				    	The Label will be appended to the following rules which will automatically be created. Elasticsearch Cluster status, Elasticsearch Unassigned shards,Elasticsearch Primary Server,Elasticsearch Cluster status RED, Elasticsearch Cluster status YELLOW, Elasticsearch Nodes | Drive D: disk space low. e.g.
+				    	If you enter 'New' for the label then we will create the following Health Rule 'Elasticsearch Cluster status New'. The label can be left blank
+				    </p>
 			  	</div>
 			  	<div ng-if="selectedNode" class="form-group">
 			  		<label for="dashboardname">Enter Dashboard Name </label>

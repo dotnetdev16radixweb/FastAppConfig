@@ -28,7 +28,6 @@ describe("Match Names in Health Rules", function() {
   				contains = "Appp Health";
 	  			
 	  			hrManager.matchNames(contains,sourceXMLAsString,destXMLAsString,function(response){
-	  				//log.debug(response);
 	  				done();
 	  			}); 
   	  		});
@@ -36,21 +35,3 @@ describe("Match Names in Health Rules", function() {
     });
 });
 
-
-describe("Test Node Reference", function() {
-	it('Test Node Reference', function (done) {
-		fs.readFile('./solutions/elasticsearch/hr.xml', 'utf-8', function (err, data) {
-  			sourceXMLAsString = data;
-  			
-  			var mods = [{element:'application-component-node',regexs:[{regex:'{node}',value:'V1000'}]},
-  			         {element:'logical-metric-name',regexs:[{regex:'{node}',value:'V1000'},{regex:'{cluster}',value:'ES Cluster'}]},
-  			         {element:'metric-name',regexs:[{regex:'{cluster}',value:'ES Cluster'}]}];
-  			
-  			hrManager.updateNodeReference(sourceXMLAsString,mods,function(results){
-  				assert.isTrue(results.indexOf("{node}") < 0);
-  				assert.isTrue(results.indexOf("{cluster}") < 0);
-  				done();
-  			})	
-  		});
-    });
-});

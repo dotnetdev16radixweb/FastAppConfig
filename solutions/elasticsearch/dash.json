@@ -2316,7 +2316,7 @@
             "healthRule": {
                 "applicationName": "{app_name}",
                 "entityType": "POLICY",
-                "entityName": "{hrname}",
+                "entityName": "Elasticsearch Cluster status {hrname}",
                 "scopingEntityType": null,
                 "scopingEntityName": null,
                 "subtype": null
