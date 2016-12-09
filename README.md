@@ -17,13 +17,13 @@ http://www.hostingadvice.com/how-to/install-nodejs-ubuntu-14-04/#ubuntu-package-
 3. sudo ln -s /usr/bin/nodejs /usr/bin/node
 4. sudo npm install bower -g
 
-Switch to node version 0.10.34 
+Switch to node version 0.10.34
 (If you need to switch node.js versions follow this : https://github.com/creationix/nvm)
 
 1. curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
 2. Logout and log back in
 2. Check if it installed >command -v nvm should output nvm
-3. nvm install 0.10.34 
+3. nvm install 0.10.34
 
 ### Installing on Mac
 Download Node 0.10.34 from
@@ -38,7 +38,7 @@ http://www.thinkingmedia.ca/2015/07/how-to-install-nodejs-bower-and-grunt-on-win
 
 ####Installation
 
-1. Clone from repository : 
+1. Clone from repository :
 >git clone https://github.com/Appdynamics/FastAppConfig.git
 
 2. Change into the directory
@@ -50,7 +50,7 @@ http://www.thinkingmedia.ca/2015/07/how-to-install-nodejs-bower-and-grunt-on-win
 4. Download npm dependencies
 > npm install
 
-5. Configure the app. 
+5. Configure the app.
 Create a config.json file in the root directory with the following :
 
 <pre>
@@ -70,7 +70,7 @@ restuser is the username @ the account <br/>
 https is a flag to set if you are using https to reference your controller.<br/>
 appid is the application id<br/>
 dashid is the id of the dashboard<br/>
-templates are entries that point to your template application on your controller.<br/> 
+templates are entries that point to your template application on your controller.<br/>
 
 If you are running your controller with a different port e.g. 8090 then you need to add the port element e.g.
 
@@ -104,7 +104,7 @@ You can then select a sample dashboard to deploy. You will select the destinatio
 #### Steps to sanitize a Dashboard Sample : <br/>
 <ul>
 	<li>Change any reference to your Application Name element to {app_name}</li>
-	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li> 
+	<li>Change any deep links, replace https://client.saas.appdynamics.com/controller.... to {server}/controller....</li>
 </ul>
 
 
@@ -132,17 +132,15 @@ When you copy the Dashboard, the template dashboard will be downloaded and modif
 
 ---
 #### Scenario : Copy Health Rules <br/>
-You would create or use an existing application as your template on your controller. In this template application configure your health rules the way you want. These rules would then be copied to the target application that you select in Step 2. 
+You would create or use an existing application as your template on your controller. In this template application configure your health rules the way you want. These rules would then be copied to the target application that you select in Step 2.
 <p/>
 #### Scenario : Copy Dashboard <br/>
-You would create a dashboard and use this as a template. If you have status widgets tied to health rules, then make sure that these health rules are also copied to the target application. When you are ready to the copy the dashboard to the target application, this app downloads the 
-dashboard and update any references e.g. Health Rules and deep links, and updates it to the target application. 
+You would create a dashboard and use this as a template. If you have status widgets tied to health rules, then make sure that these health rules are also copied to the target application. When you are ready to the copy the dashboard to the target application, this app downloads the
+dashboard and update any references e.g. Health Rules and deep links, and updates it to the target application.
 <p/>
 #### Scenario : Copy Health Rules to All Applications <br/>
 You can select a template and select the "All Applications" option in the target application from the drop down selection. This would copy
-all the health rules from the template application to all other applications on the Controller. 
+all the health rules from the template application to all other applications on the Controller.
 If you want to push just 1 health rule change, then make sure that only 1 health rule exist in the template application.
 
-
-
-
+####
