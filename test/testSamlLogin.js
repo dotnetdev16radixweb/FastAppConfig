@@ -8,8 +8,9 @@ var restManager   		= require("../src/RestManager.js");
 
 describe("Test SAML Login", function() {
 	it('Get Applications', function (done) {
-//		restManager.getAppJson(function (data){
-//			log.debug(data);
+//		restManager.getAppJson(function (err,data){
+//			console.log(data);
+//			done();
 //		});
 		done();
     });

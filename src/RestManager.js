@@ -1,7 +1,9 @@
 var async = require("async");
 var log4js = require('log4js');
 var log = log4js.getLogger("RestManager");
+//var https = require("http-debug").https;
 var https = require("https");
+//var http = require("http-debug").http;
 var http = require("http");
 var querystring = require('querystring');
 var request = require("request");
@@ -11,10 +13,10 @@ var fs = require('fs');
 var HttpsProxyAgent = require('https-proxy-agent');
 var HttpProxyAgent  = require('http-proxy-agent');
 
-http.globalAgent.maxSockets = 20;
 var configManager = require("./ConfigManager");
 var config = configManager.getConfig();
 var proxy = config.proxy;
+var saml  = config.saml;
 
 var weekDuration = parseInt(config.trending_use_number_of_weeks) * (7*24*60);
 var minDuration = parseInt(config.trending_use_number_of_mins);
@@ -24,6 +26,22 @@ var errorCodeSnapshotsDuration = config.error_code_fetch_snapshots;
 var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+http.debug = 2;
+http.globalAgent.maxSockets = 20;
+minErrorCode = 400;
+
+
+var addproxy = function(options){
+	if(config.https && proxy){
+		var agent = new HttpsProxyAgent(proxy)
+		options.agent = agent;
+	}
+	if(!config.https && proxy){
+		var agent = new HttpProxyAgent(proxy)
+		options.agent = agent;
+	}
+}
 
 
 var fetch = function(controller,url, parentCallBack){
@@ -39,24 +57,20 @@ var fetch = function(controller,url, parentCallBack){
 			"Authorization" : auth,
 		}
 	};
-
-    //log.debug("fetch options :"+JSON.stringify(options));
 	
+	addproxy(options);
+
 	var callback = function(response) {
 		response.on('data', function(chunk) {
 			str += chunk;
 		});
 
 		response.on('error', function(err) {
-			log.debug("Rest Error : "+err);
 			parentCallBack(err,null);
 		})
 
 		response.on('end', function() {
-			//log.debug("url :"+url);
-			//log.debug("status "+response.statusCode);
-			//log.dbug("response :"+str);
-			if(response.statusCode > 400){
+			if(response.statusCode >= minErrorCode){
 				parentCallBack(str,null);
 			}else{
 				parentCallBack(null,str);
@@ -65,19 +79,78 @@ var fetch = function(controller,url, parentCallBack){
 	}.bind(this)
 
 	if(config.https){
-		if(proxy){
-			var agent = new HttpsProxyAgent(proxy)
-			options.agent = agent;
-		}
-		var req = https.request(options, callback).end();
+		var req = executeRequest(controller,https,options,callback);
 	}else{
-		if(proxy){
-			var agent = new HttpProxyAgent(proxy)
-			options.agent = agent;
-		}
-		var req = http.request(options, callback).end();
+		var req = executeRequest(controller,http,options,callback);
 	}
 }
+
+var fetchJSessionID = function(controller,parentCallBack){
+	var str = "";
+	
+	var options = {
+		host : controller,
+		port : getPort(),
+		method : "GET",
+		path : "/controller/auth?action=login",
+		rejectUnauthorized: false,
+		headers : {
+			"Authorization" : auth,
+		}
+	};
+	
+	addproxy(options);
+
+	var callback = function(response) {
+		response.on('data', function(chunk) {
+			str += chunk;
+		});
+
+		response.on('error', function(err) {
+			parentCallBack(err,null);
+		})
+
+		response.on('end', function() {
+			if(response.statusCode >= minErrorCode){
+				parentCallBack(response,null);
+			}else{
+				parentCallBack(null,response);
+			}
+		});
+	}.bind(this);
+
+	if(config.https){
+		var req = https.request(options,callback).end();
+	}else{
+		var req = http.request(options,callback).end();
+	}
+}
+
+var parseCookies  = function (response) {
+    var rc = response.headers['set-cookie'];
+    var jsessionid = null;
+    rc.forEach(function( parts ) {
+    	parts.split(";").forEach(function(cookieStr){
+    		if (cookieStr.startsWith("JSESSIONID")){
+    			jsessionid = cookieStr;
+    		}
+    	});
+    });
+    return jsessionid;
+}
+
+var executeRequest = function(controller,protocol,options,callback){
+	if(saml){
+		fetchJSessionID(controller,function(err,response){
+			var jsessionId = parseCookies(response);
+			options.headers = {"Cookie":jsessionId}
+			return protocol.request(options, callback).end();
+		})
+	}else{
+		return protocol.request(options, callback).end();
+	}
+}
+
 
 var getProtocol = function(){
 	var url;
@@ -125,37 +198,29 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 		  multipart : true,
 		  rejectUnauthorized: false,
 		  headers:{
-			  'Content-Type': "multipart/form-data'",
+			  'Content-Type': 'multipart/form-data',
 			  "Authorization" : auth
 		  }
 	};
 
-	if(postData.file){
-		needle.post(url, postData, options, function(err, resp) {
-			if (err) {
-				parentCallBack(err,null);
-			} else {
-				if(resp.statusCode > 400){
-					parentCallBack(resp,null)
-				}else{
-					parentCallBack(null,resp);
-				}
-			}
-		});
-	}else{
-		needle.post(url, {body:postData}, options, function(err, resp) {
-			if (err) {
-				parentCallBack(err,null);
-			} else {
-				if(resp.statusCode > 400){
-					parentCallBack(resp,null)
-				}else{
-					parentCallBack(null,resp);
-				}
-			}
-		});
+	if(!postData.file){
+		postData = {body:postData};
 	}
-	
+	needle.post(url, postData, options, function(err, resp) {
+		handleResponse(err,resp,parentCallBack);
+	});
+}
+
+var handleResponse = function(err,resp,parentCallBack){
+	if (err) {
+		parentCallBack(err,null);
+	} else {
+		if(resp.statusCode >= minErrorCode){
+			parentCallBack(resp,null)
+		}else{
+			parentCallBack(null,resp);
+		}
+	}
 }
 
 var postJSON = function(controller,postUrl,postData,parentCallBack) {
