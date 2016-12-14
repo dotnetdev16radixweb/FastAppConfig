@@ -7,6 +7,7 @@ controller('DeployController', function($scope,$window,deployTemplates) {
 	$scope.owHR = "true";	
 	$scope.copy = "true";
 	$scope.sampleId = $window.sampleId;
+	$scope.themeId = $window.selectedTheme;
 
 	$scope.pushHealthRules = function(template, application, overwrite) {
 		deployTemplates.deployHealthRules(template,application,overwrite);
@@ -25,7 +26,7 @@ controller('DeployController', function($scope,$window,deployTemplates) {
 	}
 	
 	$scope.deploySampleDashboard = function(scope){
-		deployTemplates.deploySampleDashboard($scope.sampleId,$scope.selectedApp);
+		deployTemplates.deploySampleDashboard($scope.sampleId,$scope.selectedApp,$scope.themeId);
 	}
 	
 });

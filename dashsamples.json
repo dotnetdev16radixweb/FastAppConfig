@@ -14,7 +14,14 @@
 		{"id":12,"name":"Application - Sample 1 - OS ","path":"/samples/style_1_app_os_perf","hasHealthRules":false,"hasDashboard" : true,"description":"OS Metrics"},
 		{"id":13,"name":"Application - Sample 1 - Performance","path":"/samples/style_1_app_perf","hasHealthRules":false,"hasDashboard" : true,"description":"Application Performance"},
 		{"id":14,"name":"Overall Application Health","path":"/samples/overallapphealth","hasHealthRules":false,"hasDashboard" : true,"description":"Overall Application Health Dashboard"},
-		{"id":15,"name":"DotNet App Health","path":"/samples/dotnet_app_health","hasHealthRules":false,"hasDashboard" : true,"description":"DotNet Application Health"},
+		{"id":15,"name":"DotNet App Health","path":"/samples/dotnet_app_health","hasHealthRules":false,"hasDashboard" : true,"description":"DotNet Application Health", "themes": [1], "categories": [1, 2]},
 		{"id":16,"name":"Banking Business Transaction Health","path":"/samples/banking_bt_health","hasHealthRules":false,"hasDashboard" : true,"description":"Top Banking Business Transactions Health Dashboard. Search for string {bt_name} and {tier_name}. Replace with specific top BT's for your banking application"}
+	],
+"themes":[
+		{"id": 1, "name": "Kiwi", "description": "Kiwi", "prefix": "kiwi_"}
+	],
+"categories":[
+		{"id": 1, "name": ".NET", "description": ".NET"},
+		{"id": 2, "name": "App Health", "description": "Focused on Application Health"}
 	]
 }

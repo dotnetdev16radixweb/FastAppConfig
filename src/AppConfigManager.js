@@ -157,6 +157,12 @@ exports.findSampleById = function(id){
 	return samples[0];
 }
 
+exports.findThemeById = function(id){
+	var themes = dashsamples.themes.filter(function(item) {
+	    return item.id == id;
+	});
+	return themes[0];
+}
 
 exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,callback){
 	var sample = exports.findSampleById(sampleId);
@@ -170,10 +176,16 @@ exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,ca
 	});
 }
 
-exports.deploySampleDashboard = function(sampleId,destApp,callback){
+exports.deploySampleDashboard = function(sampleId,destApp,themeId,callback){
 
 	var sample = exports.findSampleById(sampleId);
 	var url    = './public'+sample.path+"/dashboard.json";
+
+	if (themeId)
+	{
+		var selectedTheme = this.findThemeById(themeId);
+		url = './public'+sample.path+"/"+selectedTheme.prefix+"dashboard.json";
+	}
 
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;

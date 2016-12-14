@@ -6,6 +6,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script>
     	var sampleId = <%=sample.id%>;
+    	var selectedTheme = <%= (selectedTheme ? selectedTheme.id : 0) %>;
     </script>
     <style>
     
@@ -22,14 +23,30 @@
     </style>
   </head>
   <body style="background-color:#ccc" ng-app="DeployApp" ng-controller="DeployController">
-  
+  <form>
   	<div class="container-fluid">
   		<div class="row form-group">
 	  		<div id="deploy" class="col-md-4">
+	  			<%if (sample.themes) { %>
+		  			<h6>Theme : 
+	                <select id="themeDropdown">
+		    			<option value="">No Theme</option>
+		    			<% 	for(var i=0; i < themes.length; i++) { 
+		     					var currentTheme = themes[i];
+		     					if (selectedTheme && (currentTheme.id == selectedTheme.id)) { %>
+		    			<option selected="true" value=<%= currentTheme.id %>><%= currentTheme.name %></option>
+		     			<%		} else { %>
+		    			<option value=<%= currentTheme.id %>><%= currentTheme.name %></option>
+		     			<% 		}
+		     				}
+		     			%>
+					</select>
+					</h6>
+				<% } %>
 	  			<div>
-		  			<h6>First Select Target Application : 
+		  			<h6>Target Application : 
 	                <select ng-model="selectedApp" ng-options="app.name for app in applications| filter: { name: '!<All Applications>' } | orderBy : 'name'">
-		    			<option value="">Select Option</option>
+		    			<option value="">Select Application</option>
 					</select>
 					</h6>
 				</div>
@@ -53,14 +70,23 @@
 	  		
   		</div>
   		<div id="screen" class="row form-group">
-  			<%if (sample.hasDashboard) { %>
+  			<%	if (sample.hasDashboard) { 
+  					if (selectedTheme) { %>
+				<div class="col-md-12">
+					<img src ="<%=sample.path%>/<%=selectedTheme.prefix%>full.png" class="center-block"/>
+	  			</div>
+	  		<%		} else { %>
 				<div class="col-md-12">
 					<img src ="<%=sample.path%>/full.png" class="center-block"/>
 	  			</div>
-			<% } %>
+			<%		} 
+				} 
+			%>
   		</div>
 	</div>
- 	
+	<input type='hidden' name='id'>
+	<input type='hidden' name='theme'>
+ </form>
 	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="/css/bootstrap.min.js"></script>
 	<script src="/bower_components/angular/angular.js"></script>
@@ -70,8 +96,12 @@
 
 	<script>  	
 	$(document).ready(function() {
-		
+		$('input[name="id"]').val(<%=sample.id%>);
 	});
+	$("#themeDropdown").change(function () {
+		$('input[name="theme"]').val(this.value);
+		this.form.submit();
+    });
 	</script>	
 
 
