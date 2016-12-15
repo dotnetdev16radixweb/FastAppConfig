@@ -70,6 +70,11 @@ var fetch = function(controller,url, parentCallBack){
 		})
 
 		response.on('end', function() {
+			if(config.restdebug){
+				log.debug("statusCode :"+response.statusCode);
+				log.debug("response :");
+				log.debug(str);
+			}
 			if(response.statusCode >= minErrorCode){
 				parentCallBack(str,null);
 			}else{
@@ -207,6 +212,11 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 		postData = {body:postData};
 	}
 	needle.post(url, postData, options, function(err, resp) {
+		if(config.restdebug){
+			log.debug("statusCode :"+resp.statusCode);
+			log.debug("response :");
+			log.debug(resp);
+		}
 		handleResponse(err,resp,parentCallBack);
 	});
 }
@@ -233,10 +243,14 @@ var postFile = function(controller,postUrl,postData,parentCallBack) {
 	fs.writeFileSync(filename, JSON.stringify(postData));
 	
 	var data = {
-			file: { file: filename, content_type: 'application/json'}
+		file: { file: filename, content_type: 'application/json'}
 	}
 		
-	post(controller,postUrl,data,'application/json',parentCallBack);		
+	post(controller,postUrl,data,'application/json',function(err,resp){
+		if(err){
+			parentCallBack(resp,null);
+		}
+	});		
 }
 
 var postXml = function(controller,postUrl,postData,parentCallBack) {
