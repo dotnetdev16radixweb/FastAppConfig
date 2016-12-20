@@ -34,23 +34,72 @@
 			padding: 2px;
 		}	
     </style>
+    <% include ./head %> 
   </head>
 
   <body style="background-color:#777">
+  	<header>
+      <% include ./header %>
+    </header>
+  	<form>
+	<header style="background-color:#ccc; padding: 5px">
+			<div class="row form-group">
+			<div class="col-md-4">
+	  			<h6>Theme :
+	            <select id="themeDropdown">
+	    			<option value="">No Theme</option>
+	    			<% 	for(var i=0; i < filteredSamples.themes.length; i++) { 
+	     					var currentTheme = filteredSamples.themes[i];
+		     					if (currentTheme && (currentTheme.id == themeId)) { %>
+		    			<option selected="true" value=<%= currentTheme.id %>><%= currentTheme.name %></option>
+		     			<%		} else { %>
+		    			<option value=<%= currentTheme.id %>><%= currentTheme.name %></option>
+		     			<% 		}
+		     				}
+		     			%>
+				</select>
+				</h6>
+		</div>
+			<input type='hidden' name='theme'>
+	</header>
     <div id="container">
-		<% for(var i=0; i < dashsamples.samples.length; i++) { %>
+		<% for(var i=0; i < filteredSamples.samples.length; i++) { %>
 		   	<div class="pinto">
-		   		<img src="<%=dashsamples.samples[i].path%>/preview.png"/>
+		   		<%	if (themeId) { 
+						var selectedTheme = appConfigManager.findThemeById(themeId); 
+		   		%>
+		   		<img src="<%=filteredSamples.samples[i].path%>/<%=selectedTheme.prefix%>preview.png"/>
+		   		<%	} else { %>
+		   		<img src="<%=filteredSamples.samples[i].path%>/preview.png"/>
+		   		<%	}  %>
+
 		   		<div class="header">
-		     		<a href="deploysample.html?id=<%=dashsamples.samples[i].id%>"><h6><%= dashsamples.samples[i].name %></h6></a>
+		     		<a href="deploysample.html?id=<%=filteredSamples.samples[i].id%>"><h6><%= filteredSamples.samples[i].name %></h6></a>
 		     	</div>
+		     	<% if (filteredSamples.samples[i].themes) { 
+		     			for(var j=0; j < filteredSamples.samples[i].themes.length; j++) { 
+		     				var selectedTheme = appConfigManager.findThemeById(filteredSamples.samples[i].themes[j]); 
+		     				if (selectedTheme) { %>
+		   		<div class="header">
+		     		<a href="deploysample.html?id=<%=filteredSamples.samples[i].id%>&theme=<%=selectedTheme.id%>"><h6><%= selectedTheme.name %></h6></a>
+		     	</div>
+		     	<% 			
+		     				} 
+		     			} 
+		     		} 
+		     	%>
 		    </div>
 		<% } %>
 	</div>
- 	
+
+	</form>	
 <script>  	
 $(document).ready(function() {
     $('#container').pinto();
+});
+$("#themeDropdown").change(function () {
+	$('input[name="theme"]').val(this.value);
+	this.form.submit();
 });
 </script>	
   </body>

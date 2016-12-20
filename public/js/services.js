@@ -93,12 +93,13 @@ angular.module('DeployApp.services',[])
 		    });
 	}
 	
-	_templatesService.prototype.deploySampleDashboard = function(sampleId,application) {
+	_templatesService.prototype.deploySampleDashboard = function(sampleId,application,themeId) {
 		
 		var hrRequest = [];
 		hrRequest.push(sampleId);
 		hrRequest.push(application);
-				
+		hrRequest.push(themeId);
+
 		$http({
 		    url: '/deploySampleDashboard',
 		    method: "POST",

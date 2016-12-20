@@ -83,13 +83,59 @@ app.get('/deploy.html', function(req, res) {
 });
 
 app.get('/samples.html', function(req, res) {
-	res.render('sample',{"dashsamples":dashsamples});
+
+    var themeId = req.param("theme");
+    var filteredSamples = JSON.parse(JSON.stringify(dashsamples));
+    filteredSamples.samples = [];
+
+    if (themeId)
+    {
+        for(var i=0; i < dashsamples.samples.length; i++) 
+        {
+            var dashsample = dashsamples.samples[i];
+            if (dashsample.themes) 
+            { 
+                for(var j=0; j < dashsample.themes.length; j++) 
+                {
+                    if (themeId == ("" + dashsample.themes[j]))
+                    {
+                        filteredSamples.samples.push(dashsample);
+                    }
+                }
+            }
+        } 
+        res.render('sample',{"filteredSamples":filteredSamples, "appConfigManager": appConfigManager, "themeId": themeId});
+    }
+	else
+    {
+        res.render('sample',{"filteredSamples":dashsamples, "appConfigManager": appConfigManager, "themeId": themeId});
+    }
 });
 
 app.get('/deploysample.html', function(req, res) {
 	var id = req.param("id");
-	var selectedSample = appConfigManager.findSampleById(id);
-	res.render('deploysample',{"sample":selectedSample});
+    var themeId = req.param("theme");
+    var selectedSample = appConfigManager.findSampleById(id);
+	var selectedTheme;
+    var themes = [];
+
+    if (themeId)
+    {
+        selectedTheme = appConfigManager.findThemeById(themeId);
+    }
+    if (selectedSample.themes)
+    {
+        for(var i=0; i < selectedSample.themes.length; i++) 
+        {
+            var theme = appConfigManager.findThemeById(selectedSample.themes[i]);
+            if (theme) 
+            { 
+                themes.push(theme);
+            }
+        }
+    }
+
+    res.render('deploysample',{"sample":selectedSample, "selectedTheme": selectedTheme, "themes": themes});
 });
 
 app.get('/deployhelp.html', function(req, res) {
