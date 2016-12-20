@@ -246,11 +246,7 @@ var postFile = function(controller,postUrl,postData,parentCallBack) {
 		file: { file: filename, content_type: 'application/json'}
 	}
 		
-	post(controller,postUrl,data,'application/json',function(err,resp){
-		if(err){
-			parentCallBack(resp,null);
-		}
-	});		
+	post(controller,postUrl,data,'application/json',parentCallBack);
 }
 
 var postXml = function(controller,postUrl,postData,parentCallBack) {
