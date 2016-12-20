@@ -58,13 +58,10 @@ var Package = function(config) {
 		if(!hrname){
 			hrname = '';
 		}
-
 		
 		fs.readFile('./solutions/elasticsearch/hr.xml', 'utf-8', function (err, data) {
   			sourceXMLAsString = data;
-  			
   			var mods = services.getMods(cluster,tiername,nodename,hrname);
-  			
   			req.hrManager.updateNodeReference(sourceXMLAsString,mods,function(hrxml){
   				//log.debug(hrxml);
   				req.restManager.postHealthRules(appid,hrxml,true,function(err,results){
@@ -95,13 +92,12 @@ var Package = function(config) {
 		if(!hrname){
 			hrname = '';
 		}
-		
-		console.log(appid+" "+appname+" "+tierid+" "+tiername+" "+nodename+" "+cluster+" "+hrname+" "+dashboardName);
+		//console.log(appid+" "+appname+" "+tierid+" "+tiername+" "+nodename+" "+cluster+" "+hrname+" "+dashboardName);
 				
 		fs.readFile('./solutions/elasticsearch/dash.json', 'utf-8', function (err, data) {
 			dashboardJsonObj = JSON.parse(data);
-			dashboardJsonObj = services.updateDashboard(req.configManager,dashboardJsonObj,dashboardName,hrname,appname,appid,tiername,tierid,nodename,hrname,cluster);
-			console.log(JSON.stringify(dashboardJsonObj,null,4));
+			dashboardJsonObj = services.updateDashboard(req.configManager,dashboardJsonObj,dashboardName,appname,appid,tiername,tierid,nodename,hrname,cluster);
+			//console.log(JSON.stringify(dashboardJsonObj,null,4));
 			req.restManager.postDashboard(dashboardJsonObj,function(err,result){
 				if(err){
 					res.status = 500;
@@ -114,8 +110,6 @@ var Package = function(config) {
 		});
 		
 	})
-
-	
 	
 	return this;
 };
