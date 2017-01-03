@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BT Setup</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+        .container {width: 98%;margin: auto;}
+        .overlayContent {background: #D6EBFF;z-index: 2000; border-radius: 1em;padding: 2em;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)}
+    </style>
+        <% include ./head %> 
+    </head>
+    <body ng-app="BTSetupApp" ng-controller="BTSetupController">
+        <header>
+        <% include ./header %>
+        </header>  
+        <div class="overlayContent" ng-hide="showSpinner==0"><img src="/img/spinner.gif" />&nbsp;&nbsp;&nbsp;Loading</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>BT Setup</h3>
+                    <br/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="application">Select Target Application</label>
+                        <select id="appselection" ng-model="selectedApp" ng-change="applicationChanged();" ng-options="app.name for app in applications| filter: { name: '!<All Applications>' } | orderBy : 'name'">
+                            <option value="">Select Application</option>
+                        </select>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timeframe</label>
+                        <select ng-model="timeFrame" ng-change="timeFrameChanged();">
+                            <option value="5">5 Minutes</option>    
+                            <option value="15">15 Minutes</option>    
+                            <option value="30">30 Minutes</option>    
+                            <option value="60">1 Hour</option>
+                            <option value="120">2 Hour</option>
+                            <option value="180">3 Hour</option>
+                            <option value="240">4 Hour</option>
+                            <option value="360">6 Hour</option>
+                            <option value="720">12 Hour</option>
+                            <option value="1440">1 Day</option>
+                            <option value="4320">3 Days</option>
+                            <option value="10080">1 Week</option>
+                        </select>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choose Top N</label>
+                        <select ng-model="btListTopCount" ng-change="chooseBtListTopCount();">
+                            <option value="5">5</option>    
+                            <option value="10">10</option> 
+                            <option value="15">15</option> 
+                            <option value="20">20</option> 
+                            <option value="25">25</option>  
+                            <option value="30">30</option>  
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-hide="!selectedApp">
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                            <li class="active">
+                                <a href="#selectBTs">
+                                    <h4 class="list-group-item-heading">Select BTs</h4>
+                                </a>
+                            </li>  
+                            <li>
+                                <a href="#createBTs">
+                                    <h4 class="list-group-item-heading">Create Custom Match Rules</h4>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#deleteBTs">
+                                    <h4 class="list-group-item-heading">Delete BTs</h4>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row setup-content" id="selectBTs">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well">
+                            <table cellpadding="10px" cellspacing="10px">
+                                <tr class="text-center">
+                                    <td><h4>Selected BTs</h4></td>
+                                    <td width="50px"></td>
+                                    <td><h4>Available BTs</h4></td>
+                                </tr>  
+                                <tr>
+                                    <td style="vertical-align: top;"">
+                                        <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
+                                            <thead>
+                                                <tr> 
+                                                    <th>BT Name</th>
+                                                    <th>Tier</th>
+                                                    <th>Top CPM</th>
+                                                    <th>Top ART</th>
+                                                    <th>CPM</th>
+                                                    <th>ART</th>
+                                                    <th>Move -></th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true, canCreateCMR: true } ">
+                                                <td>{{ bt.oldName }}</td>
+                                                <td>{{ bt.tierName }}</td>
+                                                <td style="text-align: center;">{{ bt.topCPM ? "Y" : "" }}</td>
+                                                <td style="text-align: center;">{{ bt.topART ? "Y" : "" }}</td>
+                                                <td>{{ bt.cpm }}</td>
+                                                <td>{{ bt.art }} ms</td>
+                                                <td style="text-align: right;">
+                                                    <button class="btn btn-primary" ng-click="removeFromList(bt)">
+                                                    ->
+                                                    </button>
+                                                </td>        
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="50px"></td>
+                                    <td style="vertical-align: top;"">
+                                        <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
+                                            <thead>
+                                                <tr> 
+                                                    <th><- Move</th>
+                                                    <th>BT Name</th>
+                                                    <th>Tier</th>
+                                                    <th>Top CPM</th>
+                                                    <th>Top ART</th>
+                                                    <th>CPM</th>
+                                                    <th>ART</th>                                                    
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: false, canCreateCMR: true } ">
+                                                <td>
+                                                    <button class="btn btn-primary" ng-click="addToList(bt)">
+                                                    <-
+                                                    </button>
+                                                </td>
+                                                <td>{{ bt.oldName }}</td>
+                                                <td>{{ bt.tierName }}</td>
+                                                <td style="text-align: center;">{{ bt.topCPM ? "Y" : "" }}</td>
+                                                <td style="text-align: center;">{{ bt.topART ? "Y" : "" }}</td>
+                                                <td>{{ bt.cpm }}</td>
+                                                <td>{{ bt.art }} ms</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+                <div class="row setup-content" id="createBTs">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well">
+                            <table cellpadding="10px" cellspacing="10px">
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-primary" ng-click="create()">
+                                            Create
+                                        </button>   
+                                    </td>
+                                </tr>
+                                <tr><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td style="vertical-align: top;"">
+<!--                                         <select id="btSelectionType">
+                                            <option value="key_metrics">Key Metrics (CPM and ART)</option>
+                                            <option value="segments">Segments</option>
+                                        </select> -->
+                                        <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
+                                            <thead>
+                                                <tr>
+                                                    <th>BT Name</th>
+                                                    <th>Tier</th>
+                                                    <th>CPM</th>
+                                                    <th>ART</th>
+                                                    <th>Criteria</th>
+                                                    <th>URI</th>
+                                                    <th>Priority</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true , canCreateCMR: true}">
+                                                <td><input style="width: 350px" ng-model="bt.name"></td>
+                                                <td>{{ bt.tierName }}</td>
+                                                <td>{{ bt.cpm }}</td>
+                                                <td>{{ bt.art }} ms</td>
+                                                <td>
+                                                    <select ng-model="bt.criteria">
+                                                        <option value="EQUALS">Equals</option>    
+                                                        <option value="STARTSWITH">Starts With</option>
+                                                        <option value="ENDSWITH">Ends With</option>
+                                                        <option value="CONTAINS">Contains</option>
+                                                        <option value="REGEX">Matches RegEx</option>
+                                                    </select>
+                                                </td>
+                                                <td><input style="width: 350px" ng-model="bt.uri"></td>
+                                                <td>
+                                                    <select ng-model="bt.priority">
+                                                        <option value="30">30</option>
+                                                        <option value="25">25</option>     
+                                                        <option value="20">20</option>
+                                                        <option value="15">15</option>
+                                                        <option value="10">10</option>
+                                                        <option value="5">5</option>
+                                                        <option value="0">0</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>                
+                </div>
+                <div class="row setup-content" id="deleteBTs">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well">
+                            <table cellpadding="10px" cellspacing="10px">
+                                <tr>
+                                    <td>                                        
+                                        <button class="btn btn-primary" ng-click="delete()">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>  
+                                <tr><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td style="vertical-align: top;"">
+                                        <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
+                                            <thead>
+                                                <tr> 
+                                                    <th>Delete?<br><input id="deleteall" type="checkbox" value="{{checkAll1}}" ng-model="checkAll1" ng-change="deleteAll(this);"></th>
+                                                    <th>BT Name</th>
+                                                    <th>Tier</th>
+                                                    <th>CPM</th>
+                                                    <th>ART</th>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="bt in btList">
+                                                <td><input type="checkbox" value="{{bt.delete}}" ng-model="bt.delete" ng-change="deleteOne(this);"></td>
+                                                <td>{{ bt.oldName }}</td>
+                                                <td>{{ bt.tierName }}</td>
+                                                <td>{{ bt.cpm }}</td>
+                                                <td>{{ bt.art }} ms</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/css/bootstrap.min.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/js/btSetupServices.js"></script>
+    <script src="/js/btSetupController.js"></script>
+    <script src="js/btSetupApp.js"></script>
+    <script>    
+    $(document).ready(function() {
+        var navListItems = $('ul.setup-panel li a'),
+        allWells = $('.setup-content');
+        allWells.hide();
+
+        navListItems.click(function(e)
+        {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this).closest('li');
+            
+            if (!$item.hasClass('disabled')) {
+                navListItems.closest('li').removeClass('active');
+                $item.addClass('active');
+                allWells.hide();
+                $target.show();
+            }
+        });  
+
+        $('ul.setup-panel li.active a').trigger('click');
+    });
+    </script>   
+
+
+    </body>
+</html>
