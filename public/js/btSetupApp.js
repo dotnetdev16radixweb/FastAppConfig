@@ -1,0 +1,1 @@
+angular.module('BTSetupApp', ['BTSetupApp.controllers','BTSetupApp.services']);
