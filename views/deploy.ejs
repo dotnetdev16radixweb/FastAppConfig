@@ -9,14 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Fast Config</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/help.css" rel="stylesheet">
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-	<script src="/bower_components/angular/angular.js"></script>
+	  <script src="/bower_components/angular/angular.js"></script>
+       <% include ./head %> 
     <script src="/css/bootstrap.min.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="js/services.js"></script>
@@ -25,6 +24,10 @@
   </head>
 
   <body ng-app="DeployApp" ng-controller="DeployController">
+  <header>
+    <% include ./header %>
+  </header> 
+
     <div class="container">
 	<div class="row form-group">
         <div class="col-xs-12">

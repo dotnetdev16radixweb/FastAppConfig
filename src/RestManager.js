@@ -136,7 +136,7 @@ var parseCookies  = function (response) {
     var jsessionid = null;
     rc.forEach(function( parts ) {
     	parts.split(";").forEach(function(cookieStr){
-    		if (cookieStr.startsWith("JSESSIONID")){
+    		if (cookieStr.indexOf("JSESSIONID") == 0){
     			jsessionid = cookieStr;
     		}
     	});
@@ -203,7 +203,7 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 		  multipart : true,
 		  rejectUnauthorized: false,
 		  headers:{
-			  'Content-Type': 'multipart/form-data',
+			  'Content-Type': contentType,
 			  "Authorization" : auth
 		  }
 	};
@@ -233,6 +233,34 @@ var handleResponse = function(err,resp,parentCallBack){
 	}
 }
 
+var postUICall = function(controller,postUrl,postData,contentType,parentCallBack) {
+	
+	console.log("postData: " + postData);
+
+	fetchJSessionID(controller,function(err,response){
+	
+		var jsessionId = parseCookies(response);
+		var url = getProtocol() + controller +":"+getPort()+postUrl;
+		var options = {
+			  method: 'POST',
+			  rejectUnauthorized: false,
+			  headers:{
+				  "Content-Type": contentType,
+				  "Cookie" : jsessionId
+			  }
+		};
+
+		needle.post(url, postData, options, function(err, resp) {
+			if(config.restdebug){
+				log.debug("statusCode :"+resp.statusCode);
+				log.debug("response :");
+				log.debug(resp);
+			}
+			handleResponse(err,resp,parentCallBack);
+		});
+	});
+}
+
 var postJSON = function(controller,postUrl,postData,parentCallBack) {
 	post(controller,postUrl,postData,'application/json',parentCallBack);		
 }
@@ -247,6 +275,18 @@ var postFile = function(controller,postUrl,postData,parentCallBack) {
 	}
 		
 	post(controller,postUrl,data,'application/json',parentCallBack);
+}
+
+var postXmlFile = function(controller,postUrl,postData,parentCallBack) {
+	
+	var filename = 'temp.xml';
+	fs.writeFileSync(filename, postData);
+	
+	var data = {
+		file: { file: filename, content_type: 'text/xml'}
+	}
+		
+	post(controller,postUrl,data,'text/xml',parentCallBack);
 }
 
 var postXml = function(controller,postUrl,postData,parentCallBack) {
@@ -294,6 +334,11 @@ exports.postDashboard = function(dashboard,callback){
 	postFile(config.controller,url,dashboard,callback);
 }
 
+exports.postCustomMatchRules = function(applicationID,customMatchRules,entryPointType,callback){
+	var url = "/controller/transactiondetection/"+applicationID+"/custom/"+entryPointType+"?overwrite=true";
+	postXmlFile(config.controller,url,customMatchRules,callback);
+}
+
 exports.getAppJson = function(callback) {
 	var url = "/controller/rest/applications?output=JSON";
 	makeFetch(config.controller,url,callback);
@@ -309,5 +354,22 @@ exports.getNodesJson = function(app,tier,callback) {
 	makeFetch(config.controller,url,callback);
 }
 
+exports.getBTList = function(appName,callback) {
+	var url = "/controller/rest/applications/" + encodeURIComponent(appName) + "/business-transactions?output=JSON";
+	makeFetch(config.controller,url,callback);
+}
 
+exports.getBTCallsPerMinute = function(appName,tierName,btName,timeFrame,callback) {
+	var url = "/controller/rest/applications/" + encodeURIComponent(appName) + "/metric-data?metric-path=Business%20Transaction%20Performance|Business%20Transactions|" + tierName + "|" + btName + "|Calls%20per%20Minute&time-range-type=BEFORE_NOW&duration-in-mins=" + timeFrame + "&output=JSON";
+	makeFetch(config.controller,url,callback);
+}
 
+exports.getBTAverageResponseTime = function(appName,tierName,btName,timeFrame,callback) {
+	var url = "/controller/rest/applications/" + encodeURIComponent(appName) + "/metric-data?metric-path=Business%20Transaction%20Performance|Business%20Transactions|" + tierName + "|" + btName + "|Average%20Response%20Time%20%28ms%29&time-range-type=BEFORE_NOW&duration-in-mins=" + timeFrame + "&output=JSON";
+	makeFetch(config.controller,url,callback);
+}
+
+exports.deleteBTs = function (deleteBTList,callback){
+	var url = "/controller/restui/bt/deleteBTs";
+	postUICall(config.controller,url,JSON.stringify(deleteBTList),"application/json",callback);
+}

@@ -16,12 +16,14 @@ var configManager = require("./src/ConfigManager.js");
 var moment = require("moment");
 
 var restManager = require('./src/RestManager.js');
+var btConfigManager = require('./src/BTConfigManager.js');
 var appConfigManager = require('./src/AppConfigManager.js');
 var hrManager = require('./src/HealthRuleManager.js');
 
 
 var templates = require('./routes/templates.js');
 var appJson = require('./routes/applications.js');
+var btSetupRoutes = require('./routes/btSetup.js');
 var copyhealthrules = require('./routes/copyhealthrules.js');
 var copydashboards = require('./routes/copydashboards.js');
 var samples = require('./routes/samples.js');
@@ -41,6 +43,7 @@ var init = function(){
 
 app.use(function(req,res,next){
     req.restManager = restManager;
+    req.btConfigManager = btConfigManager;
     req.appConfigManager = appConfigManager;
     req.configManager = configManager;
     req.hrManager = hrManager;
@@ -66,6 +69,7 @@ app.use(express.static(__dirname + '/public/images'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/templates.json',templates);
 app.use('/applications.json',appJson);
+app.use('/btSetup',btSetupRoutes);
 app.use('/tiers',tiersJson);
 app.use('/nodes',nodesJson);
 app.use('/copyhealthrules',copyhealthrules);
@@ -75,6 +79,10 @@ app.use('/deploySampleHealthRules',deploySampleHealthRules);
 app.use('/deploySampleDashboard',deploySampleDashboard);
 
 app.use('/', routes);
+
+app.get('/btsetup.html', function(req, res) {
+    res.render('btsetup');
+});
 
 app.get('/deploy.html', function(req, res) {
 	res.render('deploy');
