@@ -10,14 +10,24 @@
     <meta name="author" content="">
     <title>Fast Config</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-	<script src="/bower_components/angular/angular.js"></script>
-    <% include ./head %> 
+
+    <!-- Custom styles for this template -->
+    <link href="/css/help.css" rel="stylesheet">
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	  <script src="/bower_components/angular/angular.js"></script>
+       <% include ./head %> 
+    <script src="/css/bootstrap.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/deployapp.js"></script>
   </head>
 
   <body ng-app="DeployApp" ng-controller="DeployController">
-    <header>
+  <header>
     <% include ./header %>
-    </header> 
+  </header> 
+
     <div class="container">
 	<div class="row form-group">
         <div class="col-xs-12">
@@ -52,7 +62,7 @@
                 </p>
                 <table class="table table-striped table-bordered table-condensed table-hover">
    					<thead>
-					    <tr> 
+					    <tr>
 					    	<th>Select</th>
 					    	<th>ID</th>
 					        <th>Type</th>
@@ -79,7 +89,7 @@
     <div class="row setup-content" id="step-2">
         <div class="col-xs-12">
         	<div class="col-md-12 well text-center">
-                <h6>Target Application : 
+                <h6>Target Application :
                 <select ng-model="$parent.selectedApp" ng-options="app.name for app in applications" ng-change="updateDashName($parent)">
 	    			<option value="">Select Option</option>
 	    			<option value="All">All Applications</option>
@@ -112,18 +122,9 @@
         </div>
     </div>
 </div>
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/css/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-  	<script src="bower_components/angular-route/angular-route.js"></script>
-  	<script src="js/services.js"></script>
-  	<script src="js/controller.js"></script>
-  	<script src="js/deployapp.js"></script>
-  	
-  	
-<script>  	
+<script>
 $(document).ready(function() {
-    
+
     var navListItems = $('ul.setup-panel li a'),
     allWells = $('.setup-content');
 
@@ -134,7 +135,7 @@ $(document).ready(function() {
         e.preventDefault();
         var $target = $($(this).attr('href')),
             $item = $(this).closest('li');
-        
+
         if (!$item.hasClass('disabled')) {
             navListItems.closest('li').removeClass('active');
             $item.addClass('active');
@@ -142,28 +143,28 @@ $(document).ready(function() {
             $target.show();
         }
     });
-    
+
     $('ul.setup-panel li.active a').trigger('click');
-    
-    
+
+
     $('#activate-step-2').on('click', function(e) {
         $('ul.setup-panel li:eq(1)').removeClass('disabled');
         $('ul.setup-panel li a[href="#step-2"]').trigger('click');
         $(this).remove();
-    })    
-    
+    })
+
     $('#activate-step-3').on('click', function(e) {
         $('ul.setup-panel li:eq(2)').removeClass('disabled');
         $('ul.setup-panel li a[href="#step-3"]').trigger('click');
         $(this).remove();
-    })  
-    
+    })
+
     $('#activate-step-4').on('click', function(e) {
         $('ul.setup-panel li:eq(3)').removeClass('disabled');
         $('ul.setup-panel li a[href="#step-4"]').trigger('click');
         $(this).remove();
-    })    
-    
+    })
+
     $('#skipToStep4').on('click', function(e) {
         $('ul.setup-panel li:eq(3)').removeClass('disabled');
         $('ul.setup-panel li a[href="#step-4"]').trigger('click');
@@ -171,26 +172,26 @@ $(document).ready(function() {
         var scope = angular.element(document.getElementById('copyHealthRulesBtn')).scope();
         scope.dashName = scope.selectedApp.name +' - OPs';
     })
-    
+
     $('#backToStep2').on('click', function(e) {
     	$('ul.setup-panel li:eq(1)').removeClass('disabled');
         $('ul.setup-panel li a[href="#step-2"]').trigger('click');
         $(this).remove();
-    })    
+    })
 
     $('#copyHealthRulesBtn').on('click', function(e) {
     	var scope = angular.element(document.getElementById('copyHealthRulesBtn')).scope();
         scope.pushHealthRules(scope.selectedTemplate,scope.selectedApp,scope.owHR);
-    })  
-    
+    })
+
     $('#copyDashboardsBtn').on('click', function(e) {
     	var scope = angular.element(document.getElementById('copyDashboardsBtn')).scope();
         scope.pushDashboards(scope.selectedTemplate,scope.selectedApp,scope.dashName);
-    })    
-    
+    })
+
 });
-</script>	
-  	
-  	
+</script>
+
+
   </body>
 </html>

@@ -7,13 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var packageController = require("package.js");
 
-var routes = require('./routes/index');
-var config = require('./config.json');
-
+var routes = require('./routes/index'); 
 var schedule = require('node-schedule');
 var childProcess = require("child_process");
 var fs = require('fs');
-var config = require("./config.json");
+var config = require(__dirname+"/config.json");
 var configManager = require("./src/ConfigManager.js");
 var moment = require("moment");
 
@@ -98,12 +96,12 @@ app.get('/samples.html', function(req, res) {
 
     if (themeId)
     {
-        for(var i=0; i < dashsamples.samples.length; i++) 
+        for(var i=0; i < dashsamples.samples.length; i++)
         {
             var dashsample = dashsamples.samples[i];
-            if (dashsample.themes) 
-            { 
-                for(var j=0; j < dashsample.themes.length; j++) 
+            if (dashsample.themes)
+            {
+                for(var j=0; j < dashsample.themes.length; j++)
                 {
                     if (themeId == ("" + dashsample.themes[j]))
                     {
@@ -111,7 +109,7 @@ app.get('/samples.html', function(req, res) {
                     }
                 }
             }
-        } 
+        }
         res.render('sample',{"filteredSamples":filteredSamples, "appConfigManager": appConfigManager, "themeId": themeId});
     }
 	else
@@ -133,11 +131,11 @@ app.get('/deploysample.html', function(req, res) {
     }
     if (selectedSample.themes)
     {
-        for(var i=0; i < selectedSample.themes.length; i++) 
+        for(var i=0; i < selectedSample.themes.length; i++)
         {
             var theme = appConfigManager.findThemeById(selectedSample.themes[i]);
-            if (theme) 
-            { 
+            if (theme)
+            {
                 themes.push(theme);
             }
         }
