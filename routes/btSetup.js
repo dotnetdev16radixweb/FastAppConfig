@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config.json');
 
 router.get('/bts/:applicationName/:timeFrame/:btListTopCount', function(req, res) {
-	
+
 	req.btConfigManager.getBTDetailList(req.params.applicationName,req.params.timeFrame,req.params.btListTopCount,function(err,result){
 		if(err){
 			res.status(500).json(err.body);
@@ -11,11 +10,11 @@ router.get('/bts/:applicationName/:timeFrame/:btListTopCount', function(req, res
 			res.status(200).json(result);
 		}
 	});
-	
+
 });
 
 router.post('/bts/createBTs/', function(req, res) {
-	
+
 	var applicationId = req.body[0];
 	var btList = req.body[1];
 
@@ -26,11 +25,11 @@ router.post('/bts/createBTs/', function(req, res) {
 			res.status(200).json(btList.length);
 		}
 	});
-	
+
 });
 
 router.post('/bts/deleteBTs/', function(req, res) {
-	
+
 	var applicationName = req.body[0];
 	var btList = req.body[1];
 	var timeFrame = req.body[2];
@@ -54,7 +53,7 @@ router.post('/bts/deleteBTs/', function(req, res) {
 			res.status(200).json(result);
 		}
 	});
-	
+
 });
 
 module.exports = router;

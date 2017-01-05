@@ -18,11 +18,6 @@ var config = configManager.getConfig();
 var proxy = config.proxy;
 var saml  = config.saml;
 
-var weekDuration = parseInt(config.trending_use_number_of_weeks) * (7*24*60);
-var minDuration = parseInt(config.trending_use_number_of_mins);
-var btMinDuration = config.bt_use_last_mins;
-var errorCodeSnapshotsDuration = config.error_code_fetch_snapshots;
-
 var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
