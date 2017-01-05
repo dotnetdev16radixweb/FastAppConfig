@@ -1,7 +1,7 @@
 {
     "schemaVersion": null,
     "dashboardFormatVersion": "3.0",
-    "name": "{app_name} Application - Sample 1 - Memory - Light",
+    "name": "{app_name} Application - Sample 1 - Memory",
     "description": null,
     "properties": null,
     "templateEntityType": "APPLICATION_COMPONENT_NODE",
@@ -835,7 +835,7 @@
             "backgroundColors": null,
             "backgroundColorsStr": "16777215,16777215",
             "color": 0,
-            "fontSize": 12,
+            "fontSize": 8,
             "useAutomaticFontSize": false,
             "borderEnabled": false,
             "borderThickness": 0,
