@@ -2,12 +2,42 @@
 <html lang="en">
     <head>
         <title>BT Setup</title>
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script> 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
-     <style>
-        .container {width: 98%;margin: auto;}
-        .overlayContent {background: #D6EBFF;z-index: 2000; border-radius: 1em;padding: 2em;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)}
-    </style>
-        <% include ./head %> 
+         <style>
+            .container {width: 98%;margin: auto;}
+            .overlayContent {background: #D6EBFF;z-index: 2000; border-radius: 1em;padding: 2em;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)}
+        </style>
+        <script src="/css/bootstrap.min.js"></script>
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/js/btSetupServices.js"></script>
+        <script src="/js/btSetupController.js"></script>
+        <script src="js/btSetupApp.js"></script>        
+        <script>    
+        
+        $(document).ready(function() {
+            var navListItems = $('ul.setup-panel li a');
+            var allWells = $('.setup-content');
+            allWells.hide();
+
+            navListItems.click(function(e)
+            {
+                e.preventDefault();
+                var $target = $($(this).attr('href')),
+                    $item = $(this).closest('li');
+                
+                if (!$item.hasClass('disabled')) {
+                    navListItems.closest('li').removeClass('active');
+                    $item.addClass('active');
+                    allWells.hide();
+                    $target.show();
+                }
+            });  
+
+            $('ul.setup-panel li.active a').trigger('click');
+        });
+        </script>
+        <% include ./head %>   
     </head>
     <body ng-app="BTSetupApp" ng-controller="BTSetupController">
         <header>
@@ -253,37 +283,5 @@
                 </div>
             </div>
         </div>
-    
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/css/bootstrap.min.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/js/btSetupServices.js"></script>
-    <script src="/js/btSetupController.js"></script>
-    <script src="js/btSetupApp.js"></script>
-    <script>    
-    $(document).ready(function() {
-        var navListItems = $('ul.setup-panel li a'),
-        allWells = $('.setup-content');
-        allWells.hide();
-
-        navListItems.click(function(e)
-        {
-            e.preventDefault();
-            var $target = $($(this).attr('href')),
-                $item = $(this).closest('li');
-            
-            if (!$item.hasClass('disabled')) {
-                navListItems.closest('li').removeClass('active');
-                $item.addClass('active');
-                allWells.hide();
-                $target.show();
-            }
-        });  
-
-        $('ul.setup-panel li.active a').trigger('click');
-    });
-    </script>   
-
-
     </body>
 </html>
