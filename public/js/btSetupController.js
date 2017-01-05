@@ -5,6 +5,14 @@ controller('BTSetupController', function($scope,$window,btSetupService) {
 	$scope.timeFrame = "60";
 	$scope.showSpinner = 0;
 	$scope.btListTopCount = "10";
+	$scope.orderBy1 = "oldName";
+	$scope.orderByDesc1 = false;
+	$scope.orderBy2 = "oldName";
+	$scope.orderByDesc2 = false;
+	$scope.orderBy3 = "oldName";
+	$scope.orderByDesc3 = false;
+	$scope.orderBy4 = "oldName";
+	$scope.orderByDesc4 = false;
 
 	$scope.applicationChanged = function(){
 		btSetupService.getBTs($scope);
@@ -88,5 +96,58 @@ controller('BTSetupController', function($scope,$window,btSetupService) {
 			btSetupService.createCustomMatchRules($scope,createList);
 	  	}
 	};
+
+  	$scope.sortGrid1 = function(soryByName) {
+
+  		if ($scope.orderBy1 == soryByName)
+  		{
+  			$scope.orderByDesc1 = !$scope.orderByDesc1;
+  		}
+  		else
+  		{
+  			$scope.orderByDesc1 = false;
+  		}
+  		$scope.orderBy1 = soryByName;
+	};
+
+  	$scope.sortGrid2 = function(soryByName) {
+
+  		if ($scope.orderBy2 == soryByName)
+  		{
+  			$scope.orderByDesc2 = !$scope.orderByDesc2;
+  		}
+  		else
+  		{
+  			$scope.orderByDesc2 = false;
+  		}
+  		$scope.orderBy2 = soryByName;
+	};
+
+  	$scope.sortGrid3 = function(soryByName) {
+
+  		if ($scope.orderBy3 == soryByName)
+  		{
+  			$scope.orderByDesc3 = !$scope.orderByDesc3;
+  		}
+  		else
+  		{
+  			$scope.orderByDesc3 = false;
+  		}
+  		$scope.orderBy3 = soryByName;
+	};
+
+  	$scope.sortGrid4 = function(soryByName) {
+
+  		if ($scope.orderBy4 == soryByName)
+  		{
+  			$scope.orderByDesc4 = !$scope.orderByDesc4;
+  		}
+  		else
+  		{
+  			$scope.orderByDesc4 = false;
+  		}
+  		$scope.orderBy4 = soryByName;
+	};					
+
 });
 

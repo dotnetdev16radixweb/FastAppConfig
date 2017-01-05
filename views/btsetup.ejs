@@ -121,16 +121,16 @@
                                         <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
                                             <thead>
                                                 <tr> 
-                                                    <th>BT Name</th>
-                                                    <th>Tier</th>
-                                                    <th>Top CPM</th>
-                                                    <th>Top ART</th>
-                                                    <th>CPM</th>
-                                                    <th>ART</th>
+                                                    <th ng-click="sortGrid1('oldName')">BT Name</th>
+                                                    <th ng-click="sortGrid1('tier')">Tier</th>
+                                                    <th ng-click="sortGrid1('topCPM')">Top CPM</th>
+                                                    <th ng-click="sortGrid1('topART')">Top ART</th>
+                                                    <th ng-click="sortGrid1('cpm')">CPM</th>
+                                                    <th ng-click="sortGrid1('art')">ART</th>
                                                     <th>Move -></th>
                                                 </tr>
                                             </thead>
-                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true, canCreateCMR: true } ">
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true, canCreateCMR: true }  | orderBy:orderBy1:orderByDesc1 ">
                                                 <td>{{ bt.oldName }}</td>
                                                 <td>{{ bt.tierName }}</td>
                                                 <td style="text-align: center;">{{ bt.topCPM ? "Y" : "" }}</td>
@@ -151,15 +151,15 @@
                                             <thead>
                                                 <tr> 
                                                     <th><- Move</th>
-                                                    <th>BT Name</th>
-                                                    <th>Tier</th>
-                                                    <th>Top CPM</th>
-                                                    <th>Top ART</th>
-                                                    <th>CPM</th>
-                                                    <th>ART</th>                                                    
+                                                    <th ng-click="sortGrid2('oldName')">BT Name</th>
+                                                    <th ng-click="sortGrid2('tier')">Tier</th>
+                                                    <th ng-click="sortGrid2('topCPM')">Top CPM</th>
+                                                    <th ng-click="sortGrid2('topART')">Top ART</th>
+                                                    <th ng-click="sortGrid2('cpm')">CPM</th>
+                                                    <th ng-click="sortGrid2('art')">ART</th>                                                   
                                                 </tr>
                                             </thead>
-                                            <tr ng-repeat="bt in btList | filter:{ createCMR: false, canCreateCMR: true } ">
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: false, canCreateCMR: true } | orderBy:orderBy2:orderByDesc2 ">
                                                 <td>
                                                     <button class="btn btn-primary" ng-click="addToList(bt)">
                                                     <-
@@ -200,16 +200,16 @@
                                         <table class="table table-striped table-bordered table-condensed table-hover" border="2px">
                                             <thead>
                                                 <tr>
-                                                    <th>BT Name</th>
-                                                    <th>Tier</th>
-                                                    <th>CPM</th>
-                                                    <th>ART</th>
-                                                    <th>Criteria</th>
-                                                    <th>URI</th>
-                                                    <th>Priority</th>
+                                                    <th ng-click="sortGrid3('name')">BT Name</th>
+                                                    <th ng-click="sortGrid3('tier')">Tier</th>
+                                                    <th ng-click="sortGrid3('cpm')">CPM</th>
+                                                    <th ng-click="sortGrid3('art')">ART</th>
+                                                    <th ng-click="sortGrid3('criteria')">Criteria</th>
+                                                    <th ng-click="sortGrid3('uri')">URI</th>
+                                                    <th ng-click="sortGrid3('priority')">Priority</th>
                                                 </tr>
                                             </thead>
-                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true , canCreateCMR: true}">
+                                            <tr ng-repeat="bt in btList | filter:{ createCMR: true , canCreateCMR: true} | orderBy:orderBy3:orderByDesc3">
                                                 <td><input style="width: 350px" ng-model="bt.name"></td>
                                                 <td>{{ bt.tierName }}</td>
                                                 <td>{{ bt.cpm }}</td>
@@ -261,13 +261,13 @@
                                             <thead>
                                                 <tr> 
                                                     <th>Delete?<br><input id="deleteall" type="checkbox" value="{{checkAll1}}" ng-model="checkAll1" ng-change="deleteAll(this);"></th>
-                                                    <th>BT Name</th>
-                                                    <th>Tier</th>
-                                                    <th>CPM</th>
-                                                    <th>ART</th>
+                                                    <th ng-click="sortGrid4('oldName')">BT Name</th>
+                                                    <th ng-click="sortGrid4('tierName')">Tier</th>
+                                                    <th ng-click="sortGrid4('cpm')">CPM</th>
+                                                    <th ng-click="sortGrid4('art')">ART</th>
                                                 </tr>
                                             </thead>
-                                            <tr ng-repeat="bt in btList">
+                                            <tr ng-repeat="bt in btList | orderBy:orderBy4:orderByDesc4">
                                                 <td><input type="checkbox" value="{{bt.delete}}" ng-model="bt.delete" ng-change="deleteOne(this);"></td>
                                                 <td>{{ bt.oldName }}</td>
                                                 <td>{{ bt.tierName }}</td>
