@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var config = require('../config.json');
+var configManager = require("../src/ConfigManager");
 
 router.get('/', function(req, res) {
-	res.json(config.templates);
+	res.json(configManager.getConfigItem('templates'));
 });
 
 module.exports = router;

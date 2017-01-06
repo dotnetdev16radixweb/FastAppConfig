@@ -7,11 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var packageController = require("package.js");
 
-var routes = require('./routes/index'); 
+var routes = require('./routes/index');
 var schedule = require('node-schedule');
 var childProcess = require("child_process");
 var fs = require('fs');
-var config = require(__dirname+"/config.json");
 var configManager = require("./src/ConfigManager.js");
 var moment = require("moment");
 
@@ -164,6 +163,9 @@ app.get('/solutions.html', function(req, res) {
 	res.render('solutions',{"plugins":plugins});
 });
 
+app.get('/settings.html', function(req, res) {
+    res.render('settings');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

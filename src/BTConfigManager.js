@@ -2,9 +2,7 @@ var log4js = require('log4js');
 var log = log4js.getLogger("BTConfigManager");
 
 var btConfigManager = require('./BTConfigManager');
-var configManager = require("./ConfigManager");
 var restManager = require("./RestManager");
-var config = configManager.getConfig();
 
 function addBTRule(node,btProperties)
 {			
