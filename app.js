@@ -163,6 +163,9 @@ app.get('/solutions.html', function(req, res) {
 	res.render('solutions',{"plugins":plugins});
 });
 
+app.get('/settings.html', function(req, res) {
+    res.render('settings');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
