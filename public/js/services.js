@@ -37,8 +37,9 @@ angular.module('DeployApp.services',[])
 		});	
 	}
 	
-	_templatesService.prototype.deployHealthRules = function(template,application,overwrite) {
+	_templatesService.prototype.deployHealthRules = function($scope,template,application,overwrite) {
 		
+		$scope.showSpinner = true;
 		var hrRequest = [];
 		hrRequest.push(template);
 		hrRequest.push(application);
@@ -50,9 +51,10 @@ angular.module('DeployApp.services',[])
 		    data: JSON.stringify(hrRequest),
 		    headers: {'Content-Type': 'application/json'}
 		    }).success(function (data, status, headers, config) {
+		    	$scope.showSpinner = false;
 		        alert(data);
 		    }).error(function (data, status, headers, config) {
-		    	
+		    	$scope.showSpinner = false;
 		    });
 	}
 	
@@ -75,8 +77,9 @@ angular.module('DeployApp.services',[])
 		    });
 	}
 	
-	_templatesService.prototype.deploySampleHR = function(sampleId,application) {
+	_templatesService.prototype.deploySampleHR = function($scope,sampleId,application) {
 		
+		$scope.showSpinner = true;
 		var hrRequest = [];
 		hrRequest.push(sampleId);
 		hrRequest.push(application);
@@ -87,14 +90,16 @@ angular.module('DeployApp.services',[])
 		    data: JSON.stringify(hrRequest),
 		    headers: {'Content-Type': 'application/json'}
 		    }).success(function (data, status, headers, config) {
+		    	$scope.showSpinner = false;
 		        alert(data);
 		    }).error(function (data, status, headers, config) {
-		    	
+		    	$scope.showSpinner = false;
 		    });
 	}
 	
-	_templatesService.prototype.deploySampleDashboard = function(sampleId,application,themeId) {
+	_templatesService.prototype.deploySampleDashboard = function($scope,sampleId,application,themeId) {
 		
+		$scope.showSpinner = true;
 		var hrRequest = [];
 		hrRequest.push(sampleId);
 		hrRequest.push(application);
@@ -106,9 +111,10 @@ angular.module('DeployApp.services',[])
 		    data: JSON.stringify(hrRequest),
 		    headers: {'Content-Type': 'application/json'}
 		    }).success(function (data, status, headers, config) {
+		    	$scope.showSpinner = false;
 		        alert(data);
 		    }).error(function (data, status, headers, config) {
-		    	
+		    	$scope.showSpinner = false;
 		    });
 	}
 	

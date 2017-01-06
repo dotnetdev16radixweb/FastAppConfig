@@ -8,9 +8,10 @@ controller('DeployController', function($scope,$window,deployTemplates) {
 	$scope.copy = "true";
 	$scope.sampleId = $window.sampleId;
 	$scope.themeId = $window.selectedTheme;
+	$scope.showSpinner = false;
 
 	$scope.pushHealthRules = function(template, application, overwrite) {
-		deployTemplates.deployHealthRules(template,application,overwrite);
+		deployTemplates.deployHealthRules($scope,template,application,overwrite);
 	};
 	
 	$scope.pushDashboards = function(template, application, dashboardName) {
@@ -22,11 +23,11 @@ controller('DeployController', function($scope,$window,deployTemplates) {
 	}
 	
 	$scope.deploySampleHR = function(scope){
-		deployTemplates.deploySampleHR($scope.sampleId,$scope.selectedApp.id);
+		deployTemplates.deploySampleHR($scope,$scope.sampleId,$scope.selectedApp.id);
 	}
 	
 	$scope.deploySampleDashboard = function(scope){
-		deployTemplates.deploySampleDashboard($scope.sampleId,$scope.selectedApp,$scope.themeId);
+		deployTemplates.deploySampleDashboard($scope,$scope.sampleId,$scope.selectedApp,$scope.themeId);
 	}
 	
 });
