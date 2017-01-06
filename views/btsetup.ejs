@@ -4,10 +4,6 @@
         <title>BT Setup</title>
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script> 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
-         <style>
-            .container {width: 98%;margin: auto;}
-            .overlayContent {background: #D6EBFF;z-index: 2000; border-radius: 1em;padding: 2em;position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%)}
-        </style>
         <script src="/css/bootstrap.min.js"></script>
         <script src="/bower_components/angular/angular.js"></script>
         <script src="/js/btSetupServices.js"></script>
@@ -42,8 +38,9 @@
     <body ng-app="BTSetupApp" ng-controller="BTSetupController">
         <header>
         <% include ./header %>
+        <% include ./spinner %>
         </header>  
-        <div class="overlayContent" ng-hide="showSpinner==0"><img src="/img/spinner.gif" />&nbsp;&nbsp;&nbsp;Loading</div>
+        
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

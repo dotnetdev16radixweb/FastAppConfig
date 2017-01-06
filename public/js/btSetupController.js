@@ -3,7 +3,7 @@ controller('BTSetupController', function($scope,$window,btSetupService) {
     
 	btSetupService.getApps($scope);
 	$scope.timeFrame = "60";
-	$scope.showSpinner = 0;
+	$scope.showSpinner = false;
 	$scope.btListTopCount = "10";
 	$scope.orderBy1 = "oldName";
 	$scope.orderByDesc1 = false;

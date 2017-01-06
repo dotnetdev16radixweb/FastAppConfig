@@ -53,12 +53,12 @@ angular.module('BTSetupApp.services',[])
 
 	_btSetupService.prototype.getBTs = function($scope) {
 	
-		$scope.showSpinner = 1;
+		$scope.showSpinner = true;
 		console.log("getBTs");
 
 		$http.get('/btSetup/bts/'+$scope.selectedApp.name+"/"+$scope.timeFrame+"/"+$scope.btListTopCount).success(function(result) {	
 	        $scope.btList = initializeBTList(result);
-	        $scope.showSpinner = 0;
+	        $scope.showSpinner = false;
 		});
 	}
 
@@ -70,7 +70,7 @@ angular.module('BTSetupApp.services',[])
 
 	_btSetupService.prototype.createCustomMatchRules = function($scope,btList) {
 
-		$scope.showSpinner = 1;
+		$scope.showSpinner = true;
 		var postData = [];
 		postData.push($scope.selectedApp.id);
 		postData.push(btList);
@@ -82,17 +82,17 @@ angular.module('BTSetupApp.services',[])
 		    headers: {'Content-Type': 'application/json'}
 	    }).success(function (result) {
 
-	    	$scope.showSpinner = 0;
+	    	$scope.showSpinner = false;
 			alert("Successfully created " + result + " custom match rules.");
 	    }).error(function(result) {
-	    	$scope.showSpinner = 0;
+	    	$scope.showSpinner = false;
 	    	alert(result);
 	    });
 	}
 
 	_btSetupService.prototype.deleteBTs = function($scope,btList,timeFrame,btListTopCount) {
 
-		$scope.showSpinner = 1;
+		$scope.showSpinner = true;
 		var postData = [];
 		postData.push($scope.selectedApp.name);
 		postData.push(btList);
@@ -105,11 +105,11 @@ angular.module('BTSetupApp.services',[])
 		    data: JSON.stringify(postData),
 		    headers: {'Content-Type': 'application/json'}
 	    }).success(function (result) {
-	    	$scope.showSpinner = 0;
+	    	$scope.showSpinner = false;
 	    	$scope.btList = initializeBTList(result);
 	    	alert("Successfully deleted " + btList.length + " business transactions.");
 	    }).error(function (result) {
-	    	$scope.showSpinner = 0;
+	    	$scope.showSpinner = false;
 	    	alert(result);
 	    });
 	}
