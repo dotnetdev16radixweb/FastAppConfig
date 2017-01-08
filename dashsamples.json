@@ -13,7 +13,7 @@
 		{"id":11,"name":"Application - Sample 1 - Memory","path":"/samples/style_1_app_mem","hasHealthRules":false,"hasDashboard" : true,"themes": [1,2],"description":"Application Memory"},
 		{"id":12,"name":"Application - Sample 1 - OS ","path":"/samples/style_1_app_os_perf","hasHealthRules":false,"hasDashboard" : true,"themes": [1,2],"description":"OS Metrics"},
 		{"id":13,"name":"Application - Sample 1 - Performance","path":"/samples/style_1_app_perf","hasHealthRules":false,"hasDashboard" : true,"description":"Application Performance", "themes": [1,2], "categories": [2]},
-		{"id":14,"name":"Overall Application Health","path":"/samples/overallapphealth","hasHealthRules":false,"hasDashboard" : true,"description":"Overall Application Health Dashboard"},
+		{"id":14,"name":"Overall Application Health","path":"/samples/overallapphealth","hasHealthRules":false,"hasDashboard" : true,"themes": [1,2],"description":"Overall Application Health Dashboard"},
 		{"id":15,"name":"DotNet App Health","path":"/samples/dotnet_app_health","hasHealthRules":false,"hasDashboard" : true,"description":"DotNet Application Health", "themes": [1], "categories": [1, 2]},
 		{"id":16,"name":"Banking Business Transaction Health","path":"/samples/banking_bt_health","hasHealthRules":false,"hasDashboard" : true,"description":"Top Banking Business Transactions Health Dashboard. Search for string {bt_name} and {tier_name}. Replace with specific top BT's for your banking application"}
 	],
