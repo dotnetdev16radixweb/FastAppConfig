@@ -93,6 +93,14 @@ app.get('/samples.html', function(req, res) {
     var filteredSamples = JSON.parse(JSON.stringify(dashsamples));
     filteredSamples.samples = [];
 
+    if (!themeId)
+    {
+        if (dashsamples.themes.length > 0)
+        {
+            themeId = dashsamples.themes[0].id;
+        }
+    }
+
     if (themeId)
     {
         for(var i=0; i < dashsamples.samples.length; i++)
@@ -169,6 +177,7 @@ app.get('/settings.html', function(req, res) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+    console.log("req.originalUrl: " + req.originalUrl);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
