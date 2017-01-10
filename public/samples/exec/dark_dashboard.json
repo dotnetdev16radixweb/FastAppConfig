@@ -1,7 +1,7 @@
 {
     "schemaVersion": null,
     "dashboardFormatVersion": "3.0",
-    "name": "{app_name}",
+    "name": "{app_name} - Executive Dashboard",
     "description": null,
     "properties": null,
     "templateEntityType": "APPLICATION_COMPONENT_NODE",
@@ -783,7 +783,7 @@
             "isGlobal": true,
             "propertiesMap": null,
             "dataSeriesTemplates": null,
-            "text": "Exec Dashboard 1"
+            "text": "Executive Dashboard"
         },
         {
             "widgetType": "TextWidget",
