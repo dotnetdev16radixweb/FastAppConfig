@@ -106,6 +106,15 @@
 		$('input[name="theme"]').val(this.value);
 		this.form.submit();
     });
+    
+    <script>
+      ga('send', 'dashboard', {
+		  'screenName': '<%=sample.name%>',
+	  });
+	  ga('send', 'pageview');
+    </script>
+</script>
+    
 	</script>	
 
 
