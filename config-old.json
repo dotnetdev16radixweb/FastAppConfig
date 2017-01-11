@@ -1,0 +1,12 @@
+{
+	"restuser" : "v734217@unitedpreprod",
+	"restpasswrd" : "united101",
+	"controller" : "unitedpreprod.saas.appdynamics.com",
+	"port":443,
+	"https" : true,
+	"templates":[
+		{"id":1,"name":"Java Template","type":"Java","description":"Java Template","appid":38,"dashid":39},
+		{"id":2,"name":".NET Template","type":".NET","description":".NET Template","appid":27,"dashid":3},
+		{"id":3,"name":"Health Rule Template","type":"Template","description":"Health Rule Template","appid":101,"dashid":3}
+	]
+}

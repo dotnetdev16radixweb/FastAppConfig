@@ -44,7 +44,7 @@ exports.getAllConfigItems = function(){
 		config[key]=value;
 	});
 	if(isEmptyObject(config)){
-		return getDefaultConfig();
+		return exports.getDefaultConfig();
 	}else
 		return config;
 }
