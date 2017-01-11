@@ -1,7 +1,8 @@
 {
   "name": "fastappconfig",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "private": true,
+  "productName":"AppDynamics FastAppConfig",
   "main": "./bin/electron_start.js",
   "scripts": {
     "start": "electron ./bin/electron_start",
@@ -45,6 +46,7 @@
     "xmldom": "^0.1.22"
   },
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "electron-installer-dmg": "^0.2.0"
   }
 }
