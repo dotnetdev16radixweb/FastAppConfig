@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index');
+	configManager = req.configManager;
+	res.render('index',{"serverMode":configManager.isServerMode()});
 });
 
 module.exports = router;

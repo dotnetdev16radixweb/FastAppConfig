@@ -15,10 +15,6 @@ var HttpProxyAgent  = require('http-proxy-agent');
 
 var configManager = require("./ConfigManager");
 var config = configManager.getConfig();
-var proxy = config.proxy;
-var saml  = config.saml;
-
-var auth =  'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -26,8 +22,13 @@ http.debug = 2;
 http.globalAgent.maxSockets = 20;
 minErrorCode = 400;
 
+var getAuthString = function(){
+	return 'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
+}
+
 
 var addproxy = function(options){
+	var proxy = config.proxy;
 	if(config.https && proxy){
 		var agent = new HttpsProxyAgent(proxy)
 		options.agent = agent;
@@ -49,7 +50,7 @@ var fetch = function(controller,url, parentCallBack){
 		path : url,
 		rejectUnauthorized: false,
 		headers : {
-			"Authorization" : auth,
+			"Authorization" : getAuthString(),
 		}
 	};
 	
@@ -95,7 +96,7 @@ var fetchJSessionID = function(controller,parentCallBack){
 		path : "/controller/auth?action=login",
 		rejectUnauthorized: false,
 		headers : {
-			"Authorization" : auth,
+			"Authorization" : getAuthString(),
 		}
 	};
 	
@@ -140,7 +141,7 @@ var parseCookies  = function (response) {
 }
 
 var executeRequest = function(controller,protocol,options,callback){
-	if(saml){
+	if(config.saml){
 		fetchJSessionID(controller,function(err,response){
 			var jsessionId = parseCookies(response);
 			options.headers = {"Cookie":jsessionId}
@@ -199,7 +200,7 @@ var post = function(controller,postUrl,postData,contentType,parentCallBack) {
 		  rejectUnauthorized: false,
 		  headers:{
 			  'Content-Type': contentType,
-			  "Authorization" : auth
+			  "Authorization" : getAuthString()
 		  }
 	};
 
@@ -230,8 +231,6 @@ var handleResponse = function(err,resp,parentCallBack){
 
 var postUICall = function(controller,postUrl,postData,contentType,parentCallBack) {
 	
-	console.log("postData: " + postData);
-
 	fetchJSessionID(controller,function(err,response){
 	
 		var jsessionId = parseCookies(response);
@@ -367,4 +366,8 @@ exports.getBTAverageResponseTime = function(appName,tierName,btName,timeFrame,ca
 exports.deleteBTs = function (deleteBTList,callback){
 	var url = "/controller/restui/bt/deleteBTs";
 	postUICall(config.controller,url,JSON.stringify(deleteBTList),"application/json",callback);
+}
+
+exports.updateConfiguration = function(){
+	config = configManager.getConfig();
 }

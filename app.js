@@ -31,6 +31,7 @@ var deploySampleHealthRules = require("./routes/deploySampleHealthRules.js");
 var deploySampleDashboard = require("./routes/deploySampleDashboard.js");
 var tiersJson = require('./routes/tiers.js');
 var nodesJson = require('./routes/nodes.js');
+var settings = require('./routes/settings.js');
 
 var log = log4js.getLogger("app");
 var app = express();
@@ -76,6 +77,7 @@ app.use('/copydashboards',copydashboards);
 app.use('/samples.json',samples);
 app.use('/deploySampleHealthRules',deploySampleHealthRules);
 app.use('/deploySampleDashboard',deploySampleDashboard);
+app.use('/settings',settings);
 
 app.use('/', routes);
 
@@ -172,13 +174,12 @@ app.get('/solutions.html', function(req, res) {
 });
 
 app.get('/settings.html', function(req, res) {
-    res.render('settings');
+    res.render('settings',{"json": configManager.getAllConfigItems()});
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    console.log("req.originalUrl: " + req.originalUrl);
-    var err = new Error('Not Found');
+    var err = new Error(req.originalUrl+' Not Found');
     err.status = 404;
     next(err);
 });

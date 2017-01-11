@@ -23,6 +23,9 @@
     <div><p><a href="/deploy.html">Health Rules and Dashboard Templates</a></p></div>
     <div><p><a href="/solutions.html">Packaged Solutions</a></p></div>
     <div><p><a href="/btsetup.html">BT Setup</a></p></div>
-    <div><p><a href="/settings.html">Settings</a></p></div>
+    <p><%serverMode%></p>
+    <%if (!serverMode) { %>
+    <div><p><a href="settings.html">Settings</a></p></div>
+    <%}%>
   </body>
 </html>
