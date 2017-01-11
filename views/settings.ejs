@@ -41,9 +41,14 @@
 		    data: "["+json+"]",
 		    headers: {'Content-Type': 'application/json'}
 		}).success(function (data, status, headers, config) {
+		 	console.log(status);
+		   	console.log(headers);
 		    alert(data);
 	    }).error(function (data, status, headers, config) {
-	    	alert(data);
+	    	alert('An Error Occurred while trying to save the configuration. Please verify it is valid json');
+	    	console.log(status);
+		   	console.log(headers);
+		   	console.log(data);
 	    });
 	    $('#test').prop('disabled', false);
     });
