@@ -56,7 +56,7 @@ Create a config.json file in the root directory with the following :
 <pre>
 {
 	"restuser" : "username@account_name",
-	"restpasswrd" : "password",
+	"restpassword" : "password",
 	"controller" : "server.saas.appdynamics.com",
 	"https" : true,
 	"templates":[

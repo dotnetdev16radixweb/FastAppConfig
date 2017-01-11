@@ -1,6 +1,7 @@
 var log4js = require('log4js');
 var log = log4js.getLogger("AppConfigManager");
-var config = require('./ConfigManager').getConfig();
+var configManager = require('./ConfigManager');
+var config = configManager.getConfig();
 var dashsamples = require("../dashsamples.json");
 var restManager = require('./RestManager');
 var Q = require('q');
@@ -164,9 +165,17 @@ exports.findThemeById = function(id){
 	return themes[0];
 }
 
+exports.getRelativePath = function(){
+	if (configManager.isServerMode()){
+		return './public';
+	}else{
+		return __dirname+'/../public';
+	}
+}
+
 exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,callback){
 	var sample = exports.findSampleById(sampleId);
-	var url    = './public'+sample.path+"/hr.xml";
+	var url    = exports.getRelativePath()+sample.path+"/hr.xml";
 
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;
@@ -178,15 +187,19 @@ exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,ca
 
 exports.deploySampleDashboard = function(sampleId,destApp,themeId,callback){
 
+	console.debug(__dirname);
+	
 	var sample = exports.findSampleById(sampleId);
-	var url    = './public'+sample.path+"/dashboard.json";
+	var url    = exports.getRelativePath()+sample.path+"/dashboard.json";
 
 	if (themeId)
 	{
 		var selectedTheme = this.findThemeById(themeId);
-		url = './public'+sample.path+"/"+selectedTheme.prefix+"dashboard.json";
+		url = exports.getRelativePath()+sample.path+"/"+selectedTheme.prefix+"dashboard.json";
 	}
 
+	console.debug(url);
+	
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;
 

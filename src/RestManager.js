@@ -23,7 +23,7 @@ http.globalAgent.maxSockets = 20;
 minErrorCode = 400;
 
 var getAuthString = function(){
-	return 'Basic '+ new Buffer(config.restuser +":"+ config.restpasswrd).toString('base64');
+	return 'Basic '+ new Buffer(config.restuser +":"+ config.restpassword).toString('base64');
 }
 
 
@@ -262,9 +262,23 @@ var postJSON = function(controller,postUrl,postData,parentCallBack) {
 	post(controller,postUrl,postData,'application/json',parentCallBack);		
 }
 
+
+var getTempPath = function(){
+	
+	if(configManager.isServerMode()){
+		return '';
+	}else{
+		if(configManager.isMac()){
+			return '/tmp/log/fastappconfig/';
+		}else{
+			return '/temp/';
+		}
+	}
+}
+
 var postFile = function(controller,postUrl,postData,parentCallBack) {
 	
-	var filename = 'temp-dash.json';
+	var filename = getTempPath()+'temp-dash.json';
 	fs.writeFileSync(filename, JSON.stringify(postData));
 	
 	var data = {
@@ -276,7 +290,7 @@ var postFile = function(controller,postUrl,postData,parentCallBack) {
 
 var postXmlFile = function(controller,postUrl,postData,parentCallBack) {
 	
-	var filename = 'temp.xml';
+	var filename = getTempPath()+'temp.xml';
 	fs.writeFileSync(filename, postData);
 	
 	var data = {

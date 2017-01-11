@@ -81,7 +81,7 @@ exports.saveConfig = function(json){
 	}
 	exports.setConfigItem("controller",json.controller);
 	exports.setConfigItem("restuser",json.restuser);
-	exports.setConfigItem("restpasswrd",json.restpasswrd);
+	exports.setConfigItem("restpassword",json.restpassword);
 	exports.setConfigItem("https",json.https);
 	exports.setConfigItem("port",json.port);
 	exports.setConfigItem("saml",json.saml);
