@@ -141,6 +141,9 @@ var parseCookies  = function (response) {
 }
 
 var executeRequest = function(controller,protocol,options,callback){
+	if(config.restdebug){
+		log.debug("options :"+JSON.stringify(options));
+	}
 	if(config.saml){
 		fetchJSessionID(controller,function(err,response){
 			var jsessionId = parseCookies(response);
