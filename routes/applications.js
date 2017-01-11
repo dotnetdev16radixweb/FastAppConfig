@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 			if(results){
 				res.status = 200;
 				results.push(allApp);
-				res.json(result);
+				res.json(results);
 			}else{
 				res.status = 500;
 				res.json({"error":"not able to connect","details":results});
