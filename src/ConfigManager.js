@@ -3,6 +3,15 @@ var storage = require('node-persist');
 var appdatapath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : '/var/local')
 storage.initSync({dir:appdatapath+'/fastappconfig/config',logging: false});
 
+exports.isMac = function(){
+	return process.platform == 'darwin';
+}
+
+exports.isWindows = function(){
+	return process.platform != 'darwin';
+}
+
+
 var serverMode = true;
 try {
 	var configFile	= require("../config.json");
@@ -44,7 +53,7 @@ exports.getAllConfigItems = function(){
 		config[key]=value;
 	});
 	if(isEmptyObject(config)){
-		return getDefaultConfig();
+		return exports.getDefaultConfig();
 	}else
 		return config;
 }

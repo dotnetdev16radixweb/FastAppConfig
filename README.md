@@ -1,7 +1,7 @@
 <img src="https://github.com/Appdynamics/FastAppConfig/blob/master/public/img/features.png"/>
 
 #### Required Frameworks
-1. node.js version v0.10.34 or or v4.2.6<br/>
+1. node.js version v0.10.34 or v4.x <br/>
 2. bower<br/>
 
 References :<br/>
@@ -26,14 +26,14 @@ Switch to node version 0.10.34
 3. nvm install 0.10.34
 
 ### Installing on Mac
-Download Node 0.10.34 from
+Download Node 4.x from
 https://nodejs.org/en/download/<br/>
 
 Install Bower from
 http://bower.io/<br/>
 
 ### Installing on Windows
-Download Node 0.10.34 from
+Download Node 4.x from
 http://www.thinkingmedia.ca/2015/07/how-to-install-nodejs-bower-and-grunt-on-windows-8/<br/>
 
 ####Installation
