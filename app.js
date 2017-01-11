@@ -1,3 +1,8 @@
+var mkdirp = require('mkdirp');
+mkdirp('/tmp/log/fastappconfig', function (err) {
+	if (err) console.error(err);
+});
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -32,19 +37,12 @@ var tiersJson = require('./routes/tiers.js');
 var nodesJson = require('./routes/nodes.js');
 var settings = require('./routes/settings.js');
 
-var app = express();
-var mkdirp = require('mkdirp');
-
-mkdirp('/tmp/log/fastappconfig', function (err) {
-	if (err) console.error(err);
-});
-
 var log4js = require('log4js');
 var log = log4js.getLogger("app");
 
+var app = express();
 
 var init = function(){
-
 }()
 
 app.use(function(req,res,next){
