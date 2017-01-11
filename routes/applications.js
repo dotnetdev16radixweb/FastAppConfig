@@ -9,11 +9,21 @@ router.get('/', function(req, res) {
 			"id": 0,
 			"name": "<All Applications>"
 	};
-
-	req.restManager.getAppJson(function(err,result){
-		result.push(allApp);
-		res.json(result);
-	});
+	req.appConfigManager.fetchApplications(function(err,results){
+		if(err){
+			res.status = 500;
+			res.send(err.statusMessage);
+		}else{
+			if(results){
+				res.status = 200;
+				results.push(allApp);
+				res.json(result);
+			}else{
+				res.status = 500;
+				res.json({"error":"not able to connect","details":results});
+			}
+		}
+	})
 
 });
 

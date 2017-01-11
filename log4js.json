@@ -2,9 +2,10 @@
   "appenders":
   [
     { "type":"console","level":"INFO"},
-    { "type":"file", "filename": "/tmp/log/appconfigmanager.log", "backups": 10, "maxLogSize": 20480, "category": "AppConfigManager","level":"INFO" },
-    { "type":"file", "filename": "/tmp/log/http.log", "backups": 10, "maxLogSize": 20480, "category": "http","level":"INFO" },
-    { "type":"file", "filename": "/tmp/log/restmanager.log", "backups": 10, "maxLogSize": 20480, "category": "RestManager","level":"INFO" }
+    { "type":"file", "filename": "/tmp/log/fastappconfig/appconfigmanager.log", "backups": 10, "maxLogSize": 2048, "category": "AppConfigManager","level":"INFO" },
+    { "type":"file", "filename": "/tmp/log/fastappconfig/http.log", "backups": 10, "maxLogSize": 2048, "category": "http","level":"INFO" },
+    { "type":"file", "filename": "/tmp/log/fastappconfig/restmanager.log", "backups": 10, "maxLogSize": 2048, "category": "RestManager","level":"INFO" },
+    { "type":"file", "filename": "/tmp/log/fastappconfig/btconfigmanager.log", "backups": 10, "maxLogSize": 2048, "category": "BTConfigManager","level":"INFO" }
   ],
   "replaceConsole":true
 }

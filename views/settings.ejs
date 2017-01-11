@@ -28,6 +28,11 @@
   	</div>
   	
   <script>
+    
+	$(document).ready(function() {
+		$('#test').prop('disabled', true);
+	});
+  
   	$("#save").click(function () {
 		var json = $("#json").val();
 		$.ajax({
@@ -36,20 +41,41 @@
 		    data: "["+json+"]",
 		    headers: {'Content-Type': 'application/json'}
 		}).success(function (data, status, headers, config) {
+		 	console.log(status);
+		   	console.log(headers);
 		    alert(data);
 	    }).error(function (data, status, headers, config) {
-	    	alert(data);
+	    	alert('An Error Occurred while trying to save the configuration. Please verify it is valid json');
+	    	console.log(status);
+		   	console.log(headers);
+		   	console.log(data);
 	    });
+	    $('#test').prop('disabled', false);
     });
     
+    $('#json').bind('input propertychange', function() {
+      $('#test').prop('disabled', true);
+	});
+    
     $("#test").click(function () {
-		$.get('/applications.json').success(function(result) {
-			if(result[0]){
-				alert('Connection Successful');
-			}else{
-				alert('Connection Failed ...'+result);
-			}
-		});	
+    
+    	$.ajax({
+		    url: '/applications.json',
+		    method: "GET",
+		    data: "["+json+"]",
+		    headers: {'Content-Type': 'application/json'},
+		    timeout:1000
+		}).success(function (data, status, headers, config) {
+		   console.log(status);
+		   console.log(headers);
+		   if(data.error){
+	    		alert('Connection Failed .. please verify username, password, account, controller, https/http, port. You can try setting restdebug:true in your configuration and checking restmanager.log');
+			   	console.log(data.details);
+		   }else{
+		   		alert('Connection Test Successful');
+		   }
+	    }).error(function (data, status, headers, config) {
+	    });
     });
   	
   </script>	
