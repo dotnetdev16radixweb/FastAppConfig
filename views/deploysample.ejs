@@ -99,15 +99,15 @@
 	<script src="js/deployapp.js"></script>
 
 	<script>  	
-	$(document).ready(function() {
-		$('input[name="id"]').val(<%=sample.id%>);
-	});
-	$("#themeDropdown").change(function () {
-		$('input[name="theme"]').val(this.value);
-		this.form.submit();
-    });
-    
-      ga('send', 'pageview', location.pathname);
+		$(document).ready(function() {
+			$('input[name="id"]').val(<%=sample.id%>);
+		});
+		$("#themeDropdown").change(function () {
+			$('input[name="theme"]').val(this.value);
+			this.form.submit();
+	    });
+	    
+      	ga('send', 'pageview', location.pathname);
 	</script>	
 
 

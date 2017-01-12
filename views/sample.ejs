@@ -87,11 +87,7 @@
 			$('input[name="theme"]').val(this.value);
 			this.form.submit();
 		});
-	
-		  ga('send', 'screenview', {
-			  'screenName': 'Samples',
-		  });
-		  ga('send', 'pageview');
+		ga('send', 'pageview', location.pathname);
 	</script>
   </body>
 </html>
