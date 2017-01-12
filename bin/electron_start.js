@@ -28,8 +28,8 @@ function createWindow () {
   var template = [{
       label: "Application",
       submenu: [
-          { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
-          { type: "separator" },
+          //{ label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+          //{ type: "separator" },
           { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
       ]}, {
       label: "Edit",
@@ -41,12 +41,17 @@ function createWindow () {
           { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
           { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
           { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+      ]}, {
+          label: 'View',
+          submenu: [
+              { role: 'reload' },
+              { role: 'toggledevtools' },
+              { type: 'separator' },
+              { role: 'togglefullscreen' }
+              //,{ label: "Custom Item", click: function() { console.log("Custom click"); }}
       ]}
   ];
-
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-
-
 }
 
 app.on('ready', createWindow);
