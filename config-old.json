@@ -1,7 +1,4 @@
 {
-	"restuser" : "v734217@unitedpreprod",
-	"restpasswrd" : "united101",
-	"controller" : "unitedpreprod.saas.appdynamics.com",
 	"port":443,
 	"https" : true,
 	"templates":[
