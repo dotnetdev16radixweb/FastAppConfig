@@ -107,10 +107,7 @@
 		this.form.submit();
     });
     
-      ga('send', 'screenview', {
-		  'screenName': 'Dashboard - <%=sample.name%>',
-	  });
-	  ga('send', 'pageview');
+      ga('send', 'pageview', location.pathname);
 	</script>	
 
 
