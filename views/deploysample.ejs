@@ -32,7 +32,11 @@
   	<div class="container-fluid">
   		<div class="row form-group">
 	  		<div id="deploy" class="col-md-4">
+	  			<div style="padding-top: 6px;">
+		  			<a class="btn btn-primary text-center" href="samples.html">Back</a>
+				</div>
 	  			<%if (sample.themes) { %>
+	  			<div>
 		  			<h6>Theme : 
 	                <select id="themeDropdown">
 		    			<% 	for(var i=0; i < themes.length; i++) { 
@@ -46,6 +50,7 @@
 		     			%>
 					</select>
 					</h6>
+				</div>	
 				<% } %>
 	  			<div>
 		  			<h6>Target Application : 
