@@ -5,6 +5,7 @@
   "productName":"AppDynamics FastAppConfig",
   "main": "./bin/electron_start.js",
   "scripts": {
+    "preinstall":"bower install",
     "start": "electron ./bin/electron_start",
     "test": "./node_modules/.bin/mocha --timeout 30000 --reporter spec"
   },
