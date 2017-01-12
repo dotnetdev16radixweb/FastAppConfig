@@ -11,7 +11,7 @@ function createWindow () {
 
   // Create the browser window.
   win = new BrowserWindow();
-  // win.maximize();
+  win.maximize();
 
   // load express app into electron
   win.loadURL('http://localhost:'+3000);
