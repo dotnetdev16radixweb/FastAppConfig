@@ -11,12 +11,19 @@ mkdirp('/tmp/log/fastappconfig', function (err) {
 
 var express = require('express');
 var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var packageController = require("package.js");
 
 var routes = require('./routes/index');
+var schedule = require('node-schedule');
+var childProcess = require("child_process");
+var fs = require('fs');
 var configManager = require("./src/ConfigManager.js");
+var moment = require("moment");
+
 var restManager = require('./src/RestManager.js');
 var btConfigManager = require('./src/BTConfigManager.js');
 var appConfigManager = require('./src/AppConfigManager.js');
@@ -41,6 +48,8 @@ var log = log4js.getLogger("app");
 
 var app = express();
 
+var init = function(){
+}()
 
 app.use(function(req,res,next){
     req.restManager = restManager;
