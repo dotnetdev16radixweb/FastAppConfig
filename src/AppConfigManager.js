@@ -187,7 +187,7 @@ exports.deploySampleHealthRule = function(sampleId,destAppID,forceHealthRules,ca
 
 exports.deploySampleDashboard = function(sampleId,destApp,themeId,callback){
 
-	console.debug(__dirname);
+	log.debug("Deploying Sample Dashboard : BaseDir :"+__dirname);
 	
 	var sample = exports.findSampleById(sampleId);
 	var url    = exports.getRelativePath()+sample.path+"/dashboard.json";
@@ -198,7 +198,7 @@ exports.deploySampleDashboard = function(sampleId,destApp,themeId,callback){
 		url = exports.getRelativePath()+sample.path+"/"+selectedTheme.prefix+"dashboard.json";
 	}
 
-	console.debug(url);
+	log.debug("Deploying Sample Dashboard : BaseURL :"+url);
 	
 	fs.readFile(url, 'utf8', function (err, data) {
 		  if (err) throw err;

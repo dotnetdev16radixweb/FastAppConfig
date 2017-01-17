@@ -264,7 +264,7 @@ var postJSON = function(controller,postUrl,postData,parentCallBack) {
 
 
 var getTempPath = function(){
-	return configManager.getTempPath();
+	return configManager.getTempDir();
 }
 
 var postFile = function(controller,postUrl,postData,parentCallBack) {

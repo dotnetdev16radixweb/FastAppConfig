@@ -5,6 +5,7 @@ storage.initSync({dir:appdatapath+'/fastappconfig/config',logging: false});
 
 
 var os = require("os");
+
 exports.getTempDir= function(){
         return os.tmpdir();
 }
