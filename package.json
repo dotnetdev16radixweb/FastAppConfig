@@ -2,10 +2,10 @@
   "name": "fastappconfig",
   "version": "0.0.1",
   "private": true,
-  "productName":"AppDynamics FastAppConfig",
+  "productName": "AppDynamics FastAppConfig",
   "main": "./bin/electron_start.js",
   "scripts": {
-    "preinstall":"bower install",
+    "preinstall": "bower install",
     "start": "electron ./bin/electron_start",
     "test": "./node_modules/.bin/mocha --timeout 30000 --reporter spec"
   },
@@ -34,6 +34,7 @@
     "node-persist": "^2.0.7",
     "node-schedule": "^0.1.15",
     "nunjucks": "^2.5.2",
+    "os": "^0.1.1",
     "package.js": "^1.1.3",
     "phantomjs": "^1.9.13",
     "q": "1.1.2",

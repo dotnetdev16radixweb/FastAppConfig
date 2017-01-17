@@ -3,14 +3,11 @@ var storage = require('node-persist');
 var appdatapath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : '/var/local')
 storage.initSync({dir:appdatapath+'/fastappconfig/config',logging: false});
 
-exports.isMac = function(){
-	return process.platform == 'darwin';
-}
 
-exports.isWindows = function(){
-	return process.platform != 'darwin';
+var os = require("os");
+exports.getTempDir= function(){
+        return os.tmpdir();
 }
-
 
 var serverMode = true;
 try {
@@ -88,4 +85,3 @@ exports.saveConfig = function(json){
 	exports.setConfigItem("templates",json.templates);
 	exports.setConfigItem("restdebug",json.restdebug);
 }
-

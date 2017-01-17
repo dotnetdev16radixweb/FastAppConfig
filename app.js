@@ -1,14 +1,3 @@
-var mkdirp = require('mkdirp');
-mkdirp('/tmp', function (err) {
-	if (err) console.error(err);
-});
-mkdirp('/tmp/log', function (err) {
-	if (err) console.error(err);
-});
-mkdirp('/tmp/log/fastappconfig', function (err) {
-	if (err) console.error(err);
-});
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');

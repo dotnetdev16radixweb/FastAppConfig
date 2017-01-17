@@ -264,16 +264,7 @@ var postJSON = function(controller,postUrl,postData,parentCallBack) {
 
 
 var getTempPath = function(){
-	
-	if(configManager.isServerMode()){
-		return '';
-	}else{
-		if(configManager.isMac()){
-			return '/tmp/log/fastappconfig/';
-		}else{
-			return '/temp/';
-		}
-	}
+	return configManager.getTempPath();
 }
 
 var postFile = function(controller,postUrl,postData,parentCallBack) {
