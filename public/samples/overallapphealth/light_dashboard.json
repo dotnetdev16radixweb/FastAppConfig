@@ -1,7 +1,7 @@
 {
     "schemaVersion": null,
     "dashboardFormatVersion": "3.0",
-    "name": "Movie Tickets Online Overall Application Health - Light",
+    "name": "{app_name} Overall Application Health",
     "description": null,
     "properties": null,
     "templateEntityType": "APPLICATION_COMPONENT_NODE",
@@ -342,7 +342,7 @@
                         "maxResults": 5,
                         "evaluationScopeType": "TIER_AVERAGE",
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_CUSTOM",
                         "metricDisplayNameCustomFormat": "${e}"
                     },
@@ -400,9 +400,9 @@
                             "displayName": "null",
                             "metricPath": "Overall Application Performance|Errors per Minute",
                             "scopeEntity": {
-                                "applicationName": "Movie Tickets Online",
+                                "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "Movie Tickets Online",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
@@ -415,7 +415,7 @@
                         "maxResults": null,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -476,9 +476,9 @@
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "Movie Tickets Online",
+                                    "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "Movie Tickets Online",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -499,7 +499,7 @@
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -522,9 +522,9 @@
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "Movie Tickets Online",
+                                    "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "Movie Tickets Online",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -545,7 +545,7 @@
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -686,9 +686,9 @@
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "Movie Tickets Online",
+                                    "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "Movie Tickets Online",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -709,7 +709,7 @@
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -732,9 +732,9 @@
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "Movie Tickets Online",
+                                    "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "Movie Tickets Online",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -755,7 +755,7 @@
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -778,9 +778,9 @@
                             "agentTypes": null,
                             "entityNames": [
                                 {
-                                    "applicationName": "Movie Tickets Online",
+                                    "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "Movie Tickets Online",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -801,7 +801,7 @@
                         "maxResults": 20,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -867,9 +867,9 @@
                             "displayName": "null",
                             "metricPath": "Overall Application Performance|Calls per Minute",
                             "scopeEntity": {
-                                "applicationName": "Movie Tickets Online",
+                                "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "Movie Tickets Online",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
@@ -882,7 +882,7 @@
                         "maxResults": null,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -998,7 +998,7 @@
             "propertiesMap": null,
             "dataSeriesTemplates": null,
             "healthRule": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "entityType": "POLICY",
                 "entityName": "Business Transaction response time is much higher than normal",
                 "scopingEntityType": null,
@@ -1040,7 +1040,7 @@
             "isGlobal": true,
             "propertiesMap": null,
             "dataSeriesTemplates": null,
-            "text": "Movie Tickets Online"
+            "text": "{app_name}"
         },
         {
             "widgetType": "TextWidget",
@@ -1126,9 +1126,9 @@
                             "displayName": "null",
                             "metricPath": "Overall Application Performance|Average Response Time (ms)",
                             "scopeEntity": {
-                                "applicationName": "Movie Tickets Online",
+                                "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "Movie Tickets Online",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
@@ -1141,7 +1141,7 @@
                         "maxResults": null,
                         "evaluationScopeType": null,
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },
@@ -1366,10 +1366,10 @@
             "dataSeriesTemplates": null,
             "useTimeline": false,
             "eventFilterTemplate": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "healthRuleNames": [
                     {
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "entityType": "POLICY",
                         "entityName": "Business Transaction response time is much higher than normal",
                         "scopingEntityType": null,
@@ -1377,7 +1377,7 @@
                         "subtype": null
                     },
                     {
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "entityType": "POLICY",
                         "entityName": "Business Transaction error rate is much higher than normal",
                         "scopingEntityType": null,
@@ -1491,7 +1491,7 @@
             "propertiesMap": null,
             "dataSeriesTemplates": null,
             "healthRule": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "entityType": "POLICY",
                 "entityName": "Business Transaction response time is much higher than normal",
                 "scopingEntityType": null,
@@ -1570,7 +1570,7 @@
             "propertiesMap": null,
             "dataSeriesTemplates": null,
             "healthRule": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "entityType": "POLICY",
                 "entityName": "Business Transaction error rate is much higher than normal",
                 "scopingEntityType": null,
@@ -1649,7 +1649,7 @@
             "propertiesMap": null,
             "dataSeriesTemplates": null,
             "healthRule": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "entityType": "POLICY",
                 "entityName": "CPU utilization is too high",
                 "scopingEntityType": null,
@@ -1728,7 +1728,7 @@
             "propertiesMap": null,
             "dataSeriesTemplates": null,
             "healthRule": {
-                "applicationName": "Movie Tickets Online",
+                "applicationName": "{app_name}",
                 "entityType": "POLICY",
                 "entityName": "CPU utilization is too high",
                 "scopingEntityType": null,
@@ -1917,7 +1917,7 @@
                         "maxResults": 3,
                         "evaluationScopeType": "TIER_AVERAGE",
                         "baselineName": null,
-                        "applicationName": "Movie Tickets Online",
+                        "applicationName": "{app_name}",
                         "metricDisplayNameStyle": "DISPLAY_STYLE_AUTO",
                         "metricDisplayNameCustomFormat": null
                     },

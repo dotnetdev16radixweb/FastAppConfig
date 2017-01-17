@@ -492,7 +492,7 @@
                             "scopeEntity": {
                                 "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "HelloWorld",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
@@ -568,7 +568,7 @@
                                 {
                                     "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "HelloWorld",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -614,7 +614,7 @@
                                 {
                                     "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "HelloWorld",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -778,7 +778,7 @@
                                 {
                                     "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "HelloWorld",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -824,7 +824,7 @@
                                 {
                                     "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "HelloWorld",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -870,7 +870,7 @@
                                 {
                                     "applicationName": "{app_name}",
                                     "entityType": "APPLICATION",
-                                    "entityName": "HelloWorld",
+                                    "entityName": "{app_name}",
                                     "scopingEntityType": null,
                                     "scopingEntityName": null,
                                     "subtype": null
@@ -959,7 +959,7 @@
                             "scopeEntity": {
                                 "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "HelloWorld",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
@@ -1130,7 +1130,7 @@
             "isGlobal": true,
             "propertiesMap": null,
             "dataSeriesTemplates": null,
-            "text": "HelloWorld"
+            "text": "{app_name}"
         },
         {
             "widgetType": "TextWidget",
@@ -1218,7 +1218,7 @@
                             "scopeEntity": {
                                 "applicationName": "{app_name}",
                                 "entityType": "APPLICATION",
-                                "entityName": "HelloWorld",
+                                "entityName": "{app_name}",
                                 "scopingEntityType": null,
                                 "scopingEntityName": null,
                                 "subtype": null
