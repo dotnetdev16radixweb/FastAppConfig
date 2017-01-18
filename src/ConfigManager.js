@@ -69,7 +69,7 @@ function isEmptyObject(obj) {
 }
 
 exports.getDefaultConfig = function(){
-	return {"restuser":"<username>@account","restpassword":"<password>","controller":"controller.saas.appdynamics.com","https":true,"port":443,"saml":false,"templates":[{"id": 1,"type": "Java","description": "Template Application","appid": 1,"dashid": 1}]}
+	return {"restuser":"<username>@<account>","restpassword":"<password>","controller":"<controller>.saas.appdynamics.com","https":true,"port":443,"saml":false,"templates":[{"id": 1,"type": "Java","description": "Template Application","appid": 1,"dashid": 1}]}
 }
 
 exports.saveConfig = function(json){
