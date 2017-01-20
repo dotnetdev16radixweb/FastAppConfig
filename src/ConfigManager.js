@@ -1,6 +1,6 @@
 var storage = require('node-persist');
 
-var appdatapath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : '/var/local')
+var appdatapath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME)
 storage.initSync({dir:appdatapath+'/fastappconfig/config',logging: false});
 
 

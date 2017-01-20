@@ -20,6 +20,7 @@
     "pinto": "*"
   },
   "resolutions": {
-    "angular": "1.5.4-build.4726+sha.d497822"
+    "angular": "1.5.4-build.4726+sha.d497822",
+    "d3": "~3.5.6"
   }
 }
