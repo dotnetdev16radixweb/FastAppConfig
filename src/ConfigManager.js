@@ -5,9 +5,12 @@ storage.initSync({dir:appdatapath+'/fastappconfig/config',logging: false});
 
 
 var os = require("os");
-
 exports.getTempDir= function(){
         return os.tmpdir();
+}
+
+exports.openLogDir= function(){
+    require('electron').shell.showItemInFolder(exports.getTempDir()+'/log/fastappconfig')
 }
 
 var serverMode = true;

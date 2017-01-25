@@ -23,6 +23,7 @@
   				<p></p>
 				<button id="save" class="btn btn-primary text-center">Save Settings</button>
 				<button id="test" class="btn btn-primary text-center">Test Connection</button>
+                <button id="openlog" class="btn btn-primary text-center">Open Log Dir</button>
   			</div>
   		</div>
   	</div>
@@ -78,6 +79,17 @@
 	    });
     });
     
+    $("#openlog").click(function () {
+
+        $.ajax({
+            url: '/openlog',
+            method: "GET",
+            data: "",
+            headers: {'Content-Type': 'application/json'},
+            timeout:1000
+        });
+    });
+
     ga('send', 'pageview', location.pathname);
   	
   </script>	

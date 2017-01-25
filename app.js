@@ -176,6 +176,10 @@ app.get('/settings.html', function(req, res) {
     res.render('settings',{"json": configManager.getAllConfigItems()});
 });
 
+app.get('/openlog', function(req, res) {
+    configManager.openLogDir();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error(req.originalUrl+' Not Found');
