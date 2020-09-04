@@ -48,7 +48,7 @@
     "xmldom": "^0.1.22"
   },
   "devDependencies": {
-    "electron": "^1.4.1",
+    "electron": "^10.1.1",
     "electron-installer-dmg": "^0.2.0"
   }
 }
